@@ -1,0 +1,503 @@
+.mainPage2{
+    font-family: "Pretendard JP";
+    width:1620px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin:auto;
+    background: linear-gradient(0deg, rgba(26, 54, 54, 0.04) 0%, rgba(26, 54, 54, 0.04) 100%), #FFF;
+}
+.header{
+    width:1600px;
+    height:120px;
+    display: flex;
+    flex-direction: row;
+    /*background-color: aqua;*/
+}
+
+.logo{
+    width:64px;
+    height: 48px;
+    margin-top:58px;
+    margin-left: 90px;
+    background-color: grey;
+}
+
+.nav{
+    width:500px;
+    height:50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-top:45px;
+    margin-left: 950px;
+    /*background-color: antiquewhite;*/
+}
+
+.nav a{
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 142.9%; /* 20.006px */
+    letter-spacing: 0.203px;
+}
+
+.nav a:hover{
+    color:gray;
+    cursor: default;
+}
+
+.nav li{
+    list-style-type: none;
+    margin-left: 24px;
+}
+
+.mypageBtn{
+    width:112px;
+    height: 34px;
+    display: flex;
+    padding: 8px 18px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 20px;
+    color: #FFF;
+
+    text-align: center;
+    font-feature-settings: 'ss10' on;
+    font-family: "Pretendard JP";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 142.9%; /* 20.006px */
+    letter-spacing: 0.203px;
+    background: #FF6E23;
+    position: relative;
+}
+
+.toggleList{
+    width:112px;
+    height:210px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    border-radius: 8px 8px 0px 0px;
+    background: #FFF;
+}
+.text1{
+    width:480px;
+    height:250px;
+    color: var(--kakao-logo, #000);
+
+    text-align: center;
+    /* Display 1/Medium */
+    font-family: "Pretendard JP";
+    font-size: 56px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 128.6%; /* 72.016px */
+    letter-spacing: -1.786px;
+    /*background-color: bisque;*/
+}
+
+.findBookContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 20px 0;
+}
+
+.findBook{
+    width:790px;
+    height:60px;
+    margin-top:56px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    border:solid black;
+    background-color: white;
+}
+
+.bookFind{
+    width:766px;
+    height:57px;
+    border: none;
+    outline: none;
+    color: #808080;
+
+    text-align: center;
+    /* Headline 1/Medium */
+    font-family: "Pretendard JP";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 144.5%; /* 26.01px */
+    letter-spacing: -0.004px;
+}
+
+.searchBtn {
+    margin-top: 10px;
+    margin-right: 0px;
+    margin-left: 10px;
+    width:40px;
+    height:40px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+   
+}
+
+.myBookShelf{
+    width:1600px;
+    height:410px;
+    margin-top: 150px;
+    /*background-color: aqua;*/
+}
+
+.text2 {
+    color: var(--kakao-logo, #000);
+    font-feature-settings: 'ss10' on;
+    /* Title 2/Bold */
+    font-family: "Pretendard JP";
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 135.8%; /* 38.024px */
+    letter-spacing: -0.661px;
+    margin-left: 90px;
+}
+
+.centerBar{
+    width:1500px;
+    height:700px;
+    display: flex;
+    flex-direction: row;
+    /*background-color: #2EEA7E;*/
+}
+
+.plusBtns{
+    width:180px;
+    height:120px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 90px;
+    /*background-color: #FF6E23;*/
+}
+
+
+.greenPic{
+    width:169px;
+    height:52px;
+}
+
+.howMany{
+    width:250px;
+    height:130px;
+    display: flex;
+    flex-direction: row;
+    /*background-color: aqua;*/
+}
+
+.showHowMany{
+    width:70px;
+    height:52px;
+    border-radius: 25px;
+    background-color: black;
+}
+
+.plusPicBtn{
+    width:126px;
+    height:52px;
+    cursor: pointer;
+}
+
+.myBooks{
+    margin-left: 110px;
+    width:700px;
+    height:320px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: antiquewhite;
+}
+
+.twoBook{
+    width:328px;
+    height:304px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    background-color: #FF6E23;
+}
+
+
+.bookInfo{
+    width:300px;
+    height:200px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: aqua;
+}
+
+.bookPic{
+    width:150px;
+    height:200px;
+    background-color: #2EEA7E;
+}
+
+.bookExplain{
+    width:150px;
+    height:200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: white;
+}
+
+.buttons{
+    width:320px;
+    height:120px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color: red;
+    margin-top:20px;
+}
+
+.toMyShelf{
+    display: flex;
+    width: 145px;
+    height:50px;
+    padding: 12px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    border: 1px solid #01524D;
+    background: #FFF;
+    color: #01524D;
+
+    text-align: center;
+    font-feature-settings: 'ss10' on;
+    /* Body 1/Normal - Bold */
+    font-family: "Pretendard JP";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%; /* 24px */
+    letter-spacing: 0.091px;
+}
+
+.record{
+    display: flex;
+    width: 155px;
+    height:50px;
+    padding: 12px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    border-radius: 8px;
+    border: 1px solid #2EEA7E;
+    background: #2EEA7E;
+    color: var(--kakao-logo, #000);
+
+    text-align: center;
+    font-feature-settings: 'ss10' on;
+    /* Body 1/Normal - Bold */
+    font-family: "Pretendard JP";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 150%; /* 24px */
+    letter-spacing: 0.091px;
+    margin-left: 10px;
+
+}
+
+.bar{
+    width: 124px;
+    height: 16px;
+    flex-shrink: 0;
+    border-radius: 20px;
+    margin-top:70px;
+    background-color: gray;
+
+}
+
+.gotoMyShelfBox{
+    width:200px;
+    height:200px;
+    display: flex;
+    flex-direction: column;
+    margin-left: 30px;
+    /*background-color: antiquewhite;*/
+}
+
+.gotoMyShelfBtn{
+    width:40px;
+    height:40px;
+    right: 300px;
+    border-radius: 50px;
+    border: none;
+    background-color: #808080;
+    margin-left: 53px;
+}
+
+.text5 {
+    width:90px;
+    height: 50px;
+    color: var(--kakao-logo, #000);
+
+    text-align: right;
+    font-feature-settings: 'ss10' on;
+    /* Body 1/Normal - Medium */
+    font-family: "Pretendard JP";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 900;
+    line-height: 150%; /* 24px */
+    letter-spacing: 0.091px;
+}
+
+.banner{
+    width:1600px;
+    height:200px;
+    margin-top:50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background: #FF6E23;
+}
+.text3{
+    margin-left:85px;
+}
+
+.first_row{
+    color: #FFF;
+    font-feature-settings: 'ss10' on;
+    /* Title 2/Bold */
+    font-family: "Pretendard JP";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 135.8%; /* 38.024px */
+    letter-spacing: -0.661px;
+}
+
+.second_row{
+    color: #FFF;
+    font-feature-settings: 'ss10' on;
+    /* Title 2/Medium */
+    font-family: "Pretendard JP";
+    font-size: 24px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 135.8%;
+    letter-spacing: -0.661px;
+}
+
+.bannerPic{
+    width: 300px;
+    height: 170px;
+    margin-left: 900px;
+}
+
+.bestLineBox{
+    width:1600px;
+    height:500px;
+    margin-top: 20px;
+    /*background-color: bisque;*/
+}
+
+.text4{
+    color: var(--kakao-logo, #000);
+    font-feature-settings: 'ss10' on;
+    /* Title 2/Bold */
+    font-family: "Pretendard JP";
+    font-size: 28px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 135.8%; /* 38.024px */
+    letter-spacing: -0.661px;
+    margin-left: 85px;
+}
+
+.bestList {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    margin-top:100px;
+}
+
+.carouselItem {
+    width: 200px;
+    height:270px;
+    padding: 20px;
+    margin: 0 10px;
+    background: #fff;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.contents{
+    width: 150px;
+    height:200px;
+}
+
+
+.leftArrow {
+    width:40px;
+    height:40px;
+    position: absolute;
+    left: 300px;
+    border-radius: 50px;
+    border: none;
+    background-color: #808080;
+}
+
+.rightArrow {
+    width:40px;
+    height:40px;
+    position: absolute;
+    right: 300px;
+    border-radius: 50px;
+    border: none;
+    background-color: #808080;
+}
+
+.status{
+    width:180px;
+    height:20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    /*background-color: aqua;*/
+}
+
+.heart{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 120px;
+}
+
+.heartNum{
+    margin-left: 6px;
+}
+
+.bookmark{
+    margin-left: 10px;
+}
