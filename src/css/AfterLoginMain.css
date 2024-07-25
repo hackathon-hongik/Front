@@ -214,7 +214,7 @@
 }
 
 .myBooks{
-    margin-left: 110px;
+    margin-left: 200px;
     width:700px;
     height:320px;
     display: flex;
@@ -230,8 +230,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    cursor: pointer;
     background-color: #FF6E23;
+    margin-left: 10px;
 }
 
 
