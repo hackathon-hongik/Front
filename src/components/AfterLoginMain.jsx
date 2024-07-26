@@ -10,8 +10,9 @@ import orange_banner from "./orange_banner.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
+import {bookAPI} from "../api";
 
-
+const API_KEY=process.env.REACT_APP_KAKAO_BOOK_API_KEY;
 
 export function AfterLoginMain(){
     const navigate=useNavigate();
@@ -19,6 +20,7 @@ export function AfterLoginMain(){
     const [currentIndex, setCurrentIndex] = useState(0);
     const [bookmarked, setBookmarked] = useState([]);
     const [isCheck,setCheck]=useState(false);
+    const [title,setTitle]=useState("");
 
     useEffect(() => {
         // Simulate fetching data from server
@@ -36,12 +38,31 @@ export function AfterLoginMain(){
         fetchData();
     }, []);
     
+    const searchData=async()=>{
+        try{
+            const response=await bookAPI.get(`/v3/search/book?query=${title}`,{
+                headers:{
+                    Authorization:`KakaoAK ${API_KEY}`
+                }
+            });
+
+            console.log(response.data);
+        }
+        catch(e){
+            console.log(e);
+        }
+    }
+
     const handleItemClick=(path)=>{
         navigate(path);
     };
 
-    const handleSearch=()=>{
+    const handleTitleChange=(e)=>{
+        setTitle(e.target.value);
+    };
 
+    const handleSearch=()=>{
+        searchData();
     };
 
     
@@ -80,8 +101,8 @@ export function AfterLoginMain(){
                 </div>
 
                 <ul className="nav">
-                    <li><a onClick={()=>handleItemClick("/login")}>내 서재</a></li>
-                    <li><a onClick={()=>handleItemClick("/login")}>커뮤니티</a></li>
+                    <li><a onClick={()=>handleItemClick('/afterlogin/mylibrary')}>내 서재</a></li>
+                    <li><a onClick={()=>handleItemClick()}>커뮤니티</a></li>
                     <li>
                         <div className="buttonToggle">
                             <button className="mypageBtn" onClick={()=>{setCheck((e)=>!e)}}>마이페이지</button>
@@ -105,7 +126,7 @@ export function AfterLoginMain(){
             <div className="findBookContainer">
                 <div className="findBook">
                     <img src={findLogo} className="searchBtn" onClick={handleSearch}></img>
-                    <input type="text" className="bookFind" placeholder="책 이름 검색하고 내 서재에 추가하기"></input>
+                    <input type="text" className="bookFind" value={title} onChange={handleTitleChange} placeholder="책 이름 검색하고 내 서재에 추가하기"></input>
                 </div>
             </div>
 
@@ -121,7 +142,7 @@ export function AfterLoginMain(){
                             <div className="showHowMany">
                                 
                             </div>
-                            <img src={pluspic} className="plusPicBtn" onClick={()=>handleItemClick()}></img>
+                            {/*<img src={pluspic} className="plusPicBtn" onClick={()=>handleItemClick()}></img>*/}
                         </div>
                     </div>
         
@@ -145,7 +166,7 @@ export function AfterLoginMain(){
                                 </div>
                             </div>
                             <div className="buttons">
-                                <button className="toMyShelf">내 서재 가기</button>
+                                <button className="toMyShelf" onClick={()=>handleItemClick('/afterlogin/thisbook')}>내 서재 가기</button>
                                 <button className="record">바로 기록하기</button>
                             </div>
                         </div>
@@ -168,14 +189,14 @@ export function AfterLoginMain(){
                                 </div>
                             </div>
                             <div className="buttons">
-                                <button className="toMyShelf">내 서재 가기</button>
+                                <button className="toMyShelf" onClick={()=>handleItemClick('/afterlogin/thisbook')}>내 서재 가기</button>
                                 <button className="record">바로 기록하기</button>
                             </div>
                         </div>
                     </div>
 
                     <div className="gotoMyShelfBox">
-                        <button className="gotoMyShelfBtn" onClick={()=>handleItemClick()}>{">"}</button>
+                        <button className="gotoMyShelfBtn" onClick={()=>handleItemClick('/afterlogin/mylibrary')}>{">"}</button>
                         <div className="text5">
                             <p>내 서재로 이동</p>
                         </div>

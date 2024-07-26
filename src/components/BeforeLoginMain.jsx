@@ -15,6 +15,7 @@ import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 
 export function BeforeLoginMain(){
     const navigate=useNavigate();
+    const [bookTitle,setBookTitle]=useState("");
     const [data, setData] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [bookmarked, setBookmarked] = useState([]);
@@ -38,6 +39,10 @@ export function BeforeLoginMain(){
     const handleItemClick=(path)=>{
         navigate(path);
     };
+
+    const handleBookChange=(e)=>{
+        setBookTitle(e.target.value);
+    }
 
     const handleSearch=()=>{
 
@@ -91,7 +96,7 @@ export function BeforeLoginMain(){
             <div className="findBookContainer">
                 <div className="findBook">
                     <img src={findLogo} className="searchBtn" onClick={handleSearch}></img>
-                    <input type="text" className="bookFind" placeholder="책 이름 검색하고 내 서재에 추가하기"></input>
+                    <input type="text" className="bookFind" placeholder="책 이름 검색하고 내 서재에 추가하기" value={bookTitle} onChange={handleBookChange}></input>
                 </div>
             </div>
 
@@ -103,7 +108,7 @@ export function BeforeLoginMain(){
                 <div className="pictureBtns">
                     <div className="plusBtns">
                         <img src={greenpic} className="greenPic"></img>
-                        <img src={pluspic} className="plusPicBtn" onClick={()=>handleItemClick("/login")}></img>
+                        {/*<img src={pluspic} className="plusPicBtn" onClick={()=>handleItemClick("/login")}></img>*/}
                     </div>
 
                     <div className="blurBtn">

@@ -2,7 +2,10 @@ import { BeforeLoginMain } from "./components/BeforeLoginMain";
 import { AfterLoginMain } from "./components/AfterLoginMain";
 import { Login } from "./components/Login";
 import { Join } from "./components/Join";
-import { SimpleNote } from "./components/SimpleNote";
+import { Redirect } from "./components/Redirect";
+import { MyLibrary } from "./components/MyLibrary";
+import { ThisBook } from "./components/ThisBook";
+import { Note } from "./components/Note";
 
 import {Routes,Route} from "react-router-dom";
 
@@ -13,7 +16,10 @@ function App() {
       <Route path="/login" element={<Login/>}/>
       <Route path="/join" element={<Join/>}/>
       <Route path="/afterlogin" element={<AfterLoginMain/>}/>
-      <Route path="/simplenote" element={<SimpleNote/>}/>
+      <Route path='/auth/kakao' element={<Redirect/>}/>
+      <Route path='/afterlogin/note' element={<Note/>}/>
+      <Route path='/afterlogin/mylibrary' element={<MyLibrary/>}/>
+      <Route path='/afterlogin/thisbook' element={<ThisBook/>}/>
     </Routes>
   );
 }
