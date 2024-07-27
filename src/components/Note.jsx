@@ -11,7 +11,7 @@ import worriedImage from '../assets/걱정돼요.png';
 
 
 const AppContainer = styled.div`
-    width:1920px;
+    width:1620px;
     height:1840px;
     flex-direction: column;
     align-items: center;
