@@ -3,11 +3,11 @@ import { useState } from "react";
 import styled from "styled-components";
 import { useNavigate } from "react-router-dom";
 import { all } from '../../node_modules/@eslint/eslintrc/node_modules/js-yaml/index';
-import goodImage from './좋아요.png';
-import okayImage from './괜찮아요.png';
-import tiredImage from './피곤해요.png';
-import sadImage from './슬퍼요.png';
-import worriedImage from './걱정돼요.png';
+import goodImage from '../assets/좋아요.png';
+import okayImage from '../assets/괜찮아요.png';
+import tiredImage from '../assets/피곤해요.png';
+import sadImage from '../assets/슬퍼요.png';
+import worriedImage from '../assets/걱정돼요.png';
 
 
 const AppContainer = styled.div`
@@ -17,7 +17,8 @@ const AppContainer = styled.div`
     align-items: center;
     display: flex;
     margin:auto;
-    background: linear-gradient(0deg, rgba(26, 54, 54, 0.04) 0%, rgba(26, 54, 54, 0.04) 100%), #FFF;
+    background: #FFFFFF, linear-gradient(0deg, rgba(26, 54, 54, 0.04) 0%, rgba(26, 54, 54, 0.04) 100%);
+
 `;
 
 

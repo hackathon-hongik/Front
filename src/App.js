@@ -1,8 +1,8 @@
-import { BeforeLoginMain } from "./components/BeforeLoginMain";
-import { AfterLoginMain } from "./components/AfterLoginMain";
-import { Login } from "./components/Login";
-import { Join } from "./components/Join";
-import { Redirect } from "./components/Redirect";
+import { BeforeLoginMain } from "./Home/BeforeLoginMain";
+import { AfterLoginMain } from "./Home/AfterLoginMain";
+import { Login } from "./Login/Login";
+import { Join } from "./Home/Join";
+import { Redirect } from "./Login/Redirect";
 import { MyLibrary } from "./components/MyLibrary";
 import { ThisBook } from "./components/ThisBook";
 import { Note } from "./components/Note";

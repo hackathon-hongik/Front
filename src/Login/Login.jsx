@@ -2,7 +2,7 @@ import { useState } from "react";
 import {useNavigate} from "react-router-dom";
 import { axiosInstance } from "../api";
 import styled from "styled-components";
-import kakao from "./kakaoLogin_pic.png";
+import kakao from "../assets/kakaoLogin_pic.png";
 
 const LoginPage=styled.div`
     width:1620px;

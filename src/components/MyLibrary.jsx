@@ -2,9 +2,9 @@ import { useState } from "react";
 import {useNavigate} from "react-router-dom";
 import { axiosInstance } from "../api";
 import styled from "styled-components";
-import readlogo from "./bookreadlogo.png";
-import readinglogo from "./bookreadinglogo.png";
-import picklogo from "./bookpicklogo.png";
+import readlogo from "../assets/bookreadlogo.png";
+import readinglogo from "../assets/bookreadinglogo.png";
+import picklogo from "../assets/bookpicklogo.png";
 
 const sampleBooks = [
     {

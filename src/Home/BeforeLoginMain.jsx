@@ -1,26 +1,24 @@
 import { useNavigate } from "react-router-dom";
 import React from "react";
 import { useEffect,useState } from "react";
-import "../css/AfterLoginMain.css";
-import findLogo from "./findLogo.png";
-import greenpic from "./greenpic.png";
-import pluspic from "./pluspic.png";
-import blurpic from "./blurpic.png";
-import orange_banner from "./orange_banner.png";
+import "../css/BeforeLoginMain.css";
+import findLogo from "../assets/findLogo.png";
+import greenpic from "../assets/greenpic.png";
+import pluspic from "../assets/pluspic.png";
+import blurpic from "../assets/blurpic.png";
+import orange_banner from "../assets/orange_banner.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
-import {bookAPI} from "../api";
 
-const API_KEY=process.env.REACT_APP_KAKAO_BOOK_API_KEY;
 
-export function AfterLoginMain(){
+
+export function BeforeLoginMain(){
     const navigate=useNavigate();
+    const [bookTitle,setBookTitle]=useState("");
     const [data, setData] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [bookmarked, setBookmarked] = useState([]);
-    const [isCheck,setCheck]=useState(false);
-    const [title,setTitle]=useState("");
 
     useEffect(() => {
         // Simulate fetching data from server
@@ -38,34 +36,17 @@ export function AfterLoginMain(){
         fetchData();
     }, []);
     
-    const searchData=async()=>{
-        try{
-            const response=await bookAPI.get(`/v3/search/book?query=${title}`,{
-                headers:{
-                    Authorization:`KakaoAK ${API_KEY}`
-                }
-            });
-
-            console.log(response.data);
-        }
-        catch(e){
-            console.log(e);
-        }
-    }
-
     const handleItemClick=(path)=>{
         navigate(path);
     };
 
-    const handleTitleChange=(e)=>{
-        setTitle(e.target.value);
-    };
+    const handleBookChange=(e)=>{
+        setBookTitle(e.target.value);
+    }
 
     const handleSearch=()=>{
-        searchData();
-    };
 
-    
+    };
 
     const toggleBookmark = (id) => {
         setBookmarked((prev) => 
@@ -94,28 +75,17 @@ export function AfterLoginMain(){
     };
 
     return( 
-        <div className="mainPage2">
+        <div className="mainPage1">
             <div className="header">
                 <div className="logo">
                     <p>로고</p>
                 </div>
 
                 <ul className="nav">
-                    <li><a onClick={()=>handleItemClick('/afterlogin/mylibrary')}>내 서재</a></li>
-                    <li><a onClick={()=>handleItemClick()}>커뮤니티</a></li>
-                    <li>
-                        <div className="buttonToggle">
-                            <button className="mypageBtn" onClick={()=>{setCheck((e)=>!e)}}>마이페이지</button>
-                            {isCheck &&(
-                                <div className="toggleList">
-                                <p>닉네임 변경</p>
-                                <p>1:1 문의</p>
-                                <p>로그아웃</p>
-                                <p>회원탈퇴</p>
-                            </div>
-                            )}
-                        </div>
-                    </li>
+                    <li><a onClick={()=>handleItemClick("/login")}>내 서재</a></li>
+                    <li><a onClick={()=>handleItemClick("/login")}>커뮤니티</a></li>
+                    <li><a onClick={()=>handleItemClick("/join")}>회원가입</a></li>
+                    <li><button className="loginBtn" onClick={()=>handleItemClick("/login")}>로그인</button></li>
                 </ul>
             </div>
 
@@ -126,7 +96,7 @@ export function AfterLoginMain(){
             <div className="findBookContainer">
                 <div className="findBook">
                     <img src={findLogo} className="searchBtn" onClick={handleSearch}></img>
-                    <input type="text" className="bookFind" value={title} onChange={handleTitleChange} placeholder="책 이름 검색하고 내 서재에 추가하기"></input>
+                    <input type="text" className="bookFind" placeholder="책 이름 검색하고 내 서재에 추가하기" value={bookTitle} onChange={handleBookChange}></input>
                 </div>
             </div>
 
@@ -135,77 +105,19 @@ export function AfterLoginMain(){
                     <p>내 서재</p>
                 </div>
 
-                <div className="centerBar">
+                <div className="pictureBtns">
                     <div className="plusBtns">
                         <img src={greenpic} className="greenPic"></img>
-                        <div className="howMany">
-                            <div className="showHowMany">
-                                
-                            </div>
-                            {/*<img src={pluspic} className="plusPicBtn" onClick={()=>handleItemClick()}></img>*/}
-                        </div>
-                    </div>
-        
-
-                    <div className="myBooks">
-                        <div className="twoBook"> 
-                            <div className="bookInfo">
-                                <div className="bookPic">
-                                    <p>책 사진</p>
-                                </div>
-                                <div className="bookExplain">
-                                    <div className="title">
-                                        <p>책 제목</p>
-                                    </div>
-                                    <div className="writer">
-                                        <p>저자</p>
-                                    </div>
-                                    <div className="bar">
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="buttons">
-                                <button className="toMyShelf" onClick={()=>handleItemClick('/afterlogin/thisbook')}>내 서재 가기</button>
-                                <button className="record">바로 기록하기</button>
-                            </div>
-                        </div>
-
-                        <div className="twoBook">
-                            <div className="bookInfo">
-                                <div className="bookPic">
-                                    <p>책 사진</p>
-                                </div>
-                                <div className="bookExplain">
-                                    <div className="title">
-                                        <p>책 제목</p>
-                                    </div>
-                                    <div className="writer">
-                                        <p>저자</p>
-                                    </div>
-                                    <div className="bar">
-
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="buttons">
-                                <button className="toMyShelf" onClick={()=>handleItemClick('/afterlogin/thisbook')}>내 서재 가기</button>
-                                <button className="record">바로 기록하기</button>
-                            </div>
-                        </div>
+                        {/*<img src={pluspic} className="plusPicBtn" onClick={()=>handleItemClick("/login")}></img>*/}
                     </div>
 
-                    <div className="gotoMyShelfBox">
-                        <button className="gotoMyShelfBtn" onClick={()=>handleItemClick('/afterlogin/mylibrary')}>{">"}</button>
-                        <div className="text5">
-                            <p>내 서재로 이동</p>
-                        </div>
+                    <div className="blurBtn">
+                        <img src={blurpic} className="blurPic" onClick={()=>handleItemClick("/login")}></img>
                     </div>
                 </div>
             </div>
-            
 
-            <div className="banner" onClick={()=>handleItemClick()}>
+            <div className="banner" onClick={()=>handleItemClick("/login")}>
                 <div className="text3">
                     <p className="first_row">추천책 받고</p>
                     <p className="second_row">'한달 읽기' 시작하기</p>
