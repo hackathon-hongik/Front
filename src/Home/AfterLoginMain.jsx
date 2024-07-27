@@ -38,13 +38,34 @@ export function AfterLoginMain(){
         fetchData();
     }, []);
     
-    const searchData=async()=>{
+    const searchData=async()=>{ 
         try{
             const response=await bookAPI.get(`/v3/search/book?query=${title}`,{
+                params:{
+                    size:10,  //가져올 책 권 수 1-50
+                    
+                },
                 headers:{
                     Authorization:`KakaoAK ${API_KEY}`
                 }
             });
+
+            const results = response.data.documents.map(doc => ({
+                thumbnail: doc.thumbnail,
+                authors: doc.authors,
+                contents: doc.contents,
+                title:doc.title,
+                publisher:doc.publisher,
+                url:doc.url
+            }));   //documents는 배열이기 때문에 아래 방식이 아닌 이런 방식으로 처리해야 함
+
+            // const results = {
+            //     thumbnail: response.data.documents[0].thumbnail,
+            //     authors: response.data.documents[0].authors
+            // };  근데 이렇게 했을때 검색결과가 왜 하나도 안뜨는지는 모르겠음
+            
+
+            navigate("/afterlogin/booksearchresult", { state: { results } });  //search한 데이터를 다른 페이지로 넘기기 
 
             console.log(response.data);
         }
@@ -62,6 +83,7 @@ export function AfterLoginMain(){
     };
 
     const handleSearch=()=>{
+        handleItemClick("/afterlogin/booksearchresult")
         searchData();
     };
 
