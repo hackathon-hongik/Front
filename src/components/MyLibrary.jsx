@@ -1,10 +1,7 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {useNavigate} from "react-router-dom";
 import { axiosInstance } from "../api";
 import styled from "styled-components";
-import readlogo from "../assets/bookreadlogo.png";
-import readinglogo from "../assets/bookreadinglogo.png";
-import picklogo from "../assets/bookpicklogo.png";
 
 const sampleBooks = [
     {
@@ -369,12 +366,57 @@ const BookCard = styled.div`
   }
 `;
 
-export function MyLibrary(){
+export function MyLibrary(){  //내 서재 페이지
     const navigate=useNavigate();
     const handleItemClick=(path)=>{
         navigate(path);
     };
     const [isCheck,setCheck]=useState(false);
+
+    useEffect(() => {
+        showAll();
+      }, []);
+
+    const showAll=async()=>{
+        try{
+            const response=await axiosInstance.get("/desk/1");    //1 자리에 원래는 {memberId}가 와야함
+            console.log(response.data);
+        }
+        catch(e){
+            console.log(e)
+        }
+    }
+
+    const showReading=async()=>{
+        try{
+            const response=await axiosInstance.get("/desk/1/reading");    //1 자리에 원래는 {memberId}가 와야함
+            console.log(response.data);
+        }
+        catch(e){
+            console.log(e)
+        }
+    };
+
+    const showRead=async()=>{
+        try{
+            const response=await axiosInstance.get("/desk/1/read");
+            console.log(response.data);
+        }
+        catch(e){
+            console.log(e)
+        }
+    };
+
+    const showPicked=async()=>{
+        try{
+            const response=await axiosInstance.get("/desk/1/wish");
+            console.log(response.data);
+        }
+        catch(e){
+            console.log(e)
+        }
+    };
+
 
     return(
         <LibraryPage>
@@ -406,7 +448,7 @@ export function MyLibrary(){
                 <p className="text3">내 서재</p>
                 <p className="text1">내 서재 모아보기</p>
                 <ShowStats>
-                    <div className="reading">
+                    <div className="reading" onClick={()=>showReading}>
                         <p className="text2">지금 읽고 있는 책</p>
                         <div className="numBox">
                         <span className="material-symbols-outlined">
@@ -415,7 +457,7 @@ export function MyLibrary(){
                         <p>권</p>
                         </div>
                     </div>
-                    <div className="read">
+                    <div className="read" onClick={()=>showRead}>
                         <p className="text2">지금까지 읽은 책</p>
                         <div className="numBox">
                         <span className="material-symbols-outlined">
@@ -424,7 +466,7 @@ export function MyLibrary(){
                         <p>권 돌파</p>
                         </div>
                     </div>
-                    <div className="picked">
+                    <div className="picked" onClick={()=>showPicked}>
                         <p className="text2">찜해둔 책</p>
                         <div className="numBox">
                         <span className="material-symbols-outlined">

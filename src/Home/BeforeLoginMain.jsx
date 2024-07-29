@@ -10,15 +10,17 @@ import orange_banner from "../assets/orange_banner.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
+import {bookAPI} from "../api";
 
-
+const API_KEY=process.env.REACT_APP_KAKAO_BOOK_API_KEY;
 
 export function BeforeLoginMain(){
     const navigate=useNavigate();
-    const [bookTitle,setBookTitle]=useState("");
+    const [searchWord,setSearchWord]=useState("");
     const [data, setData] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [bookmarked, setBookmarked] = useState([]);
+    
 
     useEffect(() => {
         // Simulate fetching data from server
@@ -35,18 +37,62 @@ export function BeforeLoginMain(){
         };
         fetchData();
     }, []);
+
+    const searchData=async()=>{ 
+        try{
+            const response=await bookAPI.get(`/v3/search/book?query=${searchWord}`,{
+                params:{
+                    size:50,  //가져올 책 권 수 1-50
+                    
+                },
+                headers:{
+                    Authorization:`KakaoAK ${API_KEY}`
+                }
+            });
+
+            const results = response.data.documents.map(doc => ({
+                thumbnail: doc.thumbnail,
+                authors: doc.authors,
+                contents: doc.contents,
+                title:doc.title,
+                isbn:doc.isbn,
+        
+            }));   //documents는 배열이기 때문에 아래 방식이 아닌 이런 방식으로 처리해야 함
+
+            // const results = {
+            //     thumbnail: response.data.documents[0].thumbnail,
+            //     authors: response.data.documents[0].authors
+            // };  근데 이렇게 했을때 검색결과가 왜 하나도 안뜨는지는 모르겠음
+            
+
+            navigate("/booksearchresult", { state: { results ,searchWord } });  //search한 데이터를 다른 페이지로 넘기기 
+
+            console.log(response.data);
+        }
+        catch(e){
+            console.log(e);
+        }
+    }
     
     const handleItemClick=(path)=>{
         navigate(path);
     };
 
-    const handleBookChange=(e)=>{
-        setBookTitle(e.target.value);
-    }
+    const handleSearchWordChange=(e)=>{
+        setSearchWord(e.target.value);
+    };
 
     const handleSearch=()=>{
-
+        //handleItemClick("/booksearchresult")
+        searchData();
     };
+
+    const handleKeyDown = (e) => {       //책 검색 후 엔터버튼을 눌렀을때 책 검색이 이루어지도록 -> 돋보기 표시 클릭했을때와 같은 기능
+        if (e.key === 'Enter') {
+            handleSearch();
+        }               
+    };
+
 
     const toggleBookmark = (id) => {
         setBookmarked((prev) => 
@@ -96,7 +142,7 @@ export function BeforeLoginMain(){
             <div className="findBookContainer">
                 <div className="findBook">
                     <img src={findLogo} className="searchBtn" onClick={handleSearch}></img>
-                    <input type="text" className="bookFind" placeholder="책 이름 검색하고 내 서재에 추가하기" value={bookTitle} onChange={handleBookChange}></input>
+                    <input type="text" className="bookFind" placeholder="책 이름 검색하고 내 서재에 추가하기" value={searchWord} onChange={handleSearchWordChange} onKeyDown={handleKeyDown} ></input>
                 </div>
             </div>
 
@@ -132,7 +178,10 @@ export function BeforeLoginMain(){
                 </div>
 
                 <div className="bestList">
-                    <button className="arrow leftArrow" onClick={prevSlide}>{"<"}</button>
+                    {/* <button className="arrow leftArrow" onClick={prevSlide}>{"<"}</button> */}
+                    <span className="material-icons left-arrow-icon" onClick={prevSlide}>
+                        arrow_circle_left
+                    </span>
                     {getVisibleItems().map((item) => (
                         <div key={item.id} className="carouselItem">
                             <div className="contents">
@@ -153,7 +202,10 @@ export function BeforeLoginMain(){
                             </div>
                         </div>
                     ))}
-                    <button className="arrow rightArrow" onClick={nextSlide}>{">"}</button>
+                    <span className="material-icons right-arrow-icon" onClick={nextSlide}>
+                        arrow_circle_right
+                    </span>
+                    {/* <button className="arrow rightArrow" onClick={nextSlide}>{">"}</button> */}
                 </div>
             </div>
         </div>
