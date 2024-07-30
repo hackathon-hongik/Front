@@ -379,7 +379,7 @@ export function MyLibrary(){  //내 서재 페이지
 
     const showAll=async()=>{
         try{
-            const response=await axiosInstance.get("/desk/1");    //1 자리에 원래는 {memberId}가 와야함
+            const response=await axiosInstance.get("/desk/1");    //1 자리에 원래는 {memberId}가 와야함 지금은 로그인이 구현 안되어있어 임의로
             console.log(response.data);
         }
         catch(e){
@@ -427,7 +427,7 @@ export function MyLibrary(){  //내 서재 페이지
 
                 <ul className="nav">
                     <li><a className="orangeText" onClick={()=>handleItemClick('/afterlogin/mylibrary')}>내 서재</a></li>
-                    <li><a onClick={()=>handleItemClick()}>커뮤니티</a></li>
+                    <li><a onClick={()=>handleItemClick("/afterlogin/community")}>커뮤니티</a></li>
                     <li>
                         <div className="buttonToggle">
                             <button className="mypageBtn" onClick={()=>{setCheck((e)=>!e)}}>마이페이지</button>

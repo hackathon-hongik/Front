@@ -599,8 +599,8 @@ const handleLongCommentChange = (event) => {
           <p>로고</p>
             </Logo>
         <Nav>
-          <li><a onClick={() => handleItemClick("/login")}>내 서재</a></li>
-          <li><a onClick={() => handleItemClick("/login")}>커뮤니티</a></li>
+          <li><a onClick={() => handleItemClick("/afterlogin/mylibrary")}>내 서재</a></li>
+          <li><a onClick={() => handleItemClick("/afterlogin/community")}>커뮤니티</a></li>
           <li>
             <ButtonToggle>
               <MypageBtn onClick={() => { setCheck((e) => !e) }}>마이페이지</MypageBtn>

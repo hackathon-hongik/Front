@@ -508,8 +508,8 @@ export function BeforeBookSearchResult(){  //로그인 전 책 검색하면 나�
                 </div>
 
                 <ul className="nav">
-                    <li><a className="orangeText" onClick={()=>handleItemClick('/afterlogin/mylibrary')}>내 서재</a></li>
-                    <li><a onClick={()=>handleItemClick()}>커뮤니티</a></li>
+                    <li><a className="orangeText" onClick={()=>handleAlert('/login')}>내 서재</a></li>
+                    <li><a onClick={()=>handleAlert('/login')}>커뮤니티</a></li>
                     <li>
                         <div className="buttonToggle">
                             <button className="mypageBtn" onClick={()=>{setCheck((e)=>!e)}}>마이페이지</button>

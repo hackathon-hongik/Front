@@ -213,7 +213,7 @@ const Circle = styled.span`   //내가 만든 가짜 라디오버튼
     width: 15px;
     height: 15px;
     border-radius: 50%;
-    border: 2px solid #ddd;
+    border: none;
     display: inline-block;
     background-color: white;
   }
@@ -308,7 +308,7 @@ export function Recommend() {
               <a className="orangeText" onClick={() => handleItemClick('/afterlogin/mylibrary')}>내 서재</a>
             </li>
             <li>
-              <a onClick={() => handleItemClick()}>커뮤니티</a>
+              <a onClick={() => handleItemClick("/afterlogin/community")}>커뮤니티</a>
             </li>
             <li>
               <div className="buttonToggle">
