@@ -5,7 +5,6 @@ import "../css/AfterLoginMain.css";
 import findLogo from "../assets/findLogo.png";
 import greenpic from "../assets/greenpic.png";
 import pluspic from "../assets/pluspic.png";
-import blurpic from "../assets/blurpic.png";
 import orange_banner from "../assets/orange_banner.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
@@ -20,7 +19,7 @@ export function AfterLoginMain(){
     const [currentIndex, setCurrentIndex] = useState(0);
     const [bookmarked, setBookmarked] = useState([]);
     const [isCheck,setCheck]=useState(false);
-    const [title,setTitle]=useState("");
+    const [searchWord,setSearchWord]=useState("");
 
     useEffect(() => {
         // Simulate fetching data from server
@@ -40,9 +39,9 @@ export function AfterLoginMain(){
     
     const searchData=async()=>{ 
         try{
-            const response=await bookAPI.get(`/v3/search/book?query=${title}`,{
+            const response=await bookAPI.get(`/v3/search/book?query=${searchWord}`,{
                 params:{
-                    size:10,  //가져올 책 권 수 1-50
+                    size:50,  //가져올 책 권 수 1-50
                     
                 },
                 headers:{
@@ -55,8 +54,7 @@ export function AfterLoginMain(){
                 authors: doc.authors,
                 contents: doc.contents,
                 title:doc.title,
-                publisher:doc.publisher,
-                url:doc.url
+                isbn:doc.isbn,
             }));   //documents는 배열이기 때문에 아래 방식이 아닌 이런 방식으로 처리해야 함
 
             // const results = {
@@ -65,7 +63,7 @@ export function AfterLoginMain(){
             // };  근데 이렇게 했을때 검색결과가 왜 하나도 안뜨는지는 모르겠음
             
 
-            navigate("/afterlogin/booksearchresult", { state: { results } });  //search한 데이터를 다른 페이지로 넘기기 
+            navigate("/afterlogin/booksearchresult", { state: { results, searchWord } });  //search한 데이터를 다른 페이지로 넘기기 
 
             console.log(response.data);
         }
@@ -79,12 +77,17 @@ export function AfterLoginMain(){
     };
 
     const handleTitleChange=(e)=>{
-        setTitle(e.target.value);
+        setSearchWord(e.target.value);
     };
 
     const handleSearch=()=>{
-        handleItemClick("/afterlogin/booksearchresult")
         searchData();
+    };
+
+    const handleKeyDown = (e) => {       //책 검색 후 엔터버튼을 눌렀을때 책 검색이 이루어지도록 -> 돋보기 표시 클릭했을때와 같은 기능
+        if (e.key === 'Enter') {
+            handleSearch();
+        }               
     };
 
     
@@ -148,7 +151,7 @@ export function AfterLoginMain(){
             <div className="findBookContainer">
                 <div className="findBook">
                     <img src={findLogo} className="searchBtn" onClick={handleSearch}></img>
-                    <input type="text" className="bookFind" value={title} onChange={handleTitleChange} placeholder="책 이름 검색하고 내 서재에 추가하기"></input>
+                    <input type="text" className="bookFind" value={searchWord} onChange={handleTitleChange}  onKeyDown={handleKeyDown} placeholder="책 이름 검색하고 내 서재에 추가하기"></input>
                 </div>
             </div>
 
@@ -182,9 +185,6 @@ export function AfterLoginMain(){
                                     <div className="writer">
                                         <p>저자</p>
                                     </div>
-                                    <div className="bar">
-                                        
-                                    </div>
                                 </div>
                             </div>
                             <div className="buttons">
@@ -205,9 +205,6 @@ export function AfterLoginMain(){
                                     <div className="writer">
                                         <p>저자</p>
                                     </div>
-                                    <div className="bar">
-
-                                    </div>
                                 </div>
                             </div>
                             <div className="buttons">
@@ -218,7 +215,10 @@ export function AfterLoginMain(){
                     </div>
 
                     <div className="gotoMyShelfBox">
-                        <button className="gotoMyShelfBtn" onClick={()=>handleItemClick('/afterlogin/mylibrary')}>{">"}</button>
+                        {/* <button className="gotoMyShelfBtn" onClick={()=>handleItemClick('/afterlogin/mylibrary')}>{">"}</button> */}
+                        <span className="material-icons right-arrow-icon2" onClick={()=>handleItemClick('/afterlogin/mylibrary')}>
+                            arrow_circle_right
+                        </span>
                         <div className="text5">
                             <p>내 서재로 이동</p>
                         </div>
@@ -227,7 +227,7 @@ export function AfterLoginMain(){
             </div>
             
 
-            <div className="banner" onClick={()=>handleItemClick()}>
+            <div className="banner" onClick={()=>handleItemClick("/afterlogin/recommendation")}>
                 <div className="text3">
                     <p className="first_row">추천책 받고</p>
                     <p className="second_row">'한달 읽기' 시작하기</p>
@@ -242,7 +242,10 @@ export function AfterLoginMain(){
                 </div>
 
                 <div className="bestList">
-                    <button className="arrow leftArrow" onClick={prevSlide}>{"<"}</button>
+                    {/* <button className="arrow leftArrow" onClick={prevSlide}>{"<"}</button> */}
+                    <span className="material-icons left-arrow-icon" onClick={prevSlide}>
+                        arrow_circle_left
+                    </span>
                     {getVisibleItems().map((item) => (
                         <div key={item.id} className="carouselItem">
                             <div className="contents">
@@ -263,7 +266,10 @@ export function AfterLoginMain(){
                             </div>
                         </div>
                     ))}
-                    <button className="arrow rightArrow" onClick={nextSlide}>{">"}</button>
+                    <span className="material-icons right-arrow-icon" onClick={nextSlide}>
+                        arrow_circle_right
+                    </span>
+                    {/* <button className="arrow rightArrow" onClick={nextSlide}>{">"}</button> */}
                 </div>
             </div>
         </div>

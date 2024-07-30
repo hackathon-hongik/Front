@@ -3,7 +3,7 @@ import axios from "axios";
 const API_KEY=process.env.REACT_APP_KAKAO_BOOK_API_KEY;
 
 export const axiosInstance=axios.create({
-    baseURL: "",
+    baseURL: "http://ec2-54-180-180-204.ap-northeast-2.compute.amazonaws.com",
 });
 
 
