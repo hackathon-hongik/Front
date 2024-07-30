@@ -10,6 +10,7 @@ import { BeforeBookSearchResult} from "./BookSearch/BeforeBookSearchResult";
 import { AfterBookSearchResult } from "./BookSearch/AfterBookSearchResult";
 import { Recommend } from "./RecommendPage/Recommend";
 import { RecommendResult } from "./RecommendPage/RecommendResult";
+import { Community } from "./CommunityPage/Community";
 
 import {Routes,Route} from "react-router-dom";
 
@@ -28,6 +29,7 @@ function App() {
       <Route path='/afterlogin/booksearchresult' element={<AfterBookSearchResult/>}/>
       <Route path='/afterlogin/recommendation' element={<Recommend/>}/>
       <Route path='/afterlogin/recommendation/recommendresult' element={<RecommendResult/>}/>
+      <Route path='/afterlogin/community' element={<Community/>}/>
     </Routes>
   );
 }

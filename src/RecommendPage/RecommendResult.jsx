@@ -312,7 +312,7 @@ export function RecommendResult(){
                     <a className="orangeText" onClick={() => handleItemClick('/afterlogin/mylibrary')}>내 서재</a>
                     </li>
                     <li>
-                    <a onClick={() => handleItemClick()}>커뮤니티</a>
+                    <a onClick={() => handleItemClick("/afterlogin/community")}>커뮤니티</a>
                     </li>
                     <li>
                     <div className="buttonToggle">
