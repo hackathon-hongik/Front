@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { axiosInstance } from "../api";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 import goodImage from '../assets/좋아요.png';
 import okayImage from '../assets/괜찮아요.png';
 import tiredImage from '../assets/피곤해요.png';
@@ -465,9 +466,14 @@ const OpenSetInput = styled.input`
 
 //여기까지 글 공개여부
 
+function useQuery() {
+  return new URLSearchParams(useLocation().search);
+}
+
 export function Note() {
-  const [activeTab, setActiveTab] = useState('simple');
   const navigate = useNavigate();
+  const query = useQuery();
+  const [activeTab, setActiveTab] = useState('simple');
   const [isCheck, setCheck] = useState(false);
   const [checked, setChecked] = useState(false);
   const [selectedOption, setSelectedOption] = useState("public"); // 공개여부설정
@@ -484,6 +490,16 @@ export function Note() {
   const[long_review_id,setLongReviewId]=useState('');
   const [selectedQuestion, setSelectedQuestion] = useState(SetQuestions[0]);
   const [question, setQuestion] = useState('');
+
+  useEffect(() => {
+    const memberIdFromQuery = query.get("memberId");
+    const myBookIdFromQuery = query.get("myBookId");
+    if (memberIdFromQuery && myBookIdFromQuery) {
+      setMemberId(memberIdFromQuery);
+      setMyBookId(myBookIdFromQuery);
+    }
+  }, [query]);
+
 
   const handleItemClick = (path) => {
     navigate(path);

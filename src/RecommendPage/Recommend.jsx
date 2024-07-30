@@ -213,7 +213,7 @@ const Circle = styled.span`   //내가 만든 가짜 라디오버튼
     width: 15px;
     height: 15px;
     border-radius: 50%;
-    border: 2px solid #ddd;
+    border: none;
     display: inline-block;
     background-color: white;
   }
