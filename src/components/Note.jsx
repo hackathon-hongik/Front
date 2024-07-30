@@ -1,8 +1,8 @@
 import React from "react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styled from "styled-components";
+import { axiosInstance } from "../api";
 import { useNavigate } from "react-router-dom";
-import { all } from '../../node_modules/@eslint/eslintrc/node_modules/js-yaml/index';
 import goodImage from '../assets/좋아요.png';
 import okayImage from '../assets/괜찮아요.png';
 import tiredImage from '../assets/피곤해요.png';
@@ -10,9 +10,10 @@ import sadImage from '../assets/슬퍼요.png';
 import worriedImage from '../assets/걱정돼요.png';
 
 
+
 const AppContainer = styled.div`
     width:1620px;
-    height:1840px;
+    height:1440px;
     flex-direction: column;
     align-items: center;
     display: flex;
@@ -21,12 +22,11 @@ const AppContainer = styled.div`
 
 `;
 
-
 const NoteContainer = styled.div`
     font-family: "Pretendard JP";
     background-color: #FFFFFF;
     width:1200px;
-    height:1840px;
+    height:1440px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -152,7 +152,7 @@ const Tab = styled.button`
 const FormContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   width: 480px;
   margin-top: 20px;
 
@@ -209,6 +209,30 @@ const PageLabel = styled.label`
 
 `
 
+const SetQuestions = [
+  "오늘 읽은 책이 나에게 어떤 도움이 될 수 있을까요?",
+  "책을 읽으면서 떠오른 나의 개인적인 경험이나 기억은 무엇인가요?",
+  "이 책을 읽으면서 가장 강렬하게 느꼈던 감정은 무엇인가요?",
+  "이 책이 나의 희망이나 두려움에 어떤 영향을 주었나요?",
+  "책의 내용을 통해 느낀 위로나 치유는 무엇인가요?",
+  "이 책이 나의 가치관이나 신념에 어떤 영향을 미쳤나요?"
+];
+
+
+const Select = styled.select`
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background-color: #F2F2F7;
+  
+  &:focus {
+    border-color: #989BA2;
+    outline: none;
+  }
+`;
+
 const Input = styled.input`
   width: 100%;
   padding: 10px;
@@ -216,6 +240,11 @@ const Input = styled.input`
   border-radius: 5px;
   margin-bottom: 10px;
   background-color: #F2F2F7;
+  
+  &:focus {
+    border-color: #989BA2;
+    outline: none; /* 기본 포커스 스타일 제거 */
+  }
 `;
 
 const PageInput = styled.input`
@@ -230,6 +259,11 @@ const PageInput = styled.input`
   &:last-child {
     margin-right: 0;
   }
+
+  &:focus {
+    border-color: #989BA2;
+    outline: none; /* 기본 포커스 스타일 제거 */
+  }
 `;
 
 const Span = styled.div`
@@ -242,12 +276,18 @@ const SmallInput = styled.button`
   height: 40px;
   flex-shrink: 0;
   padding: 10px;
-  border: 1px solid #ccc;
-  background-color: #F2F2F7;
   border-radius: 8px;
+  border: 1px solid #ccc;
+  background-color: ${({ active }) => (active ? '#FFF2EB' : '#F2F2F7')}; // active prop에 따라 배경 색 변경
+  border: ${({ active }) => (active ? '1px solid #FF6E23' : '1px solid #ccc')}; // active prop에 따라 테두리 색 변경
+  cursor: pointer;
 
   &:last-child {
     margin-right: 0;
+  }
+
+  &:hover {
+    background-color: #FFDAB9; // 호버 시 배경 색
   }
 `;
 
@@ -283,6 +323,11 @@ const TextArea = styled.textarea`
   margin-bottom: 10px;
   resize: none;
   background-color: #F2F2F7;
+
+  &:focus {
+    border-color: #989BA2;
+    outline: none; /* 기본 포커스 스타일 제거 */
+  }
 `;
 
 const SubmitButton = styled.button`
@@ -301,6 +346,13 @@ const SubmitButton = styled.button`
     cursor: pointer;
 `;
 
+const SubmitDiv = styled.div`
+  width: 480px;
+  display: flex;
+  justify-content: center; // 가운데 정렬
+  margin: 0 auto; // 가운데 정렬을 위한 마진
+  padding: 20px 0; // 상하 패딩 (선택 사항)
+`;
 
 //여기부터 체크박스용 
 
@@ -312,7 +364,7 @@ const CheckboxContainer = styled.div`
 const HiddenCheckbox = styled.input.attrs({ type: "checkbox" })`
   border: 0;
   clip: rect(0 0 0 0);
-  clippath: inset(50%);
+  clip-path: inset(50%);
   height: 1px;
   margin: -1px;
   overflow: hidden;
@@ -419,8 +471,19 @@ export function Note() {
   const [isCheck, setCheck] = useState(false);
   const [checked, setChecked] = useState(false);
   const [selectedOption, setSelectedOption] = useState("public"); // 공개여부설정
-
-
+  const[start,setStart]=useState('');
+  const[end,setEnd]=useState('');
+  const[mood,setMood]=useState('');
+  const[answer,setAnswer]=useState('');
+  const[title,setTitle]=useState('');
+  const[short_comment,setShortComment]=useState('');
+  const[long_comment,setLongComment]=useState('');
+  const[memberId,setMemberId]=useState('');
+  const[myBookId,setMyBookId]=useState('');
+  const[short_review_id,setShortReviewId]=useState('');
+  const[long_review_id,setLongReviewId]=useState('');
+  const [selectedQuestion, setSelectedQuestion] = useState(SetQuestions[0]);
+  const [question, setQuestion] = useState('');
 
   const handleItemClick = (path) => {
     navigate(path);
@@ -428,14 +491,105 @@ export function Note() {
 
   // 체크박스 구현
 
-  const handleCheckboxChange = () => {
+  const handleStartChange=(e)=>{
+    setStart(e.target.value);
+};
+
+const handleEndChange=(e)=>{
+  setEnd(e.target.value);
+};
+
+const handleCheckboxChange = async () => {
     setChecked(!checked);
-  };
+};
+  
 
-
-  const handleOptionChange = (event) => { //글 공개여부설정
+const handleOptionChange = (event) => { //글 공개여부설정
     setSelectedOption(event.target.value);
   };
+
+const handleMoodChange=(selectedMood)=>{
+    setMood(selectedMood);
+};
+
+
+// 질문 선택
+const handleQuestionChange = (event) => {
+  setSelectedQuestion(event.target.value);
+  setQuestion(event.target.value);
+};
+
+//질문 답변
+const handleAnswerChange = (event) => {
+  setAnswer(event.target.value);
+};
+
+
+const handleShortComentChange = (event) => {
+  setShortComment(event.target.value);
+};
+
+
+//자세한 기록 제목
+const handleTitleChange = (event) => {
+  setTitle(event.target.value);
+};
+
+const handleLongCommentChange = (event) => {
+  setLongComment(event.target.value);
+};
+
+
+  // 짧은기록 넘겨주기 함수 
+  const handleShortNoteSubmit = async (memberId, myBookId) => {
+    try{
+      const newShortNote = {
+        short_review_id : short_review_id,
+        memberId : memberId,
+        myBookId : myBookId,
+        start_page : start,
+        end_page : end,
+        mood : mood,
+        question : question,
+        answer : answer,
+        short_comment : short_comment,
+        created_at: new Date().toISOString(),
+        open: selectedOption === "public", // 공개여부
+        checked: checked // 읽기 완료 체크박스
+      }
+      
+      const response = await axiosInstance.post(`/desk/${memberId}/${myBookId}/note/short`, newShortNote);
+      console.log(response.data);
+      // fetchNotes(); // 전체 노트를 get 하는 함수
+
+    } catch(e){
+      console.log(e);
+  }
+
+  };
+
+  // 자세한기록 넘겨주기 함수
+  const handleLongNoteSubmit = async (memberId, myBookId) => {
+    try {
+      const newLongNote = {
+        long_review_id: long_review_id,
+        member_id: memberId,
+        my_book_id: myBookId,
+        start_page: start,
+        end_page: end,
+        review_title: title,
+        long_text: long_comment,
+        created_at: new Date().toISOString(),
+        open: selectedOption === "public" // boolean 값으로 설정
+      };
+      const response = await axiosInstance.post(`/desk/${memberId}/${myBookId}/note/long`, newLongNote);
+      console.log(response.data);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+  
+
 
   return ( 
     <AppContainer>
@@ -471,10 +625,10 @@ export function Note() {
           
           <SetContainer>                       
           <Label>01. 읽은 페이지</Label>  
-          <InputPage>
-            <PageInput placeholder="입력"/>
+          <InputPage> {/* 페이지 입력 부분*/}
+            <PageInput placeholder="입력" value={start} onChange={handleStartChange}/>
             <Span>~</Span>
-            <PageInput placeholder="입력"/>
+            <PageInput placeholder="입력" value={end} onChange={handleEndChange}/>
             <PageLabel style = {{ marginLeft : "10px"}}>페이지</PageLabel>   
           </InputPage>
           <CheckboxContainer>
@@ -483,42 +637,42 @@ export function Note() {
                 <MainText>완독한 경우 체크</MainText>
                 <SubText>체크할 경우 “지금까지 읽은 책”으로 이동됩니다.</SubText>
               </TextContainer>
-            </CheckboxContainer>
+          </CheckboxContainer>
           </SetContainer>  
           
           <SetContainer> 
           <Label>02. 오늘의 기분</Label>
           <InputRow>
                 <SmallInputContainer>
-                    <SmallInput placeholder="">
+                    <SmallInput  active={mood === '좋아요'} onClick={() => handleMoodChange('좋아요')}>
                         <Emoji src={goodImage} alt="좋아요" />  
                     </SmallInput>
                     <SmallInputLabel>좋아요</SmallInputLabel>
                 </SmallInputContainer>
 
                 <SmallInputContainer>
-                    <SmallInput placeholder="">
+                    <SmallInput active={mood === '괜찮아요'} onClick={() => handleMoodChange('괜찮아요')}>
                         <Emoji src={okayImage} alt="괜찮아요" />
                     </SmallInput>
                     <SmallInputLabel>괜찮아요</SmallInputLabel>
                 </SmallInputContainer>
                 
                 <SmallInputContainer>
-                   <SmallInput placeholder="">
+                   <SmallInput active={mood === '피곤해요'} onClick={() => handleMoodChange('피곤해요')}>
                         <Emoji src={tiredImage} alt="피곤해요" />
                     </SmallInput>
                 <SmallInputLabel>피곤해요</SmallInputLabel>
                 </SmallInputContainer>
 
                 <SmallInputContainer>
-                    <SmallInput placeholder="">
+                    <SmallInput active={mood === '슬퍼요'} onClick={() => handleMoodChange('슬퍼요')}>
                         <Emoji src={sadImage} alt="슬퍼요" />
                     </SmallInput>
                     <SmallInputLabel>슬퍼요</SmallInputLabel>
                 </SmallInputContainer>
 
                 <SmallInputContainer>
-                    <SmallInput placeholder="" >
+                    <SmallInput active={mood === '걱정돼요'} onClick={() => handleMoodChange('걱정돼요')}>
                         <Emoji src={worriedImage} alt="걱정돼요" />
                     </SmallInput>
                     <SmallInputLabel>걱정돼요</SmallInputLabel>
@@ -526,78 +680,123 @@ export function Note() {
           </InputRow>
           </SetContainer>
 
+          {/* 질문선택 부분*/}
           <SetContainer> 
           <Label>03. 질문을 생각해보며 오늘 하루를 되돌아봐요.</Label>
+          <Select value={selectedQuestion} onChange={handleQuestionChange}>
+              {SetQuestions.map((question, index) => (
+                <option key={index} value={question}>
+                  {question}
+                </option>
+              ))}
+          </Select>
           <div style={{ width: '97%' }}>
-            <TextArea placeholder="오늘의 질문에 대한 답을 적어보세요.(최대 200자)" rows="4" />
-          </div>
-          </SetContainer>
-          <SetContainer>
-          <Label>04. 대답</Label>
-          <div style={{ width: '97%' }}>
-            <TextArea placeholder="대답" rows="4" />
+            <TextArea placeholder="오늘의 질문에 대한 답을 적어보세요.(최대 200자)" 
+            rows="4"
+            value={answer}
+            onChange={handleAnswerChange} 
+            />
           </div>
           </SetContainer>
 
           <SetContainer>
           <Label>04. 인상 깊은 한 줄</Label>
           <div style={{ width: '97%' }}>
-            <TextArea placeholder="인상 깊은 한 줄" rows="4" />
+            <TextArea placeholder="인상 깊은 한 줄" 
+            rows="4" 
+            value={short_comment}
+            onChange={handleShortComentChange} 
+            />
           </div>
           </SetContainer>
-        </FormContainer>
-      )}
-      {activeTab === 'detailed' && (
-        <FormContainer>
-           <Label>01. 읽은 페이지</Label>  
-          <InputPage>
-            <PageInput placeholder="입력"/>
-            <Span>~</Span>
-            <PageInput placeholder="입력"/>
-            <PageLabel style = {{ marginLeft : "10px"}}>페이지</PageLabel>   
-          </InputPage>
-           <CheckboxContainer>
-              <Checkbox checked={checked} onChange={handleCheckboxChange} />
-              <TextContainer>
-                <MainText>완독한 경우 체크</MainText>
-                <SubText>체크할 경우 “지금까지 읽은 책”으로 이동됩니다.</SubText>
-              </TextContainer>
-            </CheckboxContainer>
-          <div style={{ width: '100%' }}>
-            <Label>02. 제목</Label>
-            <Input placeholder="제목 입력" />
-          </div>
-          <div style={{ width: '100%' }}>
-            <Label>03. 내용</Label>
-            <TextArea placeholder="책에 대한 감상을 자유롭게 적어보세요 (최소 80자)" rows="13" />
-          </div>
-        </FormContainer>
-      )}
-      <OpenSet>
-        <OpenSetLabel>글 공개여부 설정</OpenSetLabel>
-        <OpenSetContainer>
-            <OpenSetInput
+          <OpenSet>
+             <OpenSetLabel>글 공개여부 설정</OpenSetLabel>
+             <OpenSetContainer>
+                <OpenSetInput
                 type="radio"
                 id="public"
                 name="visibility"
                 value="public"
                 checked={selectedOption === "public"}
                 onChange={handleOptionChange}   
-            />
-            <OpenSetLabel htmlFor="public">공개</OpenSetLabel>
-            <OpenSetInput
+                 />
+                <OpenSetLabel htmlFor="public">공개</OpenSetLabel>
+                <OpenSetInput
                 type="radio"
                 id="private"
                 name="visibility"
                 value="private"
                 checked={selectedOption === "private"}
                 onChange={handleOptionChange}
-            />
-            <OpenSetLabel htmlFor="public">비공개</OpenSetLabel>
-        </OpenSetContainer>
-      </OpenSet>
+                />
+                <OpenSetLabel htmlFor="public">비공개</OpenSetLabel>
+             </OpenSetContainer>
+           </OpenSet>
 
-        <SubmitButton>업로드</SubmitButton>
+           <SubmitButton onClick={() => handleShortNoteSubmit(memberId, myBookId)}>업로드</SubmitButton>
+        </FormContainer>
+      )}
+      {activeTab === 'detailed' && (
+        <FormContainer>
+          <SetContainer>                       
+            <Label>01. 읽은 페이지</Label>  
+            <InputPage> {/* 페이지 입력 부분*/}
+            <PageInput placeholder="입력" value={start} onChange={handleStartChange}/>
+            <Span>~</Span>
+            <PageInput placeholder="입력" value={end} onChange={handleEndChange}/>
+            <PageLabel style = {{ marginLeft : "10px"}}>페이지</PageLabel>   
+            </InputPage>
+            <CheckboxContainer>
+              <Checkbox checked={checked} onChange={handleCheckboxChange} />
+              <TextContainer>
+                <MainText>완독한 경우 체크</MainText>
+                <SubText>체크할 경우 “지금까지 읽은 책”으로 이동됩니다.</SubText>
+              </TextContainer>
+          </CheckboxContainer>
+          </SetContainer>  
+          <div style={{ width: '100%' }}>
+            <Label>02. 제목</Label>
+            <Input placeholder="제목 입력" 
+            value={title} 
+            onChange={handleTitleChange} 
+            />
+          </div>
+          <div style={{ width: '100%' }}>
+            <Label>03. 내용</Label>
+            <TextArea placeholder="책에 대한 감상을 자유롭게 적어보세요 (최소 80자)" 
+            rows="13" 
+            value={long_comment} 
+            onChange={handleLongCommentChange}
+            />
+          </div>
+          <OpenSet>
+             <OpenSetLabel>글 공개여부 설정</OpenSetLabel>
+             <OpenSetContainer>
+                <OpenSetInput
+                type="radio"
+                id="public"
+                name="visibility"
+                value="public"
+                checked={selectedOption === "public"}
+                onChange={handleOptionChange}   
+                 />
+                <OpenSetLabel htmlFor="public">공개</OpenSetLabel>
+                <OpenSetInput
+                type="radio"
+                id="private"
+                name="visibility"
+                value="private"
+                checked={selectedOption === "private"}
+                onChange={handleOptionChange}
+                />
+                <OpenSetLabel htmlFor="public">비공개</OpenSetLabel>
+             </OpenSetContainer>
+           </OpenSet>
+           <div style={{ width: '480px', display: 'flex', justifyContent: 'center', margin: '0 auto', padding: '20px 0' }}>
+           <SubmitButton onClick={() => handleLongNoteSubmit(memberId, myBookId)}>업로드</SubmitButton>
+           </div>
+        </FormContainer>
+      )}
       </NoteContainer>
     </AppContainer>
   );
