@@ -11,6 +11,7 @@ import { AfterBookSearchResult } from "./BookSearch/AfterBookSearchResult";
 import { Recommend } from "./RecommendPage/Recommend";
 import { RecommendResult } from "./RecommendPage/RecommendResult";
 import { Community } from "./CommunityPage/Community";
+import { LookNote } from "./components/Look";
 
 import {Routes,Route} from "react-router-dom";
 
@@ -24,6 +25,7 @@ function App() {
       <Route path="/afterlogin" element={<AfterLoginMain/>}/>
       <Route path='/auth/kakao' element={<Redirect/>}/>
       <Route path='/afterlogin/note' element={<Note/>}/>
+      <Route path='/afterlogin/looknote' element={<LookNote/>}/>
       <Route path='/afterlogin/mylibrary' element={<MyLibrary/>}/>
       <Route path='/afterlogin/thisbook' element={<ThisBook/>}/>
       <Route path='/afterlogin/booksearchresult' element={<AfterBookSearchResult/>}/>

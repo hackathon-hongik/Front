@@ -9,6 +9,9 @@ import okayImage from '../assets/괜찮아요.png';
 import tiredImage from '../assets/피곤해요.png';
 import sadImage from '../assets/슬퍼요.png';
 import worriedImage from '../assets/걱정돼요.png';
+import info from '../assets/info.png';
+import noteImage from '../assets/note.png';
+import contract from '../assets/contract.png';
 
 
 
@@ -32,6 +35,7 @@ const NoteContainer = styled.div`
     flex-direction: column;
     align-items: center;
 `;
+
 const Header = styled.div`
   width: 100%;
   height: 120px;
@@ -80,6 +84,7 @@ const Nav = styled.div`
 const MypageBtn = styled.button`
   width: 112px;
   height: 34px;
+  border: none;
   display: flex;
   padding: 8px 18px;
   justify-content: center;
@@ -115,7 +120,7 @@ const ToggleList = styled.div`
 `;
 
 const TabsContainer = styled.div`
-    width: 200px;
+    width: 180px;
     height: 40px;
     flex-shrink: 0;
     border-radius: 8px;
@@ -123,7 +128,8 @@ const TabsContainer = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    margin: 20px 0; 
+    margin-top: 66px;
+    margin-bottom: 25px; 
 `;
 
 const Tab = styled.button`
@@ -131,9 +137,14 @@ const Tab = styled.button`
     background-color: ${props => (props.active ? '#FF6E23' : '#F2F2F7')};
     color: ${props => (props.active ? '#FFF' : '##989BA2')};
     display: inline-flex;
+    font-feature-settings: 'ss10' on;
+    font-family: "Pretendard JP";
+    font-style: normal;
+    font-weight: ${props => (props.active ? '600' : '500')};
+    font-size: 14px;
     height: 32px;
     padding: 6px 10px;
-    width: 95px;
+    width: 85px;
     justify-content: center;
     align-items: center;
     gap: 10px;
@@ -142,7 +153,8 @@ const Tab = styled.button`
     border: none;
     margin: 0px;
     cursor: pointer;
-    line-height: 32px;
+    line-height: 142.9%; /* 20.006px */
+    letter-spacing: 0.203px;
 
     // 마우스 호버 설정
    &:hover {
@@ -211,17 +223,30 @@ const PageLabel = styled.label`
 `
 
 const SetQuestions = [
-  "오늘 읽은 책이 나에게 어떤 도움이 될 수 있을까요?",
-  "책을 읽으면서 떠오른 나의 개인적인 경험이나 기억은 무엇인가요?",
-  "이 책을 읽으면서 가장 강렬하게 느꼈던 감정은 무엇인가요?",
-  "이 책이 나의 희망이나 두려움에 어떤 영향을 주었나요?",
-  "책의 내용을 통해 느낀 위로나 치유는 무엇인가요?",
-  "이 책이 나의 가치관이나 신념에 어떤 영향을 미쳤나요?"
+  "01.중요한 대화를 해야 할 때, 갈등을 피하기 위해 어떤 준비를 하나요?",
+  "02.인간 관계에서 자신의 감정을 효과적으로 표현하는 방법은 무엇인가요?",
+  "03.오늘 읽은 책을 통해 지식이나 마음의 안정을 얻을 수 있을까요",
+  "04.책의 주요 메시지나 교훈이 내 현재 진로 고민에 어떤 통찰을 제공했나요?",
+  "05.책을 읽고 나서 내 진로에 대한 새로운 아이디어나 방향성이 생겼다면, 그것을 구체적으로 어떻게 실행할 수 있을까요?",
+  "06.책을 읽으면서 나의 가치관이나 흥미가 어떻게 변화했으며, 그것이 내 진로 결정에 어떤 영향을 미칠까요?",
+  "07.책을 통해 알게 된 투자 리스크 관리 방법 중 나에게 적합한 것은 무엇이며, 그것을 어떻게 실행할 수 있을까요?",
+  "08.책에서 소개된 성공적인 재정 관리 사례를 내 삶에 적용한다면, 어떤 변화가 필요할까요?",
+  "09.책을 읽으면서 공감한 부분은 무엇이며, 그것이 나의 돈 관리와 투자 방식에 어떻게 적용될 수 있을까요?",
+  "10.이 책에서 배운 중요한 건강 관리 원칙은 무엇이며, 그것을 어떻게 내 생활에 적용할 수 있을까요?",
+  "11.책에서 소개된 성공적인 건강 관리 사례를 내 삶에 적용한다면, 어떤 변화가 필요할까요?",
+  "12.책의 내용을 바탕으로 내가 건강하다고 느끼기 위해 어떤 조치가 필요할까요?",
+  "13.내가 직장에서 버겁게 느끼는 부분은 무엇이며, 책에서 제안한 해결책 중 어떤 것을 시도해볼 수 있을까요?",
+  "14.책을 읽고 난 후 나의 직장 업무 방식을 재구성해야 한다면, 어떤 변화가 필요하다고 생각하나요?",
+  "15.책의 내용을 바탕으로 내가 직장에서 더 행복해지기 위해 어떤 조치가 필요할까요?",
+  "16.오늘 읽은 책이 나에게 어떤 도움이 될 수 있을까요? ",
+  "17.책의 내용을 통해 느낀 위로나 치유는 무엇인가요?",
+  "18.책을 읽으면서 떠오른 나의 개인적인 경험이나 기억은 무엇인가요?",
 ];
 
 
 const Select = styled.select`
   width: 100%;
+  height: 40px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
@@ -464,6 +489,42 @@ const OpenSetInput = styled.input`
 `;
 
 
+const SubNav = styled.div`
+  width: 1200px;
+  display: flex;
+  justify-content: center;
+  background-color: #ffffff;
+  border-bottom: 1px solid #E0E0E2;
+  margin-top: 70px;
+`;
+
+const SubNavItem = styled.div`
+  position: relative;
+  text-align: center;
+  font-family: "Pretendard JP";
+  font-size: 18px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 144.5%; /* 26.01px */
+  letter-spacing: -0.004px;  
+  margin: 12px 40px;
+  cursor: pointer;
+  color: ${props => (props.active ? '#FF6E23' : '#989BA2')};
+  border-bottom: ${props => (props.active ? '2px solid #FF6E23' : 'none')};
+
+  &:hover {
+    color: #FF6E23;
+  }
+
+  img {
+    position: absolute;
+    top: -40px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: ${props => (props.active ? 'block' : 'none')};
+  }
+`;
+
 //여기까지 글 공개여부
 
 function useQuery() {
@@ -490,6 +551,8 @@ export function Note() {
   const[long_review_id,setLongReviewId]=useState('');
   const [selectedQuestion, setSelectedQuestion] = useState(SetQuestions[0]);
   const [question, setQuestion] = useState('');
+  const [activeSubNav, setActiveSubNav] = useState('record');
+
 
   useEffect(() => {
     const memberIdFromQuery = query.get("memberId");
@@ -498,6 +561,10 @@ export function Note() {
       setMemberId(memberIdFromQuery);
       setMyBookId(myBookIdFromQuery);
     }
+
+        // 고유 번호 생성
+        setShortReviewId(Date.now() + '-short');
+        setLongReviewId(Date.now() + '-long');
   }, [query]);
 
 
@@ -505,7 +572,7 @@ export function Note() {
     navigate(path);
   };
 
-  // 체크박스 구현
+// 체크박스 구현
 
   const handleStartChange=(e)=>{
     setStart(e.target.value);
@@ -519,8 +586,8 @@ const handleCheckboxChange = async () => {
     setChecked(!checked);
 };
   
-
-const handleOptionChange = (event) => { //글 공개여부설정
+//글 공개여부설정
+const handleOptionChange = (event) => { 
     setSelectedOption(event.target.value);
   };
 
@@ -562,7 +629,8 @@ const handleLongCommentChange = (event) => {
       const newShortNote = {
         short_review_id : short_review_id,
         memberId : memberId,
-        myBookId : myBookId,
+        isbn : myBookId,
+        read_complete: checked, // 읽기 완료 체크박스
         start_page : start,
         end_page : end,
         mood : mood,
@@ -571,7 +639,6 @@ const handleLongCommentChange = (event) => {
         short_comment : short_comment,
         created_at: new Date().toISOString(),
         open: selectedOption === "public", // 공개여부
-        checked: checked // 읽기 완료 체크박스
       }
       
       const response = await axiosInstance.post(`/desk/${memberId}/${myBookId}/note/short`, newShortNote);
@@ -588,11 +655,12 @@ const handleLongCommentChange = (event) => {
   const handleLongNoteSubmit = async (memberId, myBookId) => {
     try {
       const newLongNote = {
-        long_review_id: long_review_id,
+        long_review_id: long_review_id, //게시물 번호 부여
         member_id: memberId,
-        my_book_id: myBookId,
+        isbn: myBookId,
         start_page: start,
         end_page: end,
+        read_complete: checked,
         review_title: title,
         long_text: long_comment,
         created_at: new Date().toISOString(),
@@ -632,9 +700,22 @@ const handleLongCommentChange = (event) => {
           </li>
         </Nav>
       </Header>
+
+      <SubNav>
+          <SubNavItem active={activeSubNav === 'bookinfo'} onClick={() => { handleItemClick("/afterlogin/thisbook"); setActiveSubNav('bookinfo'); }}>
+                        {activeSubNav === 'bookinfo' && <img src={info} alt="active" />}
+                        책 정보보기</SubNavItem>
+          <SubNavItem active={activeSubNav === 'record'} onClick={() => { handleItemClick("/afterlogin/note"); setActiveSubNav('record'); }}>
+                        {activeSubNav === 'record' && <img src={noteImage} alt="active" />}
+                        기록하기</SubNavItem>
+          <SubNavItem active={activeSubNav === 'myrecords'} onClick={() => { handleItemClick("/afterlogin/looknote"); setActiveSubNav('myrecords'); }}>
+                        {activeSubNav === 'myrecords' && <img src={contract} alt="active" />}
+                        내 기록보기</SubNavItem>
+      </SubNav>  
+
       <TabsContainer>
-        <Tab active={activeTab === 'simple'} onClick={() => setActiveTab('simple')}>짧은 기록</Tab>
-        <Tab active={activeTab === 'detailed'} onClick={() => setActiveTab('detailed')}>자세한 기록</Tab>
+        <Tab active={activeTab === 'simple'} onClick={() => setActiveTab('simple')}>하루 기록</Tab>
+        <Tab active={activeTab === 'detailed'} onClick={() => setActiveTab('detailed')}>자유 기록</Tab>
       </TabsContainer>
       {activeTab === 'simple' && (
         <FormContainer>
