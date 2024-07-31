@@ -430,18 +430,31 @@ export function AfterBookSearchResult(){  //로그인 전 책 검색하면 나�
     const[printNewSearchWord,setPrintNewSearchWord]=useState(""); //책 제목을 입력하고 있을때 화면에 실시간으로 나타나게 하지 않기 위해 프린트용으로 배치
     const [bookResults, setBookResults] = useState([]);
     const [num,setNum]=useState(0);
-    // const [bookmarked, setBookmarked] = useState([]);
-    const [bookmarked, setBookmarked] = useState(
-        JSON.parse(localStorage.getItem('bookmarkedBooks')) || []        //새로고침해도 찜 결과가 남아있게 하고 싶었지만 이 결과가 다른 책 목록에도 그대로 적용된다는
-      );                                                                 //문제발생  -> 인자를 index가 아닌 book.isbn(isbn)(책 고유값)을 넘겨줘서 해결
-    
-      useEffect(() => {
-        localStorage.setItem('bookmarkedBooks', JSON.stringify(bookmarked));
-      }, [bookmarked]);
-    
-    // const [clickAdd,setClickAdd]=useState(false);
-    // const [clickPick,setClickPick]=useState(false);
-   
+    const [bookmarked, setBookmarked] = useState([]);   //찜한 책들 북마크 주황색으로 바꾸기 위해 isbn을 받는 배열
+    const [fetchedBookmarked,setFetchedBookmarked]=useState([]);   //찜한 책들 북마크 주황색으로 유지위해 찜한 정보들 관리하기 위한 배열 
+
+
+    useEffect(()=>{
+        fetchWishBooks()   //화면 처음 랜더링 될때 찜한 정보들 띄우기
+    },[]);
+
+    useEffect(() => {   //찜한 책 정보들 받아왔을 때 isbn들 뽑아서 bookmarked배열에 넣어주기
+        if (fetchedBookmarked && fetchedBookmarked.mybooks) {
+            const wishBooks = fetchedBookmarked.mybooks.map(book => book.book.isbn);
+            setBookmarked(wishBooks);
+        }
+    }, [fetchedBookmarked]);
+
+    const fetchWishBooks=async()=>{
+        try{
+            const response=await axiosInstance.get('/desk/1/books/group/wish/');
+            setFetchedBookmarked(response.data);
+            console.log(fetchedBookmarked);
+        }
+        catch(e){
+            console.log(e);
+        }
+    }
 
     const searchData=async(query)=>{ 
         try{
@@ -461,6 +474,8 @@ export function AfterBookSearchResult(){  //로그인 전 책 검색하면 나�
                 contents: doc.contents,
                 title:doc.title,
                 isbn:doc.isbn,
+                publisher:doc.publisher,
+                date:doc.datetime
             }));   //documents는 배열이기 때문에 아래 방식이 아닌 이런 방식으로 처리해야 함
 
             // const results = {
@@ -481,45 +496,60 @@ export function AfterBookSearchResult(){  //로그인 전 책 검색하면 나�
         }
     }
     
-    const pickBook=async(isbn,title,author,thumbnail,content)=>{
+    const pickBook=async(isbn,title,author,thumbnail,content,publisher,date)=>{
         try{
             const newBook={
                 book:{
                     isbn:isbn,
                     title:title,
                     author:author,
+                    date:date,
+                    publisher:publisher,
                     thumbnail:thumbnail,
                     content:content
                 }
             }
 
-            const response=await axiosInstance.post("/books/1/wish/",newBook);
+            const response=await axiosInstance.post("/desk/1/books/wish/",newBook);
+            alert("찜한 책에 성공적으로 추가되었습니다!")
             console.log(response);
         }
         catch(e){
-            alert("이미 찜하신 책입니다");
-            console.log(e);
+            if(e.response && e.response.status===409){
+                alert("이미 찜하신 책입니다");
+                console.log(e);
+            }
+
+            else if(e.response && e.response.status===400){
+                alert("읽고 있는 책은 찜해둔 책에 넣을 수 없습니다.")
+            }
+           
         }
     };
 
-    const addBook=async(isbn,title,author,thumbnail,content)=>{
+    const addBook=async(isbn,title,author,thumbnail,content,publisher,date)=>{
         try{
             const newBook={
                 book:{
                     isbn:isbn,
                     title:title,
                     author:author,
+                    date:date,
+                    publisher:publisher,
                     thumbnail:thumbnail,
                     content:content
                 }
             }
 
-            const response=await axiosInstance.post("/books/2/reading/",newBook);
+            const response=await axiosInstance.post("/desk/1/books/reading/",newBook);
+            alert("읽고 있는 책에 성공적으로 추가되었습니다!")
             console.log(response);
         }
         catch(e){
-            alert("이미 읽은 책으로 추가하신 책입니다");
-            console.log(e);
+            if(e.response && e.response.status===409){
+                alert("이미 읽고 있는 책에 추가하신 책입니다");
+                console.log(e);
+            }
         }
     }
 
@@ -560,16 +590,16 @@ export function AfterBookSearchResult(){  //로그인 전 책 검색하면 나�
         }  //이렇게 하면 북마크가 취소 불가
     }; 
 
-    const handlePickClick=(isbn,title,author,thumbnail,content)=>{  //찜 처리
+    const handlePickClick=(isbn,title,author,thumbnail,content,publisher,date)=>{  //찜 처리
         
-        pickBook(isbn,title,author,thumbnail,content);
+        pickBook(isbn,title,author,thumbnail,content,publisher,date);
         toggleBookmark(isbn); //책 고유값인 isbn값을 넘겨주어서 
         
     };
         
-    const handleAddClick=(isbn,title,author,thumbnail,content)=>{   //읽고 있는 책으로 추가 처리
+    const handleAddClick=(isbn,title,author,thumbnail,content,publisher,date)=>{   //읽고 있는 책으로 추가 처리
        
-        addBook(isbn,title,author,thumbnail,content);
+        addBook(isbn,title,author,thumbnail,content,publisher,date);
         
     };
 
@@ -629,16 +659,16 @@ export function AfterBookSearchResult(){  //로그인 전 책 검색하면 나�
                                          <p className="modalTitle">{book.title || "N/A"}</p>
                                          <p className="modalAuthor">{book.authors?.join(', ') || "N/A"}</p>
                                          <p className="modalPublisher">{book.publisher || "N/A"}</p>  {/* "N/A는 저 카테고리가 없는경우 처리" */}
-                                         <button className="modalAddBtn" onClick={()=>handleAddClick(book.isbn,book.title,book.authors,book.thumbnail,book.contents)}>읽고 있는 책에 추가</button>
+                                         <button className="modalAddBtn" onClick={()=>handleAddClick(book.isbn,book.title,book.authors,book.thumbnail,book.contents,book.publisher,book.date)}>읽고 있는 책에 추가</button>
                                          <p className="modalContents">{book.contents || "N/A"}</p>
                                          </ModalContent>
                                      </ModalOverlay>
                                  )}
                                  <div className="addPickBtn">
-                                    <span className="material-symbols-outlined" onClick={() => handlePickClick(book.isbn,book.title,book.authors,book.thumbnail,book.contents,index)} style={{ backgroundColor: bookmarked.includes(book.isbn) ? "#FF6E23" : "transparent" }}>
+                                    <span className="material-symbols-outlined" onClick={() => handlePickClick(book.isbn,book.title,book.authors,book.thumbnail,book.contents,book.publisher,book.date,index)} style={{ backgroundColor: bookmarked.includes(book.isbn) ? "#FF6E23" : "transparent" }}>
                                         bookmark
                                     </span>
-                                    <button className="addBtn" onClick={()=>handleAddClick(book.isbn,book.title,book.authors,book.thumbnail,book.contents)}>읽고 있는 책</button>
+                                    <button className="addBtn" onClick={()=>handleAddClick(book.isbn,book.title,book.authors,book.thumbnail,book.contents,book.publisher,book.date)}>읽고 있는 책</button>
                                  </div>
                                  
                              </BookCard>
@@ -667,16 +697,16 @@ export function AfterBookSearchResult(){  //로그인 전 책 검색하면 나�
                                             <p className="modalTitle">{book.title || "N/A"}</p>
                                             <p className="modalAuthor">{book.authors?.join(', ') || "N/A"}</p>
                                             <p className="modalPublisher">{book.publisher || "N/A"}</p>  {/* "N/A는 저 카테고리가 없는경우 처리" */}
-                                            <button className="modalAddBtn" onClick={()=>handleAddClick(book.isbn,book.title,book.authors,book.thumbnail,book.contents)}>읽고 있는 책에 추가</button>
+                                            <button className="modalAddBtn" onClick={()=>handleAddClick(book.isbn,book.title,book.authors,book.thumbnail,book.contents,book.publisher,book.date)}>읽고 있는 책에 추가</button>
                                             <p className="modalContents">{book.contents || "N/A"}</p>
                                         </ModalContent>
                                  </ModalOverlay>
                                  )}
                                 <div className="addPickBtn">
-                                    <span className="material-symbols-outlined" onClick={() => handlePickClick(book.isbn,book.title,book.authors,book.thumbnail,book.contents,index)} style={{ backgroundColor: bookmarked.includes(book.isbn) ? "#FF6E23" : "transparent" }}>
+                                    <span className="material-symbols-outlined" onClick={() => handlePickClick(book.isbn,book.title,book.authors,book.thumbnail,book.contents,book.publisher,book.date,index)} style={{ backgroundColor: bookmarked.includes(book.isbn) ? "#FF6E23" : "transparent" }}>
                                         bookmark
                                     </span>
-                                    <button className="addBtn" onClick={()=>handleAddClick(book.isbn,book.title,book.authors,book.thumbnail,book.contents)}>읽고 있는 책</button>
+                                    <button className="addBtn" onClick={()=>handleAddClick(book.isbn,book.title,book.authors,book.thumbnail,book.contents,book.publisher,book.date)}>읽고 있는 책</button>
                                  </div>
                              </BookCard>
                          ))

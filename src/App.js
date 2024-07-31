@@ -10,7 +10,7 @@ import { BeforeBookSearchResult} from "./BookSearch/BeforeBookSearchResult";
 import { AfterBookSearchResult } from "./BookSearch/AfterBookSearchResult";
 import { Recommend } from "./RecommendPage/Recommend";
 import { RecommendResult } from "./RecommendPage/RecommendResult";
-import { Community } from "./CommunityPage/Community";
+import { Community } from "./Communities/Community";
 import { LookNote } from "./components/Look";
 
 import {Routes,Route} from "react-router-dom";

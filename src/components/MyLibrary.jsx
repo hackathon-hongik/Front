@@ -71,17 +71,23 @@ const sampleBooks = [
 ];
 
 const categoryColors = {
-    "지금 읽고 있는 책": "#2EEA7E",
-    "지금까지 읽은 책": "#9DB8FF",
-    "찜해둔 책":"#ff6e23",
+    "reading": "#2EEA7E",
+    "read": "#9DB8FF",
+    "wish":"#ff6e23",
   };
+
+const categoryKorean={
+    "reading":"읽고 있는 책",
+    "read":"읽은 책",
+    "wish":"찜해둔 책",
+}
 
 
 
 const LibraryPage=styled.div`
     font-family: "Pretendard JP";
     width:1620px;
-    height:1840px;
+    //height:1840px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -286,6 +292,23 @@ const ShowStats=styled.div`
         font-weight: 600;
         
     }
+
+    .showNum{
+        width:80px;
+        height:30px;
+        display: flex;
+        flex-direction: row;
+        //align-items: center;
+        //background-color: rebeccapurple;
+        .number{
+            font-size: 23px;
+            font-weight: 600;
+        }
+
+        .gwon{
+            margin-top: 7px;
+        }
+    }
 `;
 const BookList = styled.div`
   width: 1200px;
@@ -298,7 +321,7 @@ const BookList = styled.div`
 
 const BookCard = styled.div`
   width: 220px;
-  height: 370px;
+  height: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -321,6 +344,28 @@ const BookCard = styled.div`
       object-fit: cover;
       border-radius: 4px;
     }
+  }
+
+  .bookInfo{
+    width:156px;
+    height:40px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    border-radius: 0px 0px 4px 4px;
+    background-color: gray;
+    color: var(--Materials-Chrome, rgba(255, 255, 255, 0.75));
+    text-align: center;
+    font-feature-settings: 'ss10' on;
+    /* Label 1/Reading - Bold */
+    font-family: "Pretendard JP";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 157.14%; /* 22px */
+    letter-spacing: 0.203px;
+    cursor: pointer;
   }
   .title {
     font-family: "Pretendard JP";
@@ -366,12 +411,130 @@ const BookCard = styled.div`
   }
 `;
 
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+`;
+
+const ModalContent = styled.div`
+  width:450px;
+  height:510px;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  border-radius: 20px;
+  background: #FFF;
+  padding: 40px 48px 28px 48px;
+  margin-top:230px;
+
+  .modalCover{
+    width:104px;
+    height:156px;
+  }
+
+  .modalTitle{
+    color: var(--kakao-logo, #000);
+    text-align: center;
+    font-feature-settings: 'ss10' on;
+    /* Body 1/Reading - Bold */
+    font-family: "Pretendard JP";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 162.5%; /* 26px */
+    letter-spacing: 0.091px;
+  }
+
+  .modalAuthor{
+    color: var(--kakao-logo, #000);
+    text-align: center;
+    font-feature-settings: 'ss10' on;
+    /* Label 2/Medium */
+    font-family: "Pretendard JP";
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 138.5%; /* 18.005px */
+    letter-spacing: 0.252px;
+  }
+
+  .modalPublisher{
+    color: rgba(60, 60, 67, 0.60);
+    font-feature-settings: 'ss10' on;
+    /* Label 2/Regular */
+    font-family: "Pretendard JP";
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 138.5%; /* 18.005px */
+    letter-spacing: 0.252px;
+  }
+
+  .modalAddBtn{
+    display: flex;
+    flex-direction: row;
+    width: 170px;
+    height: 20px;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    border:none;
+    border-radius: 4px;
+    background: #2EEA7E;
+    color: #FFF;
+    margin-left:140px;
+
+    text-align: center;
+    font-feature-settings: 'ss10' on;
+    /* Label 1/Normal - Bold */
+    font-family: "Pretendard JP";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 142.9%; /* 20.006px */
+    letter-spacing: 0.203px;
+  }
+
+  .modalContents{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 10;
+    align-self: stretch;
+    overflow: hidden;
+    color: var(--kakao-logo, #000);
+
+    font-feature-settings: 'ss10' on;
+    text-overflow: ellipsis;
+    font-family: "Pretendard JP";
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 19.5px */
+    letter-spacing: 0.252px;
+  }
+`;
+
 export function MyLibrary(){  //내 서재 페이지
+    const [clickedBookIndex, setClickedBookIndex] = useState(null);
+    const [readingStatus,setReadingStatus]=useState(0);
+    const [readStatus,setReadStatus]=useState(0);
+    const [pickStatus,setPickStatus]=useState(0);
+    const [bookResults, setBookResults] = useState([]);
+    const [isCheck,setCheck]=useState(false);
+    
     const navigate=useNavigate();
+    
+    
     const handleItemClick=(path)=>{
         navigate(path);
     };
-    const [isCheck,setCheck]=useState(false);
 
     useEffect(() => {
         showAll();
@@ -379,8 +542,14 @@ export function MyLibrary(){  //내 서재 페이지
 
     const showAll=async()=>{
         try{
-            const response=await axiosInstance.get("/desk/1");    //1 자리에 원래는 {memberId}가 와야함 지금은 로그인이 구현 안되어있어 임의로
+            const response=await axiosInstance.get("/desk/1/books/");    //1 자리에 원래는 {memberId}가 와야함 지금은 로그인이 구현 안되어있어 임의로
+            setReadingStatus(response.data.reading_count);
+            setReadStatus(response.data.read_count);
+            setPickStatus(response.data.wish_count);
+            setBookResults(response.data.mybooks);
+            
             console.log(response.data);
+
         }
         catch(e){
             console.log(e)
@@ -389,7 +558,12 @@ export function MyLibrary(){  //내 서재 페이지
 
     const showReading=async()=>{
         try{
-            const response=await axiosInstance.get("/desk/1/reading");    //1 자리에 원래는 {memberId}가 와야함
+            const response=await axiosInstance.get("/desk/1/books/group/reading/"); //1 자리에 원래는 {memberId}가 와야함
+            setReadingStatus(response.data.reading_count);
+            setReadStatus(response.data.read_count);
+            setPickStatus(response.data.wish_count);
+            setBookResults(response.data.mybooks);    
+            
             console.log(response.data);
         }
         catch(e){
@@ -399,7 +573,11 @@ export function MyLibrary(){  //내 서재 페이지
 
     const showRead=async()=>{
         try{
-            const response=await axiosInstance.get("/desk/1/read");
+            const response=await axiosInstance.get("/desk/1/books/group/read/");
+            setReadingStatus(response.data.reading_count);
+            setReadStatus(response.data.read_count);
+            setPickStatus(response.data.wish_count);
+            setBookResults(response.data.mybooks);   
             console.log(response.data);
         }
         catch(e){
@@ -409,7 +587,11 @@ export function MyLibrary(){  //내 서재 페이지
 
     const showPicked=async()=>{
         try{
-            const response=await axiosInstance.get("/desk/1/wish");
+            const response=await axiosInstance.get("/desk/1/books/group/wish/");
+            setReadingStatus(response.data.reading_count);
+            setReadStatus(response.data.read_count);
+            setPickStatus(response.data.wish_count);
+            setBookResults(response.data.mybooks);   
             console.log(response.data);
         }
         catch(e){
@@ -417,6 +599,45 @@ export function MyLibrary(){  //내 서재 페이지
         }
     };
 
+    const addBook=async(isbn,title,author,thumbnail,content,publisher,date)=>{
+        try{
+            const newBook={
+                book:{
+                    isbn:isbn,
+                    title:title,
+                    author:author,
+                    date:date,
+                    publisher:publisher,
+                    thumbnail:thumbnail,
+                    content:content
+                }
+            }
+
+            const response=await axiosInstance.post("/desk/1/books/reading/",newBook);
+            alert("읽고 있는 책에 성공적으로 추가되었습니다!")
+            console.log(response);
+        }
+        catch(e){
+            if(e.response && e.response.status===409){
+                alert("이미 읽고 있는 책에 추가하신 책입니다");
+                console.log(e);
+            }
+        }
+    }
+
+    const showInfo = (index) => {
+        setClickedBookIndex(index === clickedBookIndex ? null : index);
+    };
+
+    const closeModal = () => {
+        setClickedBookIndex(null);
+      };
+
+    const handleAddClick=(isbn,title,author,thumbnail,content,publisher,date)=>{   //읽고 있는 책으로 추가 처리
+       
+        addBook(isbn,title,author,thumbnail,content,publisher,date);
+        
+    };
 
     return(
         <LibraryPage>
@@ -448,13 +669,13 @@ export function MyLibrary(){  //내 서재 페이지
                 <p className="text3">내 서재</p>
                 <p className="text1">내 서재 모아보기</p>
                 <ShowStats>
-                    <div className="reading" onClick={()=>showReading}>
+                    <div className="reading" onClick={showReading}>
                         <p className="text2">지금 읽고 있는 책</p>
                         <div className="numBox">
                         <span className="material-symbols-outlined">
                             menu_book
                         </span>
-                        <p>권</p>
+                        <div className="showNum"><span className="number">{readingStatus}</span><span className="gwon">권</span></div>
                         </div>
                     </div>
                     <div className="read" onClick={()=>showRead}>
@@ -463,30 +684,44 @@ export function MyLibrary(){  //내 서재 페이지
                         <span className="material-symbols-outlined">
                         book
                         </span>
-                        <p>권 돌파</p>
+                        <div className="showNum"><span className="number">{readStatus}</span><span className="gwon">권 돌파</span></div>
                         </div>
                     </div>
-                    <div className="picked" onClick={()=>showPicked}>
+                    <div className="picked" onClick={showPicked}>
                         <p className="text2">찜해둔 책</p>
                         <div className="numBox">
                         <span className="material-symbols-outlined">
                             bookmark_star
                         </span>
-                        <p>권</p>
+                        <div className="showNum"><span className="number">{pickStatus}</span><span className="gwon">권</span></div>
                         </div>
                     </div>
                 </ShowStats>
             </Stats>
             <BookList>
-                {sampleBooks.map((book) => (
-                <BookCard key={book.id} onClick={()=>handleItemClick("/afterlogin/thisbook")}>
+                {bookResults.map((result,index) => (
+                <BookCard key={result.id}>
                     <div className="cover">
-                        <p>이미지</p>
+                        <img src={result.book.thumbnail} onClick={()=>handleItemClick("/afterlogin/thisbook")}></img>
                     </div>
-                    <div className="title">{book.title}</div>
-                    <div className="author">{book.author}</div>
-                    <div className="category" style={{ color: categoryColors[book.category] }}>{book.category}</div>
+                    <div className="bookInfo" onClick={() => showInfo(index)}>책 정보보기</div>
+                    <div className="title">{result.book.title}</div>
+                    <div className="author">{result.book.author}</div>
+                    <div className="category" style={{ color: categoryColors[result.status] }}>{categoryKorean[result.status]}</div>
+                    {clickedBookIndex === index && (
+                                     <ModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
+                                        <ModalContent onClick={(e) => e.stopPropagation()}> {/*모달창을 눌렀을때는 꺼지지 않도록*/}
+                                         <img className="modalCover" src={result.book.thumbnail} alt="Book Thumbnail"/>
+                                         <p className="modalTitle">{result.book.title || "N/A"}</p>
+                                         <p className="modalAuthor">{result.book.author || "N/A"}</p>
+                                         <p className="modalPublisher">{result.book.publisher || "N/A"}</p>  {/* "N/A는 저 카테고리가 없는경우 처리" */}
+                                         <button className="modalAddBtn" onClick={()=>handleAddClick(result.book.isbn,result.book.title,result.book.author,result.book.thumbnail,result.book.contents,result.book.publisher,result.book.date)}>읽고 있는 책에 추가</button>
+                                         <p className="modalContents">{result.book.content || "N/A"}</p>
+                                         </ModalContent>
+                                     </ModalOverlay>
+                                 )}
                 </BookCard>))}
+
             </BookList>
         </LibraryPage>
     );

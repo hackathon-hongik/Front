@@ -9,6 +9,7 @@ import { axiosInstance } from '../api';
 import axios from 'axios';
 
 
+
 const RecommendationPage = styled.div`
     width:1620px;
     height:930px;
@@ -261,22 +262,24 @@ export function Recommend() {
     ];
 
     const searchData=async(index)=>{
+      console.log(index);
         try{
-          const response=await axiosInstance.get(`/recommendation/${index}`);
-          const results = response.data.documents.map(doc => ({
+          const response=await axiosInstance.get(`/recommendation/${index}/book/`);
+          const results = response.data.map(doc => ({
             id:doc.id,
-            thumbnail: doc.book.thumbnail,
-            authors: doc.book.author,
-            contents: doc.book.content,
-            title:doc.book.title,
             isbn:doc.book.isbn,
+            title:doc.book.title,
+            author: doc.book.author,
+            date:doc.book.date,
             publisher:doc.book.publisher,
-            date:doc.book.date
+            thumbnail: doc.book.thumbnail,
+            contents: doc.book.content,
+           
           }));   
 
           console.log(response.data);
 
-          navigate("/afterlogin/recommendation/recommendresult", {state:{results, selectedQuestion}});  //selectedQuestion-> 어떤 고민에 대한 추천인지를 알기 위해서
+          navigate("/afterlogin/recommendation/recommendresult", {state:{results, category:selectedQuestion}});  //selectedQuestion-> 어떤 고민에 대한 추천인지를 알기 위해서
         }
         catch(e){
           console.log(e);

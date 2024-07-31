@@ -10,6 +10,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import {bookAPI} from "../api";
+import { axiosInstance } from "../api";
 
 const API_KEY=process.env.REACT_APP_KAKAO_BOOK_API_KEY;
 
@@ -20,23 +21,41 @@ export function AfterLoginMain(){
     const [bookmarked, setBookmarked] = useState([]);
     const [isCheck,setCheck]=useState(false);
     const [searchWord,setSearchWord]=useState("");
+    const [bookResults,setBookResults]=useState([]);
+    const [readingCount,setReadingCount]=useState(0);
 
+    const mockData = [
+        { id: 1, title: "책 1", content: "사람은 미래에 대한 기대가 있어야만 세상을 살아갈 수 있다.", hearts: 620 },
+        { id: 2, title: "책 2", content: "결국 직장에서 성공 원리는 아주 간단하다. 자기 일처럼 상상하며 알아가 보도록 하라." ,hearts: 720},
+        { id: 3, title: "책 3", content: "결정의 순간에 할 수 있는 최선은 좋은 일을 하는 것이며, 차선은 옳은 일을 하는 것이다." ,hearts: 420},
+        { id: 4, title: "책 4", content: "결정의 순간에 할 수 있는 최선은 좋은 일을 하는 것이며, 차선은 옳은 일을 하는 것이다." ,hearts: 120},
+        { id: 5, title: "책 5", content: "결정의 순간에 할 수 있는 최선은 좋은 일을 하는 것이며, 차선은 옳은 일을 하는 것이다." ,hearts: 150},
+        // Add more mock data here
+    ];
+
+   
     useEffect(() => {
-        // Simulate fetching data from server
-        const fetchData = async () => {
-            const mockData = [
-                { id: 1, title: "책 1", content: "사람은 미래에 대한 기대가 있어야만 세상을 살아갈 수 있다.", hearts: 620 },
-                { id: 2, title: "책 2", content: "결국 직장에서 성공 원리는 아주 간단하다. 자기 일처럼 상상하며 알아가 보도록 하라." ,hearts: 720},
-                { id: 3, title: "책 3", content: "결정의 순간에 할 수 있는 최선은 좋은 일을 하는 것이며, 차선은 옳은 일을 하는 것이다." ,hearts: 420},
-                { id: 4, title: "책 4", content: "결정의 순간에 할 수 있는 최선은 좋은 일을 하는 것이며, 차선은 옳은 일을 하는 것이다." ,hearts: 120},
-                { id: 5, title: "책 5", content: "결정의 순간에 할 수 있는 최선은 좋은 일을 하는 것이며, 차선은 옳은 일을 하는 것이다." ,hearts: 150},
-                // Add more mock data here
-            ];
-            setData(mockData);
-        };
-        fetchData();
+        fetchBook();
+        fetchOneLine();
     }, []);
-    
+
+
+    const fetchOneLine = async () => {
+        setData(mockData);
+    };
+
+    const fetchBook=async()=>{
+        try{
+            const response=await axiosInstance.get('/1/');
+            setBookResults(response.data.recent_reading_books)
+            setReadingCount(response.data.reading_count);
+            console.log(response);
+        }
+        catch(e){
+            console.log(e);
+        }
+    }
+
     const searchData=async()=>{ 
         try{
             const response=await bookAPI.get(`/v3/search/book?query=${searchWord}`,{
@@ -55,6 +74,8 @@ export function AfterLoginMain(){
                 contents: doc.contents,
                 title:doc.title,
                 isbn:doc.isbn,
+                publisher:doc.publisher,
+                date:doc.datetime
             }));   //documents는 배열이기 때문에 아래 방식이 아닌 이런 방식으로 처리해야 함
 
             // const results = {
@@ -165,7 +186,7 @@ export function AfterLoginMain(){
                         <img src={greenpic} className="greenPic"></img>
                         <div className="howMany">
                             <div className="showHowMany">
-                                
+                                <p className="readingCount">{readingCount}권</p>
                             </div>
                             {/*<img src={pluspic} className="plusPicBtn" onClick={()=>handleItemClick()}></img>*/}
                         </div>
@@ -173,17 +194,17 @@ export function AfterLoginMain(){
         
 
                     <div className="myBooks">
-                        <div className="twoBook"> 
+                        {bookResults.length>0 && (<div className="twoBook"> 
                             <div className="bookInfo">
                                 <div className="bookPic">
-                                    <p>책 사진</p>
+                                    <img src={bookResults[0].book.thumbnail} alt="bookPic"></img>
                                 </div>
                                 <div className="bookExplain">
                                     <div className="title">
-                                        <p>책 제목</p>
+                                        <p className="bookTitle">{bookResults[0].book.title}</p>
                                     </div>
                                     <div className="writer">
-                                        <p>저자</p>
+                                        <p className="bookAuthor">{bookResults[0].book.author}</p>
                                     </div>
                                 </div>
                             </div>
@@ -191,19 +212,19 @@ export function AfterLoginMain(){
                                 <button className="toMyShelf" onClick={()=>handleItemClick('/afterlogin/thisbook')}>내 서재 가기</button>
                                 <button className="record">바로 기록하기</button>
                             </div>
-                        </div>
+                        </div>)}
 
-                        <div className="twoBook">
+                        {bookResults.length>0 && (<div className="twoBook">
                             <div className="bookInfo">
                                 <div className="bookPic">
-                                    <p>책 사진</p>
+                                    <img src={bookResults[1].book.thumbnail} alt="bookPic"></img>
                                 </div>
                                 <div className="bookExplain">
                                     <div className="title">
-                                        <p>책 제목</p>
+                                        <p className="bookTitle">{bookResults[1].book.title}</p>
                                     </div>
                                     <div className="writer">
-                                        <p>저자</p>
+                                        <p className="bookAuthor">{bookResults[1].book.author}</p>
                                     </div>
                                 </div>
                             </div>
@@ -211,7 +232,7 @@ export function AfterLoginMain(){
                                 <button className="toMyShelf" onClick={()=>handleItemClick('/afterlogin/thisbook')}>내 서재 가기</button>
                                 <button className="record">바로 기록하기</button>
                             </div>
-                        </div>
+                        </div>)}
                     </div>
 
                     <div className="gotoMyShelfBox">
@@ -229,8 +250,8 @@ export function AfterLoginMain(){
 
             <div className="banner" onClick={()=>handleItemClick("/afterlogin/recommendation")}>
                 <div className="text3">
-                    <p className="first_row">추천책 받고</p>
-                    <p className="second_row">'한달 읽기' 시작하기</p>
+                    <p className="first_row">당신의 고민에 맞는</p>
+                    <p className="second_row">책 추천 받기</p>
                 </div>
 
                 <img src={orange_banner} className="bannerPic"></img>
