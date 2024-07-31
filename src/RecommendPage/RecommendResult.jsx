@@ -130,7 +130,7 @@ const BookList=styled.div`
     justify-content: flex-start;
     margin-top: 80px;
     margin-left:100px;
-    background-color: beige;
+    //background-color: beige;
 `;
 
 const IndexCircle=styled.div`
@@ -159,12 +159,13 @@ const IndexCircle=styled.div`
 
 const BookCard = styled.div`
   width: 220px;
-  height: 370px;
+  height: 400px;
   display: flex;
   flex-direction: column;
   align-items: center;
   margin-bottom: 20px;
-  border: 1px solid #ddd;
+  /* border: 1px solid #ddd; */
+  border:none;
   border-radius: 8px;
   margin-left: 0px;
   margin-right:15px;
@@ -216,6 +217,43 @@ const BookCard = styled.div`
     text-overflow: ellipsis;
     white-space: nowrap;
   }
+
+  .pickBtn{
+        width:120px;
+        height:40px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        margin-top: 10px;
+        background-color: white;
+
+        .material-symbols-outlined{
+        width:19px;
+        height:19px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        font-size: 32px;
+        }
+
+        p{
+            color: var(--kakao-logo, #000);
+            text-align: center;
+            font-feature-settings: 'ss10' on;
+            /* Label 1/Normal - Bold */
+            font-family: "Pretendard JP";
+            font-size: 14px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 142.9%; /* 20.006px */
+            letter-spacing: 0.203px;
+            margin-left: 10px;
+        }
+    }
+
+  
 `;
 
 const GoHomeBtn=styled.button`
@@ -227,6 +265,7 @@ const GoHomeBtn=styled.button`
     border-radius: 8px;
     background: #FF6E23;
     color: #FFF;
+    margin-left:480px;
 
     text-align: center;
     font-feature-settings: 'ss10' on;
@@ -239,35 +278,165 @@ const GoHomeBtn=styled.button`
     letter-spacing: 0.091px;
 `;
 
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+`;
+
+const ModalContent = styled.div`
+  width:450px;
+  height:510px;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  border-radius: 20px;
+  background: #FFF;
+  padding: 40px 48px 28px 48px;
+  margin-top:230px;
+
+  .modalCover{
+    width:104px;
+    height:156px;
+  }
+
+  .modalTitle{
+    color: var(--kakao-logo, #000);
+    text-align: center;
+    font-feature-settings: 'ss10' on;
+    /* Body 1/Reading - Bold */
+    font-family: "Pretendard JP";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 162.5%; /* 26px */
+    letter-spacing: 0.091px;
+  }
+
+  .modalAuthor{
+    color: var(--kakao-logo, #000);
+    text-align: center;
+    font-feature-settings: 'ss10' on;
+    /* Label 2/Medium */
+    font-family: "Pretendard JP";
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 138.5%; /* 18.005px */
+    letter-spacing: 0.252px;
+  }
+
+  .modalPublisher{
+    color: rgba(60, 60, 67, 0.60);
+    font-feature-settings: 'ss10' on;
+    /* Label 2/Regular */
+    font-family: "Pretendard JP";
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 138.5%; /* 18.005px */
+    letter-spacing: 0.252px;
+  }
+
+  .modalPickBtn{
+    display: flex;
+    flex-direction: row;
+    width: 170px;
+    height: 20px;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    border:none;
+    border-radius: 4px;
+    background: #FFF22F;
+    color: black;
+    margin-left:140px;
+
+    text-align: center;
+    font-feature-settings: 'ss10' on;
+    /* Label 1/Normal - Bold */
+    font-family: "Pretendard JP";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 142.9%; /* 20.006px */
+    letter-spacing: 0.203px;
+  }
+
+  .modalContents{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 10;
+    align-self: stretch;
+    overflow: hidden;
+    color: var(--kakao-logo, #000);
+
+    font-feature-settings: 'ss10' on;
+    text-overflow: ellipsis;
+    font-family: "Pretendard JP";
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 19.5px */
+    letter-spacing: 0.252px;
+  }
+`;
 
 export function RecommendResult(){
     const location = useLocation();
     const navigate = useNavigate();
-    const {results,category}=location.state || { results: [], category:""};
-    //const category=location.state.category;
+    //const {results,category}=location.state || { results: [], category:""};
+    const category=location.state.category;
+    const {results}=location.state || { results: []};
     const [isCheck, setCheck] = useState(false);
     const [clickedBookIndex, setClickedBookIndex] = useState(null);
-    const [bookmarked, setBookmarked] = useState(
-        JSON.parse(localStorage.getItem('bookmarkedBooks')) || []        //새로고침해도 찜 결과가 남아있게 하고 싶었지만 이 결과가 다른 책 목록에도 그대로 적용된다는
-      );                                                                 //문제발생  -> 인자를 index가 아닌 book.isbn(isbn)(책 고유값)을 넘겨줘서 해결
+    const [bookmarked, setBookmarked] = useState([]);
+    const [fetchedBookmarked,setFetchedBookmarked]=useState([]);
+
+
+    useEffect(()=>{
+        fetchWishBooks()
+    },[]);
+
+    useEffect(() => {
+        if (fetchedBookmarked && fetchedBookmarked.mybooks) {
+            const wishBooks = fetchedBookmarked.mybooks.map(book => book.book.isbn);
+            setBookmarked(wishBooks);
+        }
+    }, [fetchedBookmarked]);
+
+    const fetchWishBooks=async()=>{
+        try{
+            const response=await axiosInstance.get('/desk/1/books/group/wish/');
+            setFetchedBookmarked(response.data);
+            console.log(fetchedBookmarked);
+        }
+        catch(e){
+            console.log(e);
+        }
+    }
     
-      useEffect(() => {
-        localStorage.setItem('bookmarkedBooks', JSON.stringify(bookmarked));
-      }, [bookmarked]);
-    
-    const pickBook=async(isbn,title,author,thumbnail,content)=>{
+    const pickBook=async(isbn,title,author,thumbnail,content,publisher,date)=>{
         try{
             const newBook={
                 book:{
                     isbn:isbn,
                     title:title,
                     author:author,
+                    date:date,
+                    publisher:publisher,
                     thumbnail:thumbnail,
                     content:content
                 }
             }
 
-            const response=await axiosInstance.post("/books/1/wish/",newBook);
+            const response=await axiosInstance.post("/desk/1/books/wish/",newBook);
             console.log(response);
         }
         catch(e){
@@ -280,15 +449,19 @@ export function RecommendResult(){
         navigate(path);
       };
 
-    const handlePickClick=(isbn,title,author,thumbnail,content)=>{  //찜 처리
+    const handlePickClick=(isbn,title,author,thumbnail,content,publisher,date)=>{  //찜 처리
 
-        pickBook(isbn,title,author,thumbnail,content);
+        pickBook(isbn,title,author,thumbnail,content,publisher,date);
         toggleBookmark(isbn); //책 고유값인 isbn값을 넘겨주어서 
     }
 
     const showInfo = (index) => {
         setClickedBookIndex(index === clickedBookIndex ? null : index);
     };
+
+    const closeModal = () => {
+        setClickedBookIndex(null);
+      };
 
     const toggleBookmark = (id) => {//즐겨찾기 부분
         // setBookmarked((prev) => 
@@ -345,19 +518,24 @@ export function RecommendResult(){
                                  <IndexCircle>{index+1}</IndexCircle>
                                  <img className="cover" src={book.thumbnail} alt="Book Thumbnail" onClick={() => showInfo(index)}/>
                                  <div className="title">{book.title}</div>
-                                 <div className="author">{book.authors.join(', ')}</div>  {/* .join은 작가 여러명일때 콤마 붙이기 위한 용도 */}
+                                 <div className="author">{book.author}</div>  {/* .join은 작가 여러명일때 콤마 붙이기 위한 용도 */}
                                  {clickedBookIndex === index && (
-                                     <div className="specificInfo">
-                                         <p>제목: {book.title || "N/A"}</p>
-                                         <p>책 설명: {book.contents || "N/A"}</p>
-                                         <p>작가: {book.authors?.join(', ') || "N/A"}</p>
-                                         <p>출판사: {book.publisher || "N/A"}</p>  {/* "N/A는 저 카테고리가 없는경우 처리" */}
-                                     </div>
+                                    <ModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
+                                        <ModalContent onClick={(e) => e.stopPropagation()}> {/*모달창을 눌렀을때는 꺼지지 않도록*/}
+                                            <img className="modalCover" src={book.thumbnail} alt="Book Thumbnail"/>
+                                            <p className="modalTitle">{book.title || "N/A"}</p>
+                                            <p className="modalAuthor">{book.authors?.join(', ') || "N/A"}</p>
+                                            <p className="modalPublisher">{book.publisher || "N/A"}</p>  {/* "N/A는 저 카테고리가 없는경우 처리" */}
+                                            <button className="modalPickBtn" onClick={()=>handlePickClick(book.isbn,book.title,book.authors,book.thumbnail,book.contents,book.publisher,book.date)}>찜하기</button>
+                                            <p className="modalContents">{book.contents || "N/A"}</p>
+                                        </ModalContent>
+                                 </ModalOverlay>
                                  )}
-                                 <div className="addPickBtn">
-                                    <span className="material-symbols-outlined" onClick={() => handlePickClick(book.isbn,book.title,book.authors,book.thumbnail,book.contents,index)} style={{ backgroundColor: bookmarked.includes(book.isbn) ? "#FF6E23" : "transparent" }}>
+                                 <div className="pickBtn" onClick={() => handlePickClick(book.isbn,book.title,book.author,book.thumbnail,book.contents,book.publisher,book.date,index)}>
+                                    <span className="material-symbols-outlined" style={{ backgroundColor: bookmarked.includes(book.isbn) ? "#FF6E23" : "transparent" }}>
                                         bookmark
                                     </span>
+                                    <p style={{ color: bookmarked.includes(book.isbn) ? "black" : "#989BA2" }}>찜하기</p>
                                  </div>
                                  
                              </BookCard>

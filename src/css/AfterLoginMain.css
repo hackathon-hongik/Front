@@ -203,8 +203,25 @@
 .showHowMany{
     width:70px;
     height:52px;
+    display:flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
     border-radius: 25px;
     background-color: black;
+}
+
+.readingCount{
+    color: #35E879;
+    text-align: center;
+    font-feature-settings: 'ss10' on;
+    /* Heading 2/Bold */
+    font-family: "Pretendard JP";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%; /* 28px */
+    letter-spacing: -0.24px;
 }
 
 .plusPicBtn{
@@ -221,7 +238,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: antiquewhite;
+    /* background-color: antiquewhite; */
 }
 
 .twoBook{
@@ -230,7 +247,8 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: #FF6E23;
+    /* background-color: #FF6E23; */
+    background-color: white;
     margin-left: 10px;
 }
 
@@ -241,13 +259,16 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    background-color: aqua;
+    /* background-color: aqua; */
 }
 
 .bookPic{
     width:150px;
     height:200px;
-    background-color: #2EEA7E;
+    display: flex;
+    flex-direction: row;
+    
+    /* background-color: #2EEA7E; */
 }
 
 .bookExplain{
@@ -256,9 +277,46 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: white;
+    /* background-color: white; */
 }
 
+.bookTitle{
+    width:140px;
+    height:60px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    color: var(--kakao-logo, #000);
+    font-family: "Pretendard JP";
+    font-size: 18px;
+    font-style: normal;
+    font-weight: 550;
+    line-height: 144.5%; /* 26.01px */
+    letter-spacing: -0.004px;
+    /* background-color: red; */
+}
+
+.bookAuthor{
+    width:145px;
+    height:50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    overflow: hidden;
+    color: var(--kakao-logo, #000);
+    
+    font-feature-settings: 'ss10' on;
+    text-overflow: ellipsis;
+    /* white-space: nowrap; */
+    /* Body 1/Normal - Regular */
+    font-family: "Pretendard JP";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 24px */
+    letter-spacing: 0.091px;
+    /* background-color: aqua; */
+}
 .buttons{
     width:320px;
     height:120px;
@@ -266,7 +324,7 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color: red;
+    /* background-color: red; */
     margin-top:20px;
 }
 
@@ -388,7 +446,7 @@
     font-family: "Pretendard JP";
     font-size: 24px;
     font-style: normal;
-    font-weight: 700;
+    font-weight: 500;
     line-height: 135.8%; /* 38.024px */
     letter-spacing: -0.661px;
 }
@@ -400,7 +458,7 @@
     font-family: "Pretendard JP";
     font-size: 24px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 700;
     line-height: 135.8%;
     letter-spacing: -0.661px;
 }

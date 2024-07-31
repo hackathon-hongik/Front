@@ -165,8 +165,8 @@ export function BeforeLoginMain(){
 
             <div className="banner" onClick={()=>handleItemClick("/login")}>
                 <div className="text3">
-                    <p className="first_row">추천책 받고</p>
-                    <p className="second_row">'한달 읽기' 시작하기</p>
+                    <p className="first_row">당신의 고민에 맞는</p>
+                    <p className="second_row">책 추천 받기</p>
                 </div>
 
                 <img src={orange_banner} className="bannerPic"></img>
