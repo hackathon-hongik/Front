@@ -14,7 +14,6 @@ import { Community } from "./Communities/Community";
 import { CommunityWrite } from "./Communities/CommunityWrite";
 import { CommunityScrap } from "./Communities/CommunityScrap";
 import { LookNote } from "./components/LookNote";
-
 import {Routes,Route} from "react-router-dom";
 
 function App() {

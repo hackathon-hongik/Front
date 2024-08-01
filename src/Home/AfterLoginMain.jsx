@@ -210,7 +210,7 @@ export function AfterLoginMain(){
                             </div>
                             <div className="buttons">
                                 <button className="toMyShelf" onClick={()=>handleItemClick('/afterlogin/thisbook')}>내 서재 가기</button>
-                                <button className="record">바로 기록하기</button>
+                                <button className="record" onClick={()=>handleItemClick('/afterlogin/note')}>바로 기록하기</button>
                             </div>
                         </div>)}
 
@@ -230,7 +230,7 @@ export function AfterLoginMain(){
                             </div>
                             <div className="buttons">
                                 <button className="toMyShelf" onClick={()=>handleItemClick('/afterlogin/thisbook')}>내 서재 가기</button>
-                                <button className="record">바로 기록하기</button>
+                                <button className="record" onClick={()=>handleItemClick('/afterlogin/note')}>바로 기록하기</button>
                             </div>
                         </div>)}
                     </div>

@@ -17,6 +17,8 @@ import sadImage from '../assets/슬퍼요.png';
 import worriedImage from '../assets/걱정돼요.png';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 
 export const getShortNotes = async (memberId, isbn) => {
     try {
@@ -37,6 +39,17 @@ export const getLongNotes = async (memberId, isbn) => {
       return [];
     }
   }; 
+
+export const getMood = async (memberId, isbn) => {
+    try {
+      const response = await axios.get(`/desk/${memberId}/${isbn}/looknote/mood`);
+      return response.data;
+    } catch (error) {
+      console.error("Failed to fetch emotion counts:", error);
+      return null;
+    }
+  };
+
 
 const AppContainer = styled.div`
     width:1620px;
@@ -459,7 +472,7 @@ letter-spacing: 0.144px;
 // 여기부터 팝업창
 
 
-const ModalOverlay = styled.div`
+const ShortModalOverlay = styled.div`
   position: fixed;
   top: 0;
   left: 0;
@@ -470,8 +483,8 @@ const ModalOverlay = styled.div`
   justify-content: center;
 `;
 
-const ModalContent = styled.div`
-  width:450px;
+const ShortModalContent = styled.div`
+  width:640px;
   height:510px;
   padding: 20px;
   border-radius: 8px;
@@ -480,99 +493,247 @@ const ModalContent = styled.div`
   background: #FFF;
   padding: 40px 48px 28px 48px;
   margin-top:230px;
-
-  .modalCover{
-    width:104px;
-    height:156px;
+  
+  .left-arrow-icon{
+    color: #000000;
+    font-size: 25px;
   }
 
-  .modalTitle{
-    color: var(--kakao-logo, #000);
-    text-align: center;
-    font-feature-settings: 'ss10' on;
-    /* Body 1/Reading - Bold */
-    font-family: "Pretendard JP";
-    font-size: 16px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 162.5%; /* 26px */
-    letter-spacing: 0.091px;
+  .left-arrow-icon:hover{
+            color:#FF6E23;
+    }
+    
+  .right-arrow-icon{
+    color: #000000;
+    font-size: 25px;
   }
 
-  .modalAuthor{
-    color: var(--kakao-logo, #000);
-    text-align: center;
-    font-feature-settings: 'ss10' on;
-    /* Label 2/Medium */
-    font-family: "Pretendard JP";
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 500;
-    line-height: 138.5%; /* 18.005px */
-    letter-spacing: 0.252px;
+  .right-arrow-icon:hover{
+            color:#FF6E23;
+    }
+`;
+
+const LongModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+`;
+
+const LongModalContent = styled.div`
+  width:960px;
+  height:800px;
+  padding: 20px;
+  border-radius: 8px 8px 8px 8px;
+  text-align: center;
+  border-radius: 20px;
+  background: #FFF;
+  padding: 40px 48px 28px 48px;
+  margin-top:50px;
+  overflow: auto;
+   
+  .close{
+    margin-left:800px;
+    cursor: default;
   }
 
-  .modalPublisher{
-    color: rgba(60, 60, 67, 0.60);
-    font-feature-settings: 'ss10' on;
-    /* Label 2/Regular */
-    font-family: "Pretendard JP";
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 138.5%; /* 18.005px */
-    letter-spacing: 0.252px;
+  .line1{
+    width:850px;
+    height:1px;
+    margin-top: 40px;
+    margin-left: 50px;
+    background-color:rgba(112, 115, 124, 0.22);
   }
 
-  .modalAddBtn{
+  .top1{
+    width:820px;
+    height:50px;
     display: flex;
     flex-direction: row;
-    width: 170px;
-    height: 20px;
-    padding: 20px;
+    align-items: center;
+    margin-top: 30px;
+    margin-left: 60px;
+    background-color: beige;
+
+    .heart{
+        margin-left: 550px;
+    }
+
+    .bookmark{
+        margin-left:10px;
+    }
+    .chatIcon{
+        margin-top: 3px;
+        margin-left: 10px;
+        font-size: 19px;
+    }
+  }
+
+  .top2{
+    width:820px;
+    height:30px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 60px;
+    background-color: aqua;
+
+    .modalCreateDate{
+        font-family: "Pretendard JP";
+        font-size: 10px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 138.5%; /* 18.005px */
+        letter-spacing: 0.252px;
+        color: #989BA2;
+    }
+
+    .modalNickname{
+        width:70px;
+        height:30px;
+        display:flex;
+        flex-direction: row;            
+        justify-content: center;
+        align-items: center;
+        color: #01524D;
+        font-feature-settings: 'ss10' on;
+        text-overflow: ellipsis;
+        /* Label 2/Bold */
+        font-family: "Pretendard JP";
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 600;
+        //line-height: 138.5%; /* 18.005px */
+        //letter-spacing: 0.252px;
+        background-color: beige;
+    }
+  }
+
+  .modalLongWritingBox{
+    width:940px;
+    height:500px;
+    display: flex;
+    flex-direction: row;
     justify-content: center;
     align-items: center;
-    gap: 12px;
-    border:none;
+    margin-top: 10px;
+    background-color:aqua;
+
+    .modalLongWriting{
+        width:800px;
+        height:490px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        background-color: beige;
+    }
+    .left-arrow-icon{
+        color: default;
+        font-size: 35px;
+
+    }
+    .left-arrow-icon:hover{
+            color:#FF6E23;
+    
+        }
+    .right-arrow-icon{
+        color: default;
+        font-size: 35px;
+    
+    }
+    .right-arrow-icon:hover{
+            color:#FF6E23;
+        }
+  }
+
+  .likeLine{
+    width:850px;
+    height:50px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    margin-top: 20px;
+    margin-left:50px;
+
+    .line2{
+        width:380px;
+        height:1px;
+        background-color:rgba(112, 115, 124, 0.22);
+    }
+
+    .heartBox{
+        width:90px;
+        height:35px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        border-radius: 40px;
+        border: 1px solid var(--Line-Solid-Normal, #E1E2E4);
+        background: #FFF;
+
+        .likeText{
+            color: #989BA2;
+            margin-left: 5px;
+        }
+    }
+  }
+
+  .modalBookBox{
+    width:400px;
+    height:80px;
     border-radius: 4px;
-    background: #2EEA7E;
-    color: #FFF;
-    margin-left:140px;
+    background: #F2F2F7;
+    padding: 16px 24px;
+    margin-top: 40px;
+    margin-left:240px;
+    
 
-    text-align: center;
-    font-feature-settings: 'ss10' on;
-    /* Label 1/Normal - Bold */
-    font-family: "Pretendard JP";
-    font-size: 12px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 142.9%; /* 20.006px */
-    letter-spacing: 0.203px;
-  }
+    .modalBookInfo{
+        width:170px;
+        height:50px;
+        margin-left:160px;
+        background-color: #01524D;
+    }
 
-  .line{
-    width:450px;
-    height:1px;
-    margin-top: 15px;
-    background-color: rgba(112, 115, 124, 0.22);
-  }
+    .modalBookTitle{
+        width:160px;
+        height:20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        font-family: "Pretendard JP";
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 600;
+        background-color: palegreen;
+        margin: 0; 
+        margin-top: 10px;
+        margin-right: 190px;
+    }
 
-  .modalContents{
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 10;
-    align-self: stretch;
-    overflow: hidden;
-    color: var(--kakao-logo, #000);
-
-    font-feature-settings: 'ss10' on;
-    text-overflow: ellipsis;
-    font-family: "Pretendard JP";
-    font-size: 13px;
-    font-style: normal;
-    font-weight: 400;
-    line-height: 150%; /* 19.5px */
-    letter-spacing: 0.252px;
+    .modalBookAuthor{
+        width:160px;
+        height:20px;
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        font-family: "Pretendard JP";
+        font-size: 12px;
+        font-style: normal;
+        font-weight: 400;
+        background-color: red;
+        margin: 0; 
+        margin-right: 190px;
+    }
   }
 `;
 
@@ -588,9 +749,6 @@ const navigate = useNavigate();
 const query = useQuery();
 const [activeTab, setActiveTab] = useState('simple');
 const [isCheck, setCheck] = useState(false);
-const [checked, setChecked] = useState(false);
-const [shortNotes, setShortNotes] = useState([]);
-const [longNotes, setLongNotes] = useState([]);
 const [memberId, setMemberId] = useState('');
 const [isbn, setMyBookId] = useState('');
 const [short_review_id, setShortReviewId] = useState('');
@@ -602,7 +760,7 @@ const [clickedWritingIndex, setClickedWritingIndex] = useState(null);
 
 
 //더미 데이터
-const [dummyNotes, setDummyNotes] = useState([
+const [shortNotes, setShortNotes] = useState([
     { id: 1, comment: "책을 읽고 느낀 점을 자유롭게 적어주세요.가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라", date: "2021.09.09" },
     { id: 2, comment: "자신의 가치를 발견하고 존중하는 것이 진정한 웰빙의 시작이다.", date: "2024.07.19" },
     { id: 3, comment: "타인의 기대에 부응하는 삶이 아닌, 내가 진정으로 원하는 삶을 추구하는 것이 중요하다. 이는 나의 웰빙과 만족도를 높이는 핵심 요소다.", date: "2024.07.19" },
@@ -611,7 +769,7 @@ const [dummyNotes, setDummyNotes] = useState([
     { id: 6, comment: "건강한 자기에만 주번 사람들에게도 긍정적인 영향을 미친다. 나를 돌보는 것이 이기적인 것이 아니라 필수적인 일이다.", date: "2024.07.19" }
   ]);
   
-const [dummyLongNotes, setDummyLongNotes] = useState([
+  const [longNotes, setLongNotes] = useState([
     { long_review_id: 1, 
       isbn: "9791188331793",
       review_title: "글 제목 입력", 
@@ -630,7 +788,7 @@ const [dummyLongNotes, setDummyLongNotes] = useState([
   ]);
   
 
-const [dummyEmotions, setDummyEmotions] = useState([
+const [emotions, setEmotions] = useState([
   { id: 1, type: "good", displayName: "좋아요", count: 0, img: goodImage },
   { id: 2, type: "okay", displayName: "괜찮아요", count: 0, img: okayImage },
   { id: 3, type: "tired", displayName: "피곤해요", count: 0, img: tiredImage },
@@ -638,19 +796,10 @@ const [dummyEmotions, setDummyEmotions] = useState([
   { id: 5, type: "worried", displayName: "걱정돼요", count: 0, img: worriedImage },
 ]);
 
-const fetchEmotionCounts = async (memberId, isbn) => {
-  try {
-    const response = await axios.get(`/desk/${memberId}/${isbn}/looknote/mood`);
-    return response.data;
-  } catch (error) {
-    console.error("Failed to fetch emotion counts:", error);
-    return null;
-  }
-};
   
 
 
-const [dummyQuestions, setDummyQuestions] = useState([
+const [isQuestions, setIsQuestions] = useState([
     { id: 1,
       question: "오늘의 질문은 최대 2줄", 
       answer: "자연 속의 평온함을 느끼며 휴식을 취하는 것만큼 좋은 것은 없습니다. 현대의 바쁜 생활 속에서 잠시라도 자연을 접하는 순간은 큰 힘이 됩니다. 새로운 에너지를 얻고 재충전할 수 있는 기회가 됩니다.",
@@ -677,7 +826,7 @@ useEffect(() => {
 
 useEffect(() => {
     const fetchShortNotes = async () => {
-      const notes = await getShortNotes(memberId);
+      const notes = await getShortNotes(memberId, isbn);
       setShortNotes(notes);
     };
     fetchShortNotes();
@@ -685,18 +834,26 @@ useEffect(() => {
 
 useEffect(() => {
     const fetchLongNotes = async () => {
-      const notes = await getLongNotes(memberId);
+      const notes = await getLongNotes(memberId, isbn);
       setLongNotes(notes);
     };
     fetchLongNotes();
   }, []);
 
+  useEffect(() => {
+    const fetchMood = async () => {
+      const notes = await getMood(memberId, isbn);
+      setIsQuestions(notes);
+    };
+    fetchMood();
+  }, []);
+
 
   useEffect(() => {
     const updateEmotionCounts = async () => {
-      const data = await fetchEmotionCounts();
+      const data = await getMood();
       if (data) {
-        setDummyEmotions(emotions =>
+        setEmotions(emotions =>
           emotions.map(emotion => ({
             ...emotion,
             count: data[emotion.type + "_count"] || 0
@@ -717,25 +874,45 @@ const closeModal = () => {
    setClickedWritingIndex(null);
  };
 
- const goToPrevious = () => {
+const shortGoToPrevious = () => {
    setClickedWritingIndex(prevIndex =>
-       prevIndex === 0 ? longNotes.length - 1 : prevIndex - 1
+       prevIndex === 0 ? shortNotes.length - 1 : prevIndex - 1
    );
 };
 
-const goToNext = () => {
+const shortGoToNext = () => {
    setClickedWritingIndex(prevIndex =>
-       prevIndex === longNotes.length - 1 ? 0 : prevIndex + 1
+       prevIndex === shortNotes.length - 1 ? 0 : prevIndex + 1
    );
 };
 
+const longGoToPrevious = () => {
+  setClickedWritingIndex(prevIndex =>
+      prevIndex === 0 ? longNotes.length - 1 : prevIndex - 1
+  );
+};
+
+const longGoToNext = () => {
+  setClickedWritingIndex(prevIndex =>
+      prevIndex === longNotes.length - 1 ? 0 : prevIndex + 1
+  );
+};
+
+const emoGoToPrevious = () => {
+  setClickedWritingIndex(prevIndex =>
+      prevIndex === 0 ? isQuestions.length - 1 : prevIndex - 1
+  );
+};
+
+const emoGoToNext = () => {
+  setClickedWritingIndex(prevIndex =>
+      prevIndex === isQuestions.length - 1 ? 0 : prevIndex + 1
+  );
+};
 
 const handleItemClick = (path) => {
         navigate(path);
 };   
-
-
-
 
 
     return(
@@ -786,36 +963,46 @@ const handleItemClick = (path) => {
                 </TabsContainer>
             
                  {activeTab === 'simple' && (  //하루 기록
-                 <NoteCardContainer>
-                         {dummyNotes.map(note  => (
-                             <NoteCard key={note.id}>
-                                  <NoteText>{note.comment}</NoteText>
+                    <NoteCardContainer>
+                         {shortNotes.map((note, index) => (
+                             <NoteCard key={note.short_review_id} onClick={()=>showInfo(index)}>
+                                  <NoteText>{note.short_comment}</NoteText>
                                   <NoteActions>
                                     <div style={{ display: 'flex', alignItems: 'center'}}>
-                                     <NoteDate>{note.date}</NoteDate>
+                                     <NoteDate>{new Date(note.created_at).toLocaleDateString()}</NoteDate>
                                     </div>
                                     <div>
                                      <EditButton><Emoji src={modifyButton} /></EditButton>
                                      <DeleteButton><Emoji src={deleteButton} /></DeleteButton>
                                      </div>
                                   </NoteActions>
-                             </NoteCard>
-                            ))}
-                 {/*shortNotes.map(note => (
-                   <NoteCard key={note.short_review_id}>
-                     <NoteText>{note.short_comment}</NoteText>
-                     <NoteActions>
-                      <div style={{ display: 'flex', alignItems: 'center'}}>
-                       <NoteDate>{new Date(note.created_at).toLocaleDateString()}</NoteDate>
-                      </div>
-                      <div>
-                       <EditButton><Emoji src={modifyButton} /></EditButton>
-                       <DeleteButton><Emoji src={deleteButtonButton} /></DeleteButton>
-                      </div>
-                     </NoteActions>
-                   </NoteCard>  // 서버열리면 이쪽으로 변경
-                 ))*/}
-               </NoteCardContainer>
+                            
+                            {clickedWritingIndex === index && (
+                                     <ShortModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
+                                        <ShortModalContent onClick={(e) => e.stopPropagation()}> {/*모달창을 눌렀을때는 꺼지지 않도록*/}
+                                            <div className="prevBtn" onClick={shortGoToPrevious} style={{
+                                                color: index === 0 ? '#989BA2 ' : '#000000 ',
+                                                pointerEvents: index === 0 ? 'none' : 'auto',
+                                                }}>
+                                                <span className="material-icons left-arrow-icon">
+                                                    arrow_circle_left
+                                                </span>
+                                            </div>
+                                            <div className="modalShortWriting">{note.short_comment}</div>
+                                            <div className="nextBtn" onClick={shortGoToNext} style={{
+                                                    color: index === shortNotes.length - 1 ? '#989BA2 ' : '#000000',
+                                                    pointerEvents: index === shortNotes.length - 1 ? 'none' : 'auto',
+                                                }}>
+                                                <span className="material-icons right-arrow-icon">
+                                                    arrow_circle_right
+                                                </span>
+                                            </div>
+                                        </ShortModalContent>
+                                     </ShortModalOverlay>    
+                                 )}
+                    </NoteCard>
+                    ))}
+                  </NoteCardContainer>
              )}
             {activeTab === 'detailed' && ( //자유 기록
                 <NoteCardContainer>
@@ -826,18 +1013,18 @@ const handleItemClick = (path) => {
                          <NoteActions>
                             <NoteDate>{new Date(note.created_at).toLocaleDateString()}</NoteDate>
                             <EditButton><Emoji src={modifyButton} /></EditButton>
-                            <DeleteButton><Emoji src={deleteButton} /></DeleteButton>
+                            <DeleteButton><Emoji src={deleteButto} /></DeleteButton>
                          </NoteActions>
                      </DetCard>
                  ))*/}
                  
-                 {dummyLongNotes.map((note,index) => (
+                 {longNotes.map((note,index) => (
                      <DetCard key={note.long_review_id}  onClick={()=>showInfo(index)}>
                          <DetTitle>{note.review_title}</DetTitle>
                          <NoteText>{note.long_text}</NoteText>
                          <NoteActions>
                             <div style={{ display: 'flex', alignItems: 'center'}}>
-                              <NoteDate>{note.created_at}</NoteDate>
+                              <NoteDate>{new Date(note.created_at).toLocaleDateString()}</NoteDate>
                             </div>
                             <div>
                             <EditButton><Emoji src={modifyButton}/></EditButton>
@@ -845,18 +1032,68 @@ const handleItemClick = (path) => {
                             </div>
                          </NoteActions>
                          {clickedWritingIndex === index && (
-                                     <ModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
-                                        <ModalContent onClick={(e) => e.stopPropagation()}> {/*모달창을 눌렀을때는 꺼지지 않도록*/}
-                                            <button className="prevBtn" onClick={goToPrevious}>
-                                                <FontAwesomeIcon icon={faChevronLeft} />
-                                            </button>
-                                            <div className="modalShortWriting">{note.long_text}</div>
-                                            <button className="nextBtn" onClick={goToNext}>
-                                                <FontAwesomeIcon icon={faChevronRight} />
-                                            </button>
-                                        </ModalContent>
-                                     </ModalOverlay>
-                                 )}
+                              <LongModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
+                                    <LongModalContent onClick={(e) => e.stopPropagation()}> {/*모달창을 눌렀을때는 꺼지지 않도록*/}
+                                          <span className="material-icons close" onClick={closeModal}>
+                                            close
+                                          </span>
+                                          <div className="line1"></div>
+                                          <div className="top1">
+                                            <div className="modalTitle">{note.review_title}</div>
+                                            <div className="heart">
+                                                <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
+                                                  <div className="heartNum">{note.like_count}</div>
+                                            </div>
+                                                <div className="bookmark">
+                                                  <FontAwesomeIcon icon={faBookmark} />
+                                                </div>
+                                                <span className="material-icons chatIcon">
+                                                    chat
+                                                </span>
+                                            </div>
+                                            <div className="top2">
+                                                <div className="modalCreateDate">{note.created_at}</div>
+                                                <div className="modalNickname">{note.nickname}</div>
+                                            </div>
+                                            <div className="modalLongWritingBox">
+                                                <div className="prevBtn" onClick={longGoToPrevious} style={{
+                                                color: index === 0 ? '#989BA2 ' : '#000000 ',
+                                                pointerEvents: index === 0 ? 'none' : 'auto',
+                                                }}>
+                                                    <span className="material-icons left-arrow-icon">
+                                                        arrow_circle_left
+                                                    </span>
+                                                </div>
+                                                <div className="modalLongWriting">{note.long_text}</div>
+                                                <div className="nextBtn" onClick={longGoToNext} style={{
+                                                    color: index === longNotes.length - 1 ? '#989BA2 ' : '#000000',
+                                                    pointerEvents: index === longNotes.length - 1 ? 'none' : 'auto',
+                                                }}>
+                                                    <span className="material-icons right-arrow-icon">
+                                                        arrow_circle_right
+                                                    </span>
+                                                </div>
+                                            </div>
+                                            <div className="likeLine">
+                                                <div className="line2"></div>
+                                                <div className="heartBox">
+                                                    <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
+                                                    <div className="likeText">좋아요</div>
+                                                </div>
+                                                <div className="line2"></div>
+                                            </div>
+
+                                            <div className="modalBookBox">
+                                                <div className="modalCover"></div>
+                                                <div className="modalBookInfo">
+                                                    <div className="modalBookTitle">{note.book_title}</div>
+                                                    <div className="modalBookAuthor">{note.book_author}</div>
+                                                </div>
+                                            </div>
+                                            
+                                  </LongModalContent>
+                          </LongModalOverlay>           
+                        )}
                      </DetCard>
                     ))}
                 </NoteCardContainer>
@@ -866,7 +1103,7 @@ const handleItemClick = (path) => {
                 <FormContainer>
                     
                     <EmotionIconsContainer>
-                        {dummyEmotions.map(emotion => (
+                        {emotions.map(emotion => (
                             <EmotionIcon key={emotion.id}>
                                 <EmotionImgCountWrapper>
                                     <EmotionImg src={emotion.img}/>
@@ -877,7 +1114,7 @@ const handleItemClick = (path) => {
                     ))}
                     </EmotionIconsContainer>
                     <EmotionContainer> 
-                        {dummyQuestions.map((question,index) => (
+                        {isQuestions.map((question,index) => (
                         <QuestionCard key={question.id}  onClick={()=>showInfo(index)}>
                             <QuestionText>Q. {question.question}</QuestionText>
                             <AnswerText>A. {question.answer}</AnswerText>
@@ -891,19 +1128,25 @@ const handleItemClick = (path) => {
                                 <DeleteButton><Emoji src={deleteButton} /></DeleteButton>
                             </div>
                             </NoteActions>
+                            
+                            
                             {clickedWritingIndex === index && (
-                                     <ModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
-                                        <ModalContent onClick={(e) => e.stopPropagation()}> {/*모달창을 눌렀을때는 꺼지지 않도록*/}
-                                            <button className="prevBtn" onClick={goToPrevious}>
-                                                <FontAwesomeIcon icon={faChevronLeft} />
-                                            </button>
+                                    <ShortModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
+                                        <ShortModalContent onClick={(e) => e.stopPropagation()}> {/*모달창을 눌렀을때는 꺼지지 않도록*/}
+                                            <div className="prevBtn" onClick={emoGoToPrevious}>
+                                                <span className="material-icons left-arrow-icon">
+                                                    arrow_circle_left
+                                                </span>
+                                            </div>
                                             <div className="modalShortWriting">{question.question}</div>
                                             <div className="modalShortWriting">{question.answer}</div>
-                                            <button className="nextBtn" onClick={goToNext}>
-                                                <FontAwesomeIcon icon={faChevronRight} />
-                                            </button>
-                                        </ModalContent>
-                                     </ModalOverlay>
+                                            <div className="nextBtn" onClick={emoGoToNext}>
+                                                <span className="material-icons right-arrow-icon">
+                                                    arrow_circle_right
+                                                </span>
+                                            </div>
+                                        </ShortModalContent>
+                                     </ShortModalOverlay>    
                                  )}
                         </QuestionCard>
                          ))}
