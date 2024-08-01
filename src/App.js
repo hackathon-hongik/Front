@@ -32,6 +32,8 @@ function App() {
       <Route path='/afterlogin/recommendation' element={<Recommend/>}/>
       <Route path='/afterlogin/recommendation/recommendresult' element={<RecommendResult/>}/>
       <Route path='/afterlogin/community' element={<Community/>}/>
+      <Route path='/afterlogin/community/communityscrap' element={<CommunityScrap/>}/>
+      <Route path='/afterlogin/community/communitywrite' element={<CommunityWrite/>}/>
     </Routes>
   );
 }
