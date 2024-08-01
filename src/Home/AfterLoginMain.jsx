@@ -204,7 +204,7 @@ export function AfterLoginMain(){
                                         <p className="bookTitle">{bookResults[0].book.title}</p>
                                     </div>
                                     <div className="writer">
-                                        <p className="bookAuthor">{bookResults[0].book.author}</p>
+                                        <p className="bookAuthor">{bookResults[0].book.author.replace(/[\[\]']+/g, '')}</p>
                                     </div>
                                 </div>
                             </div>
@@ -224,7 +224,7 @@ export function AfterLoginMain(){
                                         <p className="bookTitle">{bookResults[1].book.title}</p>
                                     </div>
                                     <div className="writer">
-                                        <p className="bookAuthor">{bookResults[1].book.author}</p>
+                                        <p className="bookAuthor">{bookResults[1].book.author.replace(/[\[\]']+/g, '')}</p>
                                     </div>
                                 </div>
                             </div>

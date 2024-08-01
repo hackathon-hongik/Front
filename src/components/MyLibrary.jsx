@@ -502,6 +502,13 @@ const ModalContent = styled.div`
     letter-spacing: 0.203px;
   }
 
+  .line{
+    width:450px;
+    height:1px;
+    margin-top: 15px;
+    background-color: rgba(112, 115, 124, 0.22);
+  }
+
   .modalContents{
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -706,16 +713,19 @@ export function MyLibrary(){  //내 서재 페이지
                     </div>
                     <div className="bookInfo" onClick={() => showInfo(index)}>책 정보보기</div>
                     <div className="title">{result.book.title}</div>
-                    <div className="author">{result.book.author}</div>
+                    <div className="author"> 
+                    {result.book.author.replace(/[\[\]']+/g, '')} 
+                    </div>
                     <div className="category" style={{ color: categoryColors[result.status] }}>{categoryKorean[result.status]}</div>
                     {clickedBookIndex === index && (
                                      <ModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
                                         <ModalContent onClick={(e) => e.stopPropagation()}> {/*모달창을 눌렀을때는 꺼지지 않도록*/}
                                          <img className="modalCover" src={result.book.thumbnail} alt="Book Thumbnail"/>
                                          <p className="modalTitle">{result.book.title || "N/A"}</p>
-                                         <p className="modalAuthor">{result.book.author || "N/A"}</p>
+                                         <p className="modalAuthor">{result.book.author.replace(/[\[\]']+/g, '') || "N/A"}</p>
                                          <p className="modalPublisher">{result.book.publisher || "N/A"}</p>  {/* "N/A는 저 카테고리가 없는경우 처리" */}
                                          <button className="modalAddBtn" onClick={()=>handleAddClick(result.book.isbn,result.book.title,result.book.author,result.book.thumbnail,result.book.contents,result.book.publisher,result.book.date)}>읽고 있는 책에 추가</button>
+                                         <div className="line"></div>
                                          <p className="modalContents">{result.book.content || "N/A"}</p>
                                          </ModalContent>
                                      </ModalOverlay>

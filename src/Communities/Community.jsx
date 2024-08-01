@@ -10,11 +10,12 @@ import orange_banner from "../assets/orange_banner.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 const short = [
     {
         id: 1,
-        short_comment: "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
+        short_comment: "1안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
         nickname:"롯데 우승은 언제쯤",
         like_count:200,
         book_title:"해리포터",
@@ -23,7 +24,7 @@ const short = [
     },
     {
         id: 2,
-        short_comment: "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
+        short_comment: "2안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
         nickname:"롯데 우승은 언제쯤",
         like_count:200,
         book_title:"해리포터",
@@ -31,7 +32,7 @@ const short = [
     },
     {
         id: 3,
-        short_comment: "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
+        short_comment: "3안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
         nickname:"롯데 우승은 언제쯤",
         like_count:200,
         book_title:"해리포터",
@@ -39,7 +40,7 @@ const short = [
     },
     {
         id: 4,
-        short_comment: "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
+        short_comment: "4안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
         nickname:"롯데 우승은 언제쯤",
         like_count:200,
         book_title:'해리포터',
@@ -47,7 +48,7 @@ const short = [
     },
     {
         id: 5,
-        short_comment: "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
+        short_comment: "5안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
         nickname:"롯데 우승은 언제쯤",
         like_count:200,
         book_title:'해리포터',
@@ -55,7 +56,7 @@ const short = [
     },
     {
         id: 6,
-        short_comment: "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
+        short_comment: "6안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
         nickname:"롯데 우승은 언제쯤",
         like_count:200,
         book_title:'해리포터',
@@ -63,7 +64,7 @@ const short = [
     },
     {
         id: 7,
-        short_comment: "안녕하세요안녕하세요안녕하세요안녕하세요",
+        short_comment: "7안녕하세요안녕하세요안녕하세요안녕하세요",
         nickname:"닉네임",
         like_count:200,
         book_title:'해리포터',
@@ -71,7 +72,7 @@ const short = [
     },
     {
         id: 8,
-        short_comment: "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
+        short_comment: "8안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
         nickname:"롯데 우승은 언제쯤",
         like_count:200,
         book_title:'해리포터',
@@ -79,7 +80,7 @@ const short = [
     },
     {
         id: 9,
-        short_comment: "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
+        short_comment: "9안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
         nickname:"롯데 우승은 언제쯤",
         like_count:200,
         book_title:'해리포터',
@@ -87,7 +88,7 @@ const short = [
     },
     {
         id: 10,
-        short_comment: "안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
+        short_comment: "10안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
         nickname:"롯데 우승은 언제쯤",
         like_count:200,
         book_title:'해리포터',
@@ -730,11 +731,128 @@ const LongWritingCard=styled.div`
         }
 `;
 
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+`;
+
+const ModalContent = styled.div`
+  width:450px;
+  height:510px;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  border-radius: 20px;
+  background: #FFF;
+  padding: 40px 48px 28px 48px;
+  margin-top:230px;
+
+  .modalCover{
+    width:104px;
+    height:156px;
+  }
+
+  .modalTitle{
+    color: var(--kakao-logo, #000);
+    text-align: center;
+    font-feature-settings: 'ss10' on;
+    /* Body 1/Reading - Bold */
+    font-family: "Pretendard JP";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 162.5%; /* 26px */
+    letter-spacing: 0.091px;
+  }
+
+  .modalAuthor{
+    color: var(--kakao-logo, #000);
+    text-align: center;
+    font-feature-settings: 'ss10' on;
+    /* Label 2/Medium */
+    font-family: "Pretendard JP";
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 138.5%; /* 18.005px */
+    letter-spacing: 0.252px;
+  }
+
+  .modalPublisher{
+    color: rgba(60, 60, 67, 0.60);
+    font-feature-settings: 'ss10' on;
+    /* Label 2/Regular */
+    font-family: "Pretendard JP";
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 138.5%; /* 18.005px */
+    letter-spacing: 0.252px;
+  }
+
+  .modalAddBtn{
+    display: flex;
+    flex-direction: row;
+    width: 170px;
+    height: 20px;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    border:none;
+    border-radius: 4px;
+    background: #2EEA7E;
+    color: #FFF;
+    margin-left:140px;
+
+    text-align: center;
+    font-feature-settings: 'ss10' on;
+    /* Label 1/Normal - Bold */
+    font-family: "Pretendard JP";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 142.9%; /* 20.006px */
+    letter-spacing: 0.203px;
+  }
+
+  .line{
+    width:450px;
+    height:1px;
+    margin-top: 15px;
+    background-color: rgba(112, 115, 124, 0.22);
+  }
+
+  .modalContents{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 10;
+    align-self: stretch;
+    overflow: hidden;
+    color: var(--kakao-logo, #000);
+
+    font-feature-settings: 'ss10' on;
+    text-overflow: ellipsis;
+    font-family: "Pretendard JP";
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 19.5px */
+    letter-spacing: 0.252px;
+  }
+`;
 
 export function Community(){
     const navigate=useNavigate();
     const [isCheck, setCheck] = useState(false);
     const [activeTab, setActiveTab] = useState('simple');
+    const [clickedWritingIndex, setClickedWritingIndex] = useState(null);
     const [shortWritings,setShortWritings]=useState([]);
     const [longWritings,setLongWritings]=useState([]);
 
@@ -764,6 +882,27 @@ export function Community(){
         }
       };
 
+    
+    const showInfo = (index) => {
+         setClickedWritingIndex(index === clickedWritingIndex ? null : index);
+    };
+    
+
+    const closeModal = () => {
+        setClickedWritingIndex(null);
+      };
+
+      const goToPrevious = () => {
+        setClickedWritingIndex(prevIndex =>
+            prevIndex === 0 ? shortWritings.length - 1 : prevIndex - 1
+        );
+    };
+
+    const goToNext = () => {
+        setClickedWritingIndex(prevIndex =>
+            prevIndex === shortWritings.length - 1 ? 0 : prevIndex + 1
+        );
+    };
     return(
         <CommunityPage>
             <Header>
@@ -773,10 +912,10 @@ export function Community(){
         
                 <ul className="nav">
                     <li>
-                    <a className="orangeText" onClick={() => handleItemClick('/afterlogin/mylibrary')}>내 서재</a>
+                    <a onClick={() => handleItemClick('/afterlogin/mylibrary')}>내 서재</a>
                     </li>
                     <li>
-                    <a onClick={() => handleItemClick("/afterlogin/community")}>커뮤니티</a>
+                    <a className="orangeText" onClick={() => handleItemClick("/afterlogin/community")}>커뮤니티</a>
                     </li>
                     <li>
                     <div className="buttonToggle">
@@ -819,7 +958,7 @@ export function Community(){
             {activeTab==='simple'&&(<>        
             <ShortWritingList>
                 {short.slice(0, 6).map((item, index) => (
-                <ShortWritingCard key={index}>
+                <ShortWritingCard key={index} onClick={()=>showInfo(index)}>
                     <div className="shortWriting">{item.short_comment}</div>
                     <div className="likePick">
                         <div className="nickName">{item.nickname}</div>
@@ -835,6 +974,19 @@ export function Community(){
                         <div className="bookTitle">{item.book_title}</div>
                         <div className="bookAuthor">{item.book_author}</div>
                     </div>
+                    {clickedWritingIndex === index && (
+                                     <ModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
+                                        <ModalContent onClick={(e) => e.stopPropagation()}> {/*모달창을 눌렀을때는 꺼지지 않도록*/}
+                                            <button className="prevBtn" onClick={goToPrevious}>
+                                                <FontAwesomeIcon icon={faChevronLeft} />
+                                            </button>
+                                            <div className="modalShortWriting">{item.short_comment}</div>
+                                            <button className="nextBtn" onClick={goToNext}>
+                                                <FontAwesomeIcon icon={faChevronRight} />
+                                            </button>
+                                        </ModalContent>
+                                     </ModalOverlay>
+                                 )}
                 </ShortWritingCard>
                 ))}
             </ShortWritingList>
@@ -850,7 +1002,7 @@ export function Community(){
 
             <BelowShortWritingList>
                 {short.slice(6).map((item, index) => (
-                <ShortWritingCard key={index}>
+                <ShortWritingCard key={index+6} onClick={()=>showInfo(index+6)}>
                     <div className="shortWriting">{item.short_comment}</div>
                     <div className="likePick">
                         <div className="nickName">{item.nickname}</div>
@@ -866,6 +1018,19 @@ export function Community(){
                         <div className="bookTitle">{item.book_title}</div>
                         <div className="bookAuthor">{item.book_author}</div>
                     </div>
+                    {clickedWritingIndex === index+6 && (
+                                     <ModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
+                                        <ModalContent onClick={(e) => e.stopPropagation()}> {/*모달창을 눌렀을때는 꺼지지 않도록*/}
+                                            <button className="prevBtn" onClick={goToPrevious}>
+                                                <FontAwesomeIcon icon={faChevronLeft} />
+                                            </button>
+                                            <div className="modalShortWriting">{item.short_comment}</div>
+                                            <button className="nextBtn" onClick={goToNext}>
+                                                <FontAwesomeIcon icon={faChevronRight} />
+                                            </button>
+                                        </ModalContent>
+                                     </ModalOverlay>
+                                 )}
                     
                 </ShortWritingCard>
                 ))}

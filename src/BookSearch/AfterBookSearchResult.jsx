@@ -401,6 +401,13 @@ const ModalContent = styled.div`
     letter-spacing: 0.203px;
   }
 
+  .line{
+    width:450px;
+    height:1px;
+    margin-top: 15px;
+    background-color: rgba(112, 115, 124, 0.22);
+  }
+
   .modalContents{
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -660,6 +667,7 @@ export function AfterBookSearchResult(){  //로그인 전 책 검색하면 나�
                                          <p className="modalAuthor">{book.authors?.join(', ') || "N/A"}</p>
                                          <p className="modalPublisher">{book.publisher || "N/A"}</p>  {/* "N/A는 저 카테고리가 없는경우 처리" */}
                                          <button className="modalAddBtn" onClick={()=>handleAddClick(book.isbn,book.title,book.authors,book.thumbnail,book.contents,book.publisher,book.date)}>읽고 있는 책에 추가</button>
+                                         <div className="line"></div>
                                          <p className="modalContents">{book.contents || "N/A"}</p>
                                          </ModalContent>
                                      </ModalOverlay>
