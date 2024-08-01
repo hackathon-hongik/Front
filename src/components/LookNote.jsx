@@ -453,6 +453,120 @@ letter-spacing: 0.144px;
   white-space: normal;
 `;
 
+// 여기부터 팝업창
+
+const ModalOverlay = styled.div`
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background:rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+`;
+
+
+const ModalContent = styled.div`
+  width:450px;
+  height:510px;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  border-radius: 20px;
+  background: #FFF;
+  padding: 40px 48px 28px 48px;
+  margin-top:230px;
+
+  .modalCover{
+    width:104px;
+    height:156px;
+  }
+
+  .modalTitle{
+    color: var(--kakao-logo, #000);
+    text-align: center;
+    font-feature-settings: 'ss10' on;
+    /* Body 1/Reading - Bold */
+    font-family: "Pretendard JP";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 162.5%; /* 26px */
+    letter-spacing: 0.091px;
+  }
+
+  .modalAuthor{
+    color: var(--kakao-logo, #000);
+    text-align: center;
+    font-feature-settings: 'ss10' on;
+    /* Label 2/Medium */
+    font-family: "Pretendard JP";
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 138.5%; /* 18.005px */
+    letter-spacing: 0.252px;
+  }
+
+  .modalPublisher{
+    color: rgba(60, 60, 67, 0.60);
+    font-feature-settings: 'ss10' on;
+    /* Label 2/Regular */
+    font-family: "Pretendard JP";
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 138.5%; /* 18.005px */
+    letter-spacing: 0.252px;
+  }
+
+  .modalAddBtn{
+    display: flex;
+    flex-direction: row;
+    width: 170px;
+    height: 20px;
+    padding: 20px;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    border:none;
+    border-radius: 4px;
+    background: #2EEA7E;
+    color: #FFF;
+    margin-left:140px;
+
+    text-align: center;
+    font-feature-settings: 'ss10' on;
+    /* Label 1/Normal - Bold */
+    font-family: "Pretendard JP";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 142.9%; /* 20.006px */
+    letter-spacing: 0.203px;
+  }
+
+  .modalContents{
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 10;
+    align-self: stretch;
+    overflow: hidden;
+    color: var(--kakao-logo, #000);
+
+    font-feature-settings: 'ss10' on;
+    text-overflow: ellipsis;
+    font-family: "Pretendard JP";
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%; /* 19.5px */
+    letter-spacing: 0.252px;
+  }
+`;
+
+
 
 function useQuery() {
     return new URLSearchParams(useLocation().search);
@@ -469,9 +583,11 @@ const [shortNotes, setShortNotes] = useState([]);
 const [longNotes, setLongNotes] = useState([]);
 const [memberId, setMemberId] = useState('');
 const [myBookId, setMyBookId] = useState('');
-const [shortReviewId, setShortReviewId] = useState('');
-const [longReviewId, setLongReviewId] = useState('');
+const [short_review_id, setShortReviewId] = useState('');
+const [long_review_id, setLongReviewId] = useState('');
 const [activeSubNav, setActiveSubNav] = useState('myrecords');
+const [isModalOpen, setModalOpen] = useState(false);
+const [selectedNote, setSelectedNote] = useState(null);
 
 
 //더미 데이터
@@ -538,6 +654,17 @@ useEffect(() => {
 const handleItemClick = (path) => {
         navigate(path);
 };   
+
+
+const handleNoteClick = (note) => {
+  setSelectedNote(note);
+  setModalOpen(true);
+};
+
+const closeModal = () => {
+  setModalOpen(false);
+  setSelectedNote(null);
+};
 
 
     return(
@@ -625,7 +752,7 @@ const handleItemClick = (path) => {
                  ))*/}
                  
                  {dummyLongNotes.map(note => (
-                     <DetCard key={note.id}>
+                     <DetCard key={note.id} onClick={() => handleNoteClick(note)}>
                          <DetTitle>{note.title}</DetTitle>
                          <NoteText>{note.comment}</NoteText>
                          <NoteActions>

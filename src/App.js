@@ -11,7 +11,7 @@ import { AfterBookSearchResult } from "./BookSearch/AfterBookSearchResult";
 import { Recommend } from "./RecommendPage/Recommend";
 import { RecommendResult } from "./RecommendPage/RecommendResult";
 import { Community } from "./Communities/Community";
-import { LookNote } from "./components/Look";
+import { LookNote } from "./components/LookNote";
 
 import {Routes,Route} from "react-router-dom";
 
