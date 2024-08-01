@@ -15,6 +15,8 @@ import okayImage from '../assets/괜찮아요.png';
 import tiredImage from '../assets/피곤해요.png';
 import sadImage from '../assets/슬퍼요.png';
 import worriedImage from '../assets/걱정돼요.png';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
 
 export const getShortNotes = async (memberId, isbn) => {
     try {
@@ -202,6 +204,7 @@ const NoteCard = styled.div`
   display: flex;
   flex-direction: column;
 `;
+
 const DetTitle = styled.div`
 color: var(--kakao-logo, #000);
 font-family: "Pretendard JP";
@@ -455,6 +458,7 @@ letter-spacing: 0.144px;
 
 // 여기부터 팝업창
 
+
 const ModalOverlay = styled.div`
   position: fixed;
   top: 0;
@@ -465,7 +469,6 @@ const ModalOverlay = styled.div`
   display: flex;
   justify-content: center;
 `;
-
 
 const ModalContent = styled.div`
   width:450px;
@@ -547,6 +550,13 @@ const ModalContent = styled.div`
     letter-spacing: 0.203px;
   }
 
+  .line{
+    width:450px;
+    height:1px;
+    margin-top: 15px;
+    background-color: rgba(112, 115, 124, 0.22);
+  }
+
   .modalContents{
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -582,12 +592,13 @@ const [checked, setChecked] = useState(false);
 const [shortNotes, setShortNotes] = useState([]);
 const [longNotes, setLongNotes] = useState([]);
 const [memberId, setMemberId] = useState('');
-const [myBookId, setMyBookId] = useState('');
+const [isbn, setMyBookId] = useState('');
 const [short_review_id, setShortReviewId] = useState('');
 const [long_review_id, setLongReviewId] = useState('');
 const [activeSubNav, setActiveSubNav] = useState('myrecords');
 const [isModalOpen, setModalOpen] = useState(false);
 const [selectedNote, setSelectedNote] = useState(null);
+const [clickedWritingIndex, setClickedWritingIndex] = useState(null);
 
 
 //더미 데이터
@@ -601,29 +612,62 @@ const [dummyNotes, setDummyNotes] = useState([
   ]);
   
 const [dummyLongNotes, setDummyLongNotes] = useState([
-    { id: 1, title: "글 제목 입력", comment: "'나를 위해 살지 않으면 남을 위해 살게 된다' 책을 읽고 난 후, 나의 웰빙에 대한 새로운 관점을 얻게 되었다. 우리는 종종 타인의 기대에 부응하려고 하며, 그 과정에서 자신의 진정한 꿈과 목표를 잃어버리곤 한다.", date: "2024.07.21" },
-    { id: 2, title: "글 제목 입력", comment: "'나를 위해 살지 않으면 남을 위해 살게 된다' 책을 읽고 난 후, 나의 웰빙에 대한 새로운 관점을 얻게 되었다. 우리는 종종 타인의 기대에 부응하려고 하며, 그 과정에서 자신의 진정한 꿈과 목표를 잃어버리곤 한다.", date: "2024.07.21" }
+    { long_review_id: 1, 
+      isbn: "9791188331793",
+      review_title: "글 제목 입력", 
+      long_text: "'나를 위해 살지 않으면 남을 위해 살게 된다' 책을 읽고 난 후, 나의 웰빙에 대한 새로운 관점을 얻게 되었다. 우리는 종종 타인의 기대에 부응하려고 하며, 그 과정에서 자신의 진정한 꿈과 목표를 잃어버리곤 한다.", 
+      created_at: "2024.07.21" },
+    { long_review_id: 2, 
+      isbn: "9791188331793",
+      review_title: "글 제목 입력",
+      long_text: "이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<", 
+      created_at: "2024.07.21" },
+   { long_review_id: 3, 
+     isbn: "9791188331793",
+     review_title: "글 제목 입력",
+     long_text: "이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ", 
+     created_at: "2024.07.21" }  
   ]);
   
 
 const [dummyEmotions, setDummyEmotions] = useState([
-    { id: 1, type: "좋아요", count: 64, img: goodImage },
-    { id: 2, type: "괜찮아요", count: 64, img: okayImage },
-    { id: 3, type: "피곤해요", count: 64, img: tiredImage },
-    { id: 4, type: "슬퍼요", count: 64, img: sadImage },
-    { id: 5, type: "걱정돼요", count: 64, img: worriedImage }
-  ]);
+  { id: 1, type: "good", displayName: "좋아요", count: 0, img: goodImage },
+  { id: 2, type: "okay", displayName: "괜찮아요", count: 0, img: okayImage },
+  { id: 3, type: "tired", displayName: "피곤해요", count: 0, img: tiredImage },
+  { id: 4, type: "sad", displayName: "슬퍼요", count: 0, img: sadImage },
+  { id: 5, type: "worried", displayName: "걱정돼요", count: 0, img: worriedImage },
+]);
+
+const fetchEmotionCounts = async (memberId, isbn) => {
+  try {
+    const response = await axios.get(`/desk/${memberId}/${isbn}/looknote/mood`);
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch emotion counts:", error);
+    return null;
+  }
+};
   
+
+
 const [dummyQuestions, setDummyQuestions] = useState([
-    { id: 1, question: "오늘의 질문은 최대 2줄", answer: "자연 속의 평온함을 느끼며 휴식을 취하는 것만큼 좋은 것은 없습니다. 현대의 바쁜 생활 속에서 잠시라도 자연을 접하는 순간은 큰 힘이 됩니다. 새로운 에너지를 얻고 재충전할 수 있는 기회가 됩니다.", date: "2024.07.21", emoji: goodImage },
-    { id: 2, question: "오늘의 질문은 최대 2줄", answer: "나의 대답은 최대 3줄까지지만 \"자세한 기록\" 페이지와 동일", date: "2024.07.21", emoji: sadImage }
+    { id: 1,
+      question: "오늘의 질문은 최대 2줄", 
+      answer: "자연 속의 평온함을 느끼며 휴식을 취하는 것만큼 좋은 것은 없습니다. 현대의 바쁜 생활 속에서 잠시라도 자연을 접하는 순간은 큰 힘이 됩니다. 새로운 에너지를 얻고 재충전할 수 있는 기회가 됩니다.",
+      date: "2024.07.21", 
+      mood: goodImage },
+    { id: 2, 
+      question: "오늘의 질문은 최대 2줄", 
+      answer: "나의 대답은 최대 3줄까지지만 \"자세한 기록\" 페이지와 동일", 
+      date: "2024.07.21", 
+      mood: sadImage }
   ]);
   
 
 
 useEffect(() => {
     const memberIdFromQuery = query.get("memberId");
-    const myBookIdFromQuery = query.get("myBookId");
+    const myBookIdFromQuery = query.get("isbn");
     if (memberIdFromQuery && myBookIdFromQuery) {
       setMemberId(memberIdFromQuery);
       setMyBookId(myBookIdFromQuery);
@@ -646,9 +690,44 @@ useEffect(() => {
     };
     fetchLongNotes();
   }, []);
+
+
+  useEffect(() => {
+    const updateEmotionCounts = async () => {
+      const data = await fetchEmotionCounts();
+      if (data) {
+        setDummyEmotions(emotions =>
+          emotions.map(emotion => ({
+            ...emotion,
+            count: data[emotion.type + "_count"] || 0
+          }))
+        );
+      }
+    };
+    updateEmotionCounts();
+  }, []);
   
 
+  const showInfo = (index) => {
+    setClickedWritingIndex(index === clickedWritingIndex ? null : index);
+};
 
+
+const closeModal = () => {
+   setClickedWritingIndex(null);
+ };
+
+ const goToPrevious = () => {
+   setClickedWritingIndex(prevIndex =>
+       prevIndex === 0 ? longNotes.length - 1 : prevIndex - 1
+   );
+};
+
+const goToNext = () => {
+   setClickedWritingIndex(prevIndex =>
+       prevIndex === longNotes.length - 1 ? 0 : prevIndex + 1
+   );
+};
 
 
 const handleItemClick = (path) => {
@@ -656,15 +735,7 @@ const handleItemClick = (path) => {
 };   
 
 
-const handleNoteClick = (note) => {
-  setSelectedNote(note);
-  setModalOpen(true);
-};
 
-const closeModal = () => {
-  setModalOpen(false);
-  setSelectedNote(null);
-};
 
 
     return(
@@ -713,16 +784,20 @@ const closeModal = () => {
                 <Tab active={activeTab === 'emotion'} onClick={() => setActiveTab('emotion')}>감정 기록</Tab>
                 <Tab active={activeTab === 'detailed'} onClick={() => setActiveTab('detailed')}>자유 기록</Tab>
                 </TabsContainer>
-
-                 {activeTab === 'simple' && ( 
+            
+                 {activeTab === 'simple' && (  //하루 기록
                  <NoteCardContainer>
-                         {dummyNotes.map(note => (
+                         {dummyNotes.map(note  => (
                              <NoteCard key={note.id}>
                                   <NoteText>{note.comment}</NoteText>
                                   <NoteActions>
+                                    <div style={{ display: 'flex', alignItems: 'center'}}>
                                      <NoteDate>{note.date}</NoteDate>
+                                    </div>
+                                    <div>
                                      <EditButton><Emoji src={modifyButton} /></EditButton>
                                      <DeleteButton><Emoji src={deleteButton} /></DeleteButton>
+                                     </div>
                                   </NoteActions>
                              </NoteCard>
                             ))}
@@ -730,69 +805,106 @@ const closeModal = () => {
                    <NoteCard key={note.short_review_id}>
                      <NoteText>{note.short_comment}</NoteText>
                      <NoteActions>
+                      <div style={{ display: 'flex', alignItems: 'center'}}>
                        <NoteDate>{new Date(note.created_at).toLocaleDateString()}</NoteDate>
+                      </div>
+                      <div>
                        <EditButton><Emoji src={modifyButton} /></EditButton>
                        <DeleteButton><Emoji src={deleteButtonButton} /></DeleteButton>
+                      </div>
                      </NoteActions>
                    </NoteCard>  // 서버열리면 이쪽으로 변경
                  ))*/}
                </NoteCardContainer>
              )}
-            {activeTab === 'detailed' && (
+            {activeTab === 'detailed' && ( //자유 기록
                 <NoteCardContainer>
                     {/*longNotes.map(note => (
-                    <NoteCard key={note.long_review_id}>
-                     <NoteText>{note.long_comment}</NoteText>
-                     <NoteActions>
-                       <NoteDate>{new Date(note.created_at).toLocaleDateString()}</NoteDate>
-                       <EditButton><Emoji src={modifyButton} /></EditButton>
-                       <DeleteButton><Emoji src={deleteButtonButton} /></DeleteButton>
-                     </NoteActions>
-                   </NoteCard>  // 서버열리면 이쪽으로 변경
-                 ))*/}
-                 
-                 {dummyLongNotes.map(note => (
-                     <DetCard key={note.id} onClick={() => handleNoteClick(note)}>
-                         <DetTitle>{note.title}</DetTitle>
-                         <NoteText>{note.comment}</NoteText>
+                      <DetCard key={note.long_review_id} onClick={() => handleNoteClick(note)}>
+                         <DetTitle>{note.review_title}</DetTitle>
+                         <NoteText>{note.long_text}</NoteText>
                          <NoteActions>
-                            <NoteDate>{note.date}</NoteDate>
+                            <NoteDate>{new Date(note.created_at).toLocaleDateString()}</NoteDate>
                             <EditButton><Emoji src={modifyButton} /></EditButton>
                             <DeleteButton><Emoji src={deleteButton} /></DeleteButton>
                          </NoteActions>
                      </DetCard>
+                 ))*/}
+                 
+                 {dummyLongNotes.map((note,index) => (
+                     <DetCard key={note.long_review_id}  onClick={()=>showInfo(index)}>
+                         <DetTitle>{note.review_title}</DetTitle>
+                         <NoteText>{note.long_text}</NoteText>
+                         <NoteActions>
+                            <div style={{ display: 'flex', alignItems: 'center'}}>
+                              <NoteDate>{note.created_at}</NoteDate>
+                            </div>
+                            <div>
+                            <EditButton><Emoji src={modifyButton}/></EditButton>
+                            <DeleteButton><Emoji src={deleteButton}/></DeleteButton>
+                            </div>
+                         </NoteActions>
+                         {clickedWritingIndex === index && (
+                                     <ModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
+                                        <ModalContent onClick={(e) => e.stopPropagation()}> {/*모달창을 눌렀을때는 꺼지지 않도록*/}
+                                            <button className="prevBtn" onClick={goToPrevious}>
+                                                <FontAwesomeIcon icon={faChevronLeft} />
+                                            </button>
+                                            <div className="modalShortWriting">{note.long_text}</div>
+                                            <button className="nextBtn" onClick={goToNext}>
+                                                <FontAwesomeIcon icon={faChevronRight} />
+                                            </button>
+                                        </ModalContent>
+                                     </ModalOverlay>
+                                 )}
+                     </DetCard>
                     ))}
                 </NoteCardContainer>
              )}
-             {activeTab === 'emotion' && (
+
+             {activeTab === 'emotion' && ( //감정기록
                 <FormContainer>
                     
                     <EmotionIconsContainer>
                         {dummyEmotions.map(emotion => (
                             <EmotionIcon key={emotion.id}>
                                 <EmotionImgCountWrapper>
-                                    <EmotionImg src={emotion.img} alt={emotion.type} />
+                                    <EmotionImg src={emotion.img}/>
                                     <EmotionCount>{emotion.count}</EmotionCount>
                                 </EmotionImgCountWrapper>
-                            <EmotionText>{emotion.type}</EmotionText>
+                                <EmotionText>{emotion.displayName}</EmotionText>
                             </EmotionIcon>
                     ))}
                     </EmotionIconsContainer>
                     <EmotionContainer> 
-                        {dummyQuestions.map(question => (
-                        <QuestionCard key={question.id}>
+                        {dummyQuestions.map((question,index) => (
+                        <QuestionCard key={question.id}  onClick={()=>showInfo(index)}>
                             <QuestionText>Q. {question.question}</QuestionText>
                             <AnswerText>A. {question.answer}</AnswerText>
                             <NoteActions>
                             <div style={{ display: 'flex', alignItems: 'center'}}>
                                 <NoteDate>{question.date}</NoteDate>
-                                <Emoji src={question.emoji} />
+                                <Emoji src={question.mood} />
                             </div>
                             <div>
                                 <EditButton><Emoji src={modifyButton} /></EditButton>
                                 <DeleteButton><Emoji src={deleteButton} /></DeleteButton>
                             </div>
                             </NoteActions>
+                            {clickedWritingIndex === index && (
+                                     <ModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
+                                        <ModalContent onClick={(e) => e.stopPropagation()}> {/*모달창을 눌렀을때는 꺼지지 않도록*/}
+                                            <button className="prevBtn" onClick={goToPrevious}>
+                                                <FontAwesomeIcon icon={faChevronLeft} />
+                                            </button>
+                                            <div className="modalShortWriting">{question.question}</div>
+                                            <div className="modalShortWriting">{question.answer}</div>
+                                            <button className="nextBtn" onClick={goToNext}>
+                                                <FontAwesomeIcon icon={faChevronRight} />
+                                            </button>
+                                        </ModalContent>
+                                     </ModalOverlay>
+                                 )}
                         </QuestionCard>
                          ))}
                     </EmotionContainer>
