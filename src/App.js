@@ -12,7 +12,8 @@ import { Recommend } from "./RecommendPage/Recommend";
 import { RecommendResult } from "./RecommendPage/RecommendResult";
 import { Community } from "./Communities/Community";
 import { LookNote } from "./components/Look";
-
+import { CommunityScrap } from "./Communities/CommunityScrap";
+import { CommunityWrite } from "./Communities/CommunityWrite";
 import {Routes,Route} from "react-router-dom";
 
 function App() {

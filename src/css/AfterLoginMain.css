@@ -545,13 +545,13 @@
 }
 
 .left-arrow-icon {
-    color: #FF6E23;
+    
     cursor: pointer; 
     margin-right: 20px;
 }
 
 .right-arrow-icon {
-    color: #FF6E23;
+   
     cursor: pointer; 
     margin-left: 20px;
 }
