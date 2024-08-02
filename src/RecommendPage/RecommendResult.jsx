@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import React from "react";
 import styled from "styled-components";
 import { axiosInstance } from '../api';
+import queryString from 'query-string';
 
 const RecommendResultPage=styled.div`
     width:1620px;
@@ -398,10 +399,16 @@ export function RecommendResult(){
     const [clickedBookIndex, setClickedBookIndex] = useState(null);
     const [bookmarked, setBookmarked] = useState([]);
     const [fetchedBookmarked,setFetchedBookmarked]=useState([]);
-
+    const token = location.state?.token || '';
+    // const { results: resultsString, category, token } = queryString.parse(location.search);
+    // const results = JSON.parse(resultsString || '[]');
+   
 
     useEffect(()=>{
-        fetchWishBooks()
+        console.log("Received token:", token); // token 값이 올바르게 출력되는지 확인합니다.
+        
+            fetchWishBooks();
+        
     },[]);
 
     useEffect(() => {
@@ -413,11 +420,16 @@ export function RecommendResult(){
 
     const fetchWishBooks=async()=>{
         try{
-            const response=await axiosInstance.get('/desk/1/books/group/wish/');
+            const response=await axiosInstance.get('/desk/books/group/wish/',{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            });
             setFetchedBookmarked(response.data);
             console.log(fetchedBookmarked);
         }
         catch(e){
+            alert("위시 불러오기 실패")
             console.log(e);
         }
     }
@@ -436,8 +448,13 @@ export function RecommendResult(){
                 }
             }
 
-            const response=await axiosInstance.post("/desk/1/books/wish/",newBook);
+            const response=await axiosInstance.post("/desk/books/wish/",newBook,{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            });
             console.log(response);
+            alert("찜한 책에 성공적으로 추가되었습니다!");
         }
         catch(e){
             alert("이미 찜하신 책입니다");
@@ -445,9 +462,9 @@ export function RecommendResult(){
         }
     };
 
-    const handleItemClick = (path) => {
-        navigate(path);
-      };
+    const handleItemClick=(path,token)=>{
+        navigate(path,{state:{token}});
+    };
 
     const handlePickClick=(isbn,title,author,thumbnail,content,publisher,date)=>{  //찜 처리
 
@@ -482,7 +499,7 @@ export function RecommendResult(){
         
                 <ul className="nav">
                     <li>
-                    <a className="orangeText" onClick={() => handleItemClick('/afterlogin/mylibrary')}>내 서재</a>
+                    <a className="orangeText" onClick={() => handleItemClick('/afterlogin/mylibrary',token)}>내 서재</a>
                     </li>
                     <li>
                     <a onClick={() => handleItemClick("/afterlogin/community")}>커뮤니티</a>

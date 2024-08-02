@@ -195,7 +195,7 @@ export function BeforeLoginMain(){
 
                 <div className="bestList">
                     
-                    <span className="material-icons left-arrow-icon" onClick={prevSlide} style={{ color: currentIndex === 0 ? 'black' : '#FF6E23' }}>
+                    <span className="material-icons left-arrow-icon" onClick={prevSlide} style={{ color: currentIndex === 0 ? '#989BA2' : '#FF6E23' }}>
                         arrow_circle_left
                     </span>
                     {getVisibleItems().map((item) => (
@@ -222,7 +222,7 @@ export function BeforeLoginMain(){
                     
                         
                     ))}
-                    <span className="material-icons right-arrow-icon" onClick={nextSlide} style={{ color: currentIndex >= data.length - 3 ? 'black' : '#FF6E23' }}>
+                    <span className="material-icons right-arrow-icon" onClick={nextSlide} style={{ color: currentIndex >= data.length - 3 ? '#989BA2' : '#FF6E23' }}>
                         arrow_circle_right
                     </span>
                     

@@ -19,7 +19,9 @@ const short = [
         nickname:"롯데 우승은 언제쯤",
         like_count:200,
         book_title:"해리포터",
-        book_author:"롤링"
+        book_author:"롤링",
+        nickname:"닉네임",
+        created_at:"2024-07-28T05:41:31.341060+09:00"
 
     },
     {
@@ -28,7 +30,9 @@ const short = [
         nickname:"롯데 우승은 언제쯤",
         like_count:200,
         book_title:"해리포터",
-        book_author:"롤링"
+        book_author:"롤링",
+        nickname:"닉네임",
+        created_at:"2024-07-28T05:41:31.341060+09:00"
     },
     {
         id: 3,
@@ -36,7 +40,9 @@ const short = [
         nickname:"롯데 우승은 언제쯤",
         like_count:200,
         book_title:"해리포터",
-        book_author:"롤링"
+        book_author:"롤링",
+        nickname:"닉네임",
+        created_at:"2024-07-28T05:41:31.341060+09:00"
     },
     {
         id: 4,
@@ -44,7 +50,9 @@ const short = [
         nickname:"롯데 우승은 언제쯤",
         like_count:200,
         book_title:'해리포터',
-        book_author:'롤링'
+        book_author:'롤링',
+        nickname:"닉네임",
+        created_at:"2024-07-28T05:41:31.341060+09:00"
     },
     {
         id: 5,
@@ -52,7 +60,9 @@ const short = [
         nickname:"롯데 우승은 언제쯤",
         like_count:200,
         book_title:'해리포터',
-        book_author:'롤링'
+        book_author:'롤링',
+        nickname:"닉네임",
+        created_at:"2024-07-28T05:41:31.341060+09:00"
     },
     {
         id: 6,
@@ -60,7 +70,9 @@ const short = [
         nickname:"롯데 우승은 언제쯤",
         like_count:200,
         book_title:'해리포터',
-        book_author:'롤링'
+        book_author:'롤링',
+        nickname:"닉네임",
+        created_at:"2024-07-28T05:41:31.341060+09:00"
     },
     {
         id: 7,
@@ -68,7 +80,9 @@ const short = [
         nickname:"닉네임",
         like_count:200,
         book_title:'해리포터',
-        book_author:'롤링'
+        book_author:'롤링',
+        nickname:"닉네임",
+        created_at:"2024-07-28T05:41:31.341060+09:00"
     },
     {
         id: 8,
@@ -76,7 +90,9 @@ const short = [
         nickname:"롯데 우승은 언제쯤",
         like_count:200,
         book_title:'해리포터',
-        book_author:'롤링'
+        book_author:'롤링',
+        nickname:"닉네임",
+        created_at:"2024-07-28T05:41:31.341060+09:00"
     },
     {
         id: 9,
@@ -84,7 +100,9 @@ const short = [
         nickname:"롯데 우승은 언제쯤",
         like_count:200,
         book_title:'해리포터',
-        book_author:'롤링'
+        book_author:'롤링',
+        nickname:"닉네임",
+        created_at:"2024-07-28T05:41:31.341060+09:00"
     },
     {
         id: 10,
@@ -92,7 +110,9 @@ const short = [
         nickname:"롯데 우승은 언제쯤",
         like_count:200,
         book_title:'해리포터',
-        book_author:'롤링'
+        book_author:'롤링',
+        nickname:"닉네임",
+        created_at:"2024-07-28T05:41:31.341060+09:00"
     },
     // 더 많은 샘플 데이터 추가
 ];
@@ -102,7 +122,7 @@ const long=[
         id:1,
         review_title:'으아아아 힘들어',
         long_text:'1이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만',
-        created_at:'2024.07.31',
+        created_at:"2024-07-28T05:41:31.341060+09:00",
         nickname:'닉네임',
         like_count:200,
         book_title:'해리포터',
@@ -129,7 +149,7 @@ const long=[
         id:2,
         review_title:'으아아아 힘들어',
         long_text:'2이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만',
-        created_at:'2024.07.31',
+        created_at:"2024-07-28T05:41:31.341060+09:00",
         nickname:'닉네임',
         like_count:200,
         book_title:'해리포터',
@@ -156,7 +176,7 @@ const long=[
         id:3,
         review_title:'으아아아 힘들어',
         long_text:'3이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만',
-        created_at:'2024.07.31',
+        created_at:"2024-07-28T05:41:31.341060+09:00",
         nickname:'닉네임',
         like_count:200,
         book_title:'해리포터',
@@ -194,7 +214,7 @@ const long=[
         id:4,
         review_title:'으아아아 힘들어',
         long_text:'4나를 위해 살지 않으면 남을 위해 살게 된다 책을 읽고 난 후, 나의 웰빙에 대한 새로운 관점을 얻게 되었다. 우리는 종종 타인의 기대에 부응하려고 하며, 그 과정에서 자신을 잃어버리기 쉽다. 이 책은 자신을 위한 삶의 중요성을 강조하며, 스스로의 행복과 만족을 우선시하는 것이 왜 중요한지에 대해 다시 한 번 생각해 보게 한다. 나의 웰빙은 단순히 신체적 건강을 넘어선다. 정신적, 감정적 건강 또한 중요한 부분이다. 이 책을 통해 나는 나 자신에게 더 많은 시간을 투자하고, 내가 진정으로 원하는 것을 추구하는 것이 얼마나 중요한지 깨달았다. 타인의 기대에 얽매이지 않고, 나만의 목표와 꿈을 향해 나아갈 때 비로소 진정한 웰빙을 실현할 수 있다. 또한, 자기 자신을 돌보는 것이 이기적인 것이 아님을 깨달았다. 내가 행복하고 건강할 때, 주변 사람들에게도 긍정적인 영향을 미칠 수 있다. 따라서 나의 웰빙을 위해 나를 위한 시간을 갖고, 나의 가치를 존중하며 살아가는 것이 중요하다. 이 책은 나에게 새로운 동기부여가 되었고, 앞으로의 삶에서 나를 위해 더 많이 살 것을 다짐하게 만들었다.',
-        created_at:'2024.07.31',
+        created_at:"2024-07-28T05:41:31.341060+09:00",
         nickname:'닉네임',
         like_count:200,
         book_title:'해리포터',
@@ -221,7 +241,7 @@ const long=[
         id:5,
         review_title:'으아아아 힘들어',
         long_text:'5이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제',
-        created_at:'2024.07.31',
+        created_at:"2024-07-28T05:41:31.341060+09:00",
         nickname:'닉네임',
         like_count:200,
         book_title:'해리포터',
@@ -839,8 +859,8 @@ const ShortModalOverlay = styled.div`
 `;
 
 const ShortModalContent = styled.div`
-  width:640px;
-  height:510px;
+  width:600px;
+  height:520px;
   padding: 20px;
   border-radius: 8px;
   text-align: center;
@@ -866,6 +886,125 @@ const ShortModalContent = styled.div`
   .right-arrow-icon:hover{
             color:#FF6E23;
     }
+  
+  .textAndClose{
+    width:600px;
+    height:34px;
+    display: flex;
+    flex-direction: row;
+    //background-color: red;
+    overflow: hidden;
+    color: #989BA2;
+    .modalText{
+        width:150px;
+        height:20px;
+        background-color: blue;
+        font-feature-settings: 'ss10' on;
+        text-overflow: ellipsis;
+        /* Label 2/Regular */
+        font-family: "Pretendard JP";
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 138.5%; /* 18.005px */
+        letter-spacing: 0.252px;
+        margin-left: 40px;
+    }
+    .close{
+        font-size: 33px;
+        margin-left: 320px;
+        }
+  }
+
+  .line1{
+        width:500px;
+        height:1px;
+        margin-left: 50px;
+        margin-top:20px;
+        background-color: rgba(112, 115, 124, 0.22);
+    }
+
+    .top1{
+    width:500px;
+    height:20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 50px;
+   // background-color: beige;
+  }
+
+  .top2{
+    width:500px;
+    height:20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 50px;
+   // background-color: aqua;
+
+    .modalCreateDate{
+        width:100px;
+        height: 30px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        background-color: beige;
+        font-family: "Pretendard JP";
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 138.5%; /* 18.005px */
+        letter-spacing: 0.252px;
+        color: #989BA2;
+    }
+
+    .modalNickname{
+        width:70px;
+        height:20px;
+        display:flex;
+        flex-direction: row;            
+        justify-content: center;
+        align-items: center;
+        color: #01524D;
+        font-feature-settings: 'ss10' on;
+        text-overflow: ellipsis;
+        /* Label 2/Bold */
+        font-family: "Pretendard JP";
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 600;
+        //line-height: 138.5%; /* 18.005px */
+        //letter-spacing: 0.252px;
+       //background-color: beige;
+    }
+
+     .heart{
+        margin-left: 280px;
+    }
+  }
+
+  .modalShortWritingBox{
+    width:600px;
+    height:300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    background-color:aqua;
+    margin-top: 20px;
+
+    .modalShortWriting{
+        width:500px;
+        height:300px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        background-color: beige;
+    }
+  }
 `;
 
 const LongModalOverlay = styled.div`
@@ -890,7 +1029,7 @@ const LongModalContent = styled.div`
   padding: 40px 48px 28px 48px;
   margin-top:90px;
   overflow: auto;
-  position: relative;
+  //position: relative;
    
     /* .scrollableContent{
     width:50px;
@@ -976,6 +1115,10 @@ const LongModalContent = styled.div`
         //letter-spacing: 0.252px;
         background-color: beige;
     }
+
+    /* .heart{
+        margin-left: 140px;
+    } */
   }
 
   .modalLongWritingBox{
@@ -999,12 +1142,12 @@ const LongModalContent = styled.div`
         background-color: beige;
     }
 
-    .prevBtn, .nextBtn {
+    /* .prevBtn, .nextBtn {
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
     cursor: pointer;
-    }
+    } */
 
     .left-arrow-icon{
         color: default;
@@ -1027,15 +1170,15 @@ const LongModalContent = styled.div`
         }
   }
 
-  .modalLongWritingBox .prevBtn {
+   /* .modalLongWritingBox .prevBtn {
     position: fixed;
-    left: 350px; /* Adjust as necessary */
-    }
+    left: 350px; 
+    } */
 
-    .modalLongWritingBox .nextBtn {
+    /* .modalLongWritingBox .nextBtn {
     position: fixed;
-    right: 360px; /* Adjust as necessary */
-    }
+    right: 360px; 
+    } */
 
   .likeLine{
     width:850px;
@@ -1365,17 +1508,46 @@ export function Community(){
                     {clickedWritingIndex === index && (
                                      <ShortModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
                                         <ShortModalContent onClick={(e) => e.stopPropagation()}> {/*모달창을 눌렀을때는 꺼지지 않도록*/}
-                                            <div className="prevBtn" onClick={shortGoToPrevious}>
-                                                <span className="material-icons left-arrow-icon">
-                                                    arrow_circle_left
+                                            <div className="textAndClose">
+                                                <div className="modalText">책 속 한 줄 상세보기</div>
+                                                <span className="material-icons close" onClick={closeModal}>
+                                                    close
                                                 </span>
                                             </div>
-                                            <div className="modalShortWriting">{item.short_comment}</div>
-                                            <div className="nextBtn" onClick={shortGoToNext}>
-                                                <span className="material-icons right-arrow-icon">
-                                                    arrow_circle_right
-                                                </span>
+                                            <div className="line1"></div>
+                                            <div className="top1"></div>
+                                            <div className="top2">
+                                                <div className="modalCreateDate">{new Date(item.created_at).toLocaleDateString()}</div>
+                                                <div className="modalNickname">{item.nickname}</div>
+                                                <div className="heart">
+                                                    <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
+                                                    <div className="heartNum">{item.like_count}</div>
+                                                </div>
+                                                <div className="bookmark">
+                                                    <FontAwesomeIcon icon={faBookmark} />
+                                                </div>
                                             </div>
+
+                                            <div className="modalShortWritingBox">  
+                                                <div className="prevBtn" onClick={shortGoToPrevious} style={{
+                                                color: index === 0 ? '#989BA2 ' : '#000000 ',
+                                                pointerEvents: index === 0 ? 'none' : 'auto',
+                                                }}>
+                                                    <span className="material-icons left-arrow-icon">
+                                                        arrow_circle_left
+                                                    </span>
+                                                </div>
+                                                <div className="modalShortWriting">{item.short_comment}</div>
+                                                <div className="nextBtn" onClick={shortGoToNext} style={{
+                                                    color: index === short.length - 1 ? '#989BA2 ' : '#000000',
+                                                    pointerEvents: index === short.length - 1 ? 'none' : 'auto',
+                                                }}>
+                                                    <span className="material-icons right-arrow-icon">
+                                                        arrow_circle_right
+                                                    </span>
+                                                </div>
+                                              </div>   
+
                                         </ShortModalContent>
                                      </ShortModalOverlay>
                                  )}
@@ -1412,20 +1584,50 @@ export function Community(){
                     </div>
                     {clickedWritingIndex === index+6 && (
                                      <ShortModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
-                                        <ShortModalContent onClick={(e) => e.stopPropagation()}> {/*모달창을 눌렀을때는 꺼지지 않도록*/}
-                                            <div className="prevBtn" onClick={shortGoToPrevious}>
-                                            <span className="material-icons left-arrow-icon">
-                                                arrow_circle_left
-                                            </span>
+                                     <ShortModalContent onClick={(e) => e.stopPropagation()}> {/*모달창을 눌렀을때는 꺼지지 않도록*/}
+                                         <div className="textAndClose">
+                                             <div className="modalText">책 속 한 줄 상세보기</div>
+                                             <span className="material-icons close" onClick={closeModal}>
+                                                 close
+                                             </span>
+                                         </div>
+                                         <div className="line1"></div>
+                                         <div className="top1"></div>
+                                         <div className="top2">
+                                             <div className="modalCreateDate">{new Date(item.created_at).toLocaleDateString()}</div>
+                                             <div className="modalNickname">{item.nickname}</div>
+                                             <div className="heart">
+                                                <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
+                                                <div className="heartNum">{item.like_count}</div>
                                             </div>
-                                            <div className="modalShortWriting">{item.short_comment}</div>
-                                            <div className="nextBtn" onClick={shortGoToNext}>
-                                            <span className="material-icons right-arrow-icon">
-                                                arrow_circle_right
-                                            </span>
+                                            <div className="bookmark">
+                                                <FontAwesomeIcon icon={faBookmark} />
                                             </div>
-                                        </ShortModalContent>
-                                     </ShortModalOverlay>
+
+                                         </div>
+
+                                         <div className="modalShortWritingBox">  
+                                             <div className="prevBtn" onClick={shortGoToPrevious} style={{
+                                             color: '#000000 ',
+                                             //pointerEvents: index === 0 ? 'none' : 'auto',
+                                             }}>
+                                                 <span className="material-icons left-arrow-icon">
+                                                     arrow_circle_left
+                                                 </span>
+                                             </div>
+                                             <div className="modalShortWriting">{item.short_comment}</div>
+                                             <div className="nextBtn" onClick={shortGoToNext} style={{
+                                                 color: index+6 === short.length - 1 ? '#989BA2 ' : '#000000',
+                                                 pointerEvents: index+6 === short.length - 1 ? 'none' : 'auto',
+                                             }}>
+                                                 <span className="material-icons right-arrow-icon">
+                                                     arrow_circle_right
+                                                 </span>
+                                             </div>
+                                           </div>   
+
+                                     </ShortModalContent>
+                                  </ShortModalOverlay>
                                  )}
                     
                 </ShortWritingCard>
@@ -1440,16 +1642,16 @@ export function Community(){
                         <div className="title">{item.review_title}</div>
                         <div className="longWriting">{item.long_text}</div>
                         <div className="likePick">
-                            <div className="createDate">{item.created_at}</div>
+                            <div className="createDate">{new Date(item.created_at).toLocaleDateString()}</div>
                             <div className="nickName">{item.nickname}</div>
-                            <div className="heart">
+                            <div className="heart" onClick={(e)=>e.stopPropagation()}>
                                 <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
                                 <div className="heartNum">{item.like_count}</div>
                             </div>
-                            <div className="bookmark">
+                            <div className="bookmark" onClick={(e)=>e.stopPropagation()}>
                                 <FontAwesomeIcon icon={faBookmark} />
                             </div>
-                            <span className="material-icons chatIcon">
+                            <span className="material-icons chatIcon" onClick={(e)=>e.stopPropagation()}>
                                 chat
                             </span>
                         </div>
@@ -1480,7 +1682,7 @@ export function Community(){
                                                 </span>
                                             </div>
                                             <div className="top2">
-                                                <div className="modalCreateDate">{item.created_at}</div>
+                                                <div className="modalCreateDate">{new Date(item.created_at).toLocaleDateString()}</div>
                                                 <div className="modalNickname">{item.nickname}</div>
                                             </div>
                                             <div className="modalLongWritingBox">
@@ -1537,7 +1739,7 @@ export function Community(){
                                                     {item.comment_list.map((comment) => (
                                                     <CommentCard key={comment.comment_id}>
                                                         <div className="commentNickName">{comment.comment_nickname}</div>
-                                                        <div className="commentCreatedAt">{comment.comment_created_at}</div>
+                                                        <div className="commentCreatedAt">{new Date(comment.comment_created_at).toLocaleDateString()}</div>
                                                         <div className="commentText">{comment.comment_text}</div>
                                                     </CommentCard>
                                                     ))}
@@ -1567,16 +1769,16 @@ export function Community(){
                         <div className="title">{item.review_title}</div>
                         <div className="longWriting">{item.long_text}</div>
                         <div className="likePick">
-                            <div className="createDate">{item.created_at}</div>
+                            <div className="createDate">{new Date(item.created_at).toLocaleDateString()}</div>
                             <div className="nickName">{item.nickname}</div>
-                            <div className="heart">
+                            <div className="heart" onClick={(e)=>e.stopPropagation()}>
                                 <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
                                 <div className="heartNum">{item.like_count}</div>
                             </div>
-                            <div className="bookmark">
+                            <div className="bookmark" onClick={(e)=>e.stopPropagation()}>
                                 <FontAwesomeIcon icon={faBookmark} />
                             </div>
-                            <span className="material-icons chatIcon">
+                            <span className="material-icons chatIcon" onClick={(e)=>e.stopPropagation()}>
                                 chat
                             </span>
                         </div>
@@ -1606,7 +1808,7 @@ export function Community(){
                                                 </span>
                                             </div>
                                             <div className="top2">
-                                                <div className="modalCreateDate">{item.created_at}</div>
+                                                <div className="modalCreateDate">{new Date(item.created_at).toLocaleDateString()}</div>
                                                 <div className="modalNickname">{item.nickname}</div>
                                             </div>
                                             <div className="modalLongWritingBox">
@@ -1663,7 +1865,7 @@ export function Community(){
                                                     {item.comment_list.map((comment) => (
                                                     <CommentCard key={comment.comment_id}>
                                                         <div className="commentNickName">{comment.comment_nickname}</div>
-                                                        <div className="commentCreatedAt">{comment.comment_created_at}</div>
+                                                        <div className="commentCreatedAt">{new Date(comment.comment_created_at).toLocaleDateString()}</div>
                                                         <div className="commentText">{comment.comment_text}</div>
                                                     </CommentCard>
                                                     ))}

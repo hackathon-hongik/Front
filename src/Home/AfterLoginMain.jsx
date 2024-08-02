@@ -11,6 +11,7 @@ import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import {bookAPI} from "../api";
 import { axiosInstance } from "../api";
+import { useLocation } from 'react-router-dom'
 
 const API_KEY=process.env.REACT_APP_KAKAO_BOOK_API_KEY;
 
@@ -23,6 +24,8 @@ export function AfterLoginMain(){
     const [searchWord,setSearchWord]=useState("");
     const [bookResults,setBookResults]=useState([]);
     const [readingCount,setReadingCount]=useState(0);
+    const location = useLocation();
+    const token = location.state?.access || '';
 
     const mockData = [
         { id: 1, title: "책 1", content: "사람은 미래에 대한 기대가 있어야만 세상을 살아갈 수 있다.", hearts: 620 },
@@ -35,6 +38,7 @@ export function AfterLoginMain(){
 
    
     useEffect(() => {
+        console.log(token);
         fetchBook();
         fetchOneLine();
     }, []);
@@ -46,7 +50,11 @@ export function AfterLoginMain(){
 
     const fetchBook=async()=>{
         try{
-            const response=await axiosInstance.get('/1/');
+            const response=await axiosInstance.get('/mainpage/',{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            });
             setBookResults(response.data.recent_reading_books)
             setReadingCount(response.data.reading_count);
             console.log(response);
@@ -84,7 +92,7 @@ export function AfterLoginMain(){
             // };  근데 이렇게 했을때 검색결과가 왜 하나도 안뜨는지는 모르겠음
             
 
-            navigate("/afterlogin/booksearchresult", { state: { results, searchWord } });  //search한 데이터를 다른 페이지로 넘기기 
+            navigate("/afterlogin/booksearchresult", { state: { results, searchWord, token } });  //search한 데이터를 다른 페이지로 넘기기 
 
             console.log(response.data);
         }
@@ -93,8 +101,8 @@ export function AfterLoginMain(){
         }
     }
 
-    const handleItemClick=(path)=>{
-        navigate(path);
+    const handleItemClick=(path,token)=>{
+        navigate(path,{state:{token}});
     };
 
     const handleTitleChange=(e)=>{
@@ -163,14 +171,14 @@ export function AfterLoginMain(){
                 </div>
 
                 <ul className="nav">
-                    <li><a onClick={()=>handleItemClick('/afterlogin/mylibrary')}>내 서재</a></li>
+                    <li><a onClick={()=>handleItemClick('/afterlogin/mylibrary',token)}>내 서재</a></li>
                     <li><a onClick={()=>handleItemClick("/afterlogin/community")}>커뮤니티</a></li>
                     <li>
                         <div className="buttonToggle">
                             <button className="mypageBtn" onClick={()=>{setCheck((e)=>!e)}}>마이페이지</button>
                             {isCheck &&(
                                 <div className="toggleList">
-                                <p>닉네임 변경</p>
+                                <p onClick={()=>handleItemClick('/afterlogin/changenickname',token)}>닉네임 변경</p>
                                 <p>1:1 문의</p>
                                 <p>로그아웃</p>
                                 <p>회원탈퇴</p>
@@ -253,7 +261,7 @@ export function AfterLoginMain(){
 
                     <div className="gotoMyShelfBox">
                         {/* <button className="gotoMyShelfBtn" onClick={()=>handleItemClick('/afterlogin/mylibrary')}>{">"}</button> */}
-                        <span className="material-icons right-arrow-icon2" onClick={()=>handleItemClick('/afterlogin/mylibrary')}>
+                        <span className="material-icons right-arrow-icon2" onClick={()=>handleItemClick('/afterlogin/mylibrary',token)}>
                             arrow_circle_right
                         </span>
                         <div className="text5">
@@ -264,7 +272,7 @@ export function AfterLoginMain(){
             </div>
             
 
-            <div className="banner" onClick={()=>handleItemClick("/afterlogin/recommendation")}>
+            <div className="banner" onClick={()=>handleItemClick("/afterlogin/recommendation",token)}>
                 <div className="text3">
                     <p className="first_row">당신의 고민에 맞는</p>
                     <p className="second_row">책 추천 받기</p>
@@ -280,7 +288,7 @@ export function AfterLoginMain(){
 
                 <div className="bestList">
                     {/* <button className="arrow leftArrow" onClick={prevSlide}>{"<"}</button> */}
-                    <span className="material-icons left-arrow-icon" onClick={prevSlide} style={{ color: currentIndex === 0 ? 'black' : '#FF6E23' }}>
+                    <span className="material-icons left-arrow-icon" onClick={prevSlide} style={{ color: currentIndex === 0 ? '#989BA2' : '#FF6E23' }}>
                         arrow_circle_left
                     </span>
                     {getVisibleItems().map((item) => (
@@ -303,7 +311,7 @@ export function AfterLoginMain(){
                             </div>
                         </div>
                     ))}
-                    <span className="material-icons right-arrow-icon" onClick={nextSlide} style={{ color: currentIndex >= data.length - 3 ? 'black' : '#FF6E23' }}>
+                    <span className="material-icons right-arrow-icon" onClick={nextSlide} style={{ color: currentIndex >= data.length - 3 ? '#989BA2' : '#FF6E23' }}>
                         arrow_circle_right
                     </span>
                     {/* <button className="arrow rightArrow" onClick={nextSlide}>{">"}</button> */}

@@ -2,6 +2,9 @@ import { useEffect, useState } from "react";
 import {useNavigate} from "react-router-dom";
 import { axiosInstance } from "../api";
 import styled from "styled-components";
+import { useLocation } from 'react-router-dom';
+
+
 
 const sampleBooks = [
     {
@@ -535,6 +538,8 @@ export function MyLibrary(){  //내 서재 페이지
     const [pickStatus,setPickStatus]=useState(0);
     const [bookResults, setBookResults] = useState([]);
     const [isCheck,setCheck]=useState(false);
+    const location = useLocation();
+    const token = location.state?.token || '';
     
     const navigate=useNavigate();
     
@@ -549,7 +554,11 @@ export function MyLibrary(){  //내 서재 페이지
 
     const showAll=async()=>{
         try{
-            const response=await axiosInstance.get("/desk/1/books/");    //1 자리에 원래는 {memberId}가 와야함 지금은 로그인이 구현 안되어있어 임의로
+            const response=await axiosInstance.get("/desk/books/",{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            });    
             setReadingStatus(response.data.reading_count);
             setReadStatus(response.data.read_count);
             setPickStatus(response.data.wish_count);
@@ -565,7 +574,11 @@ export function MyLibrary(){  //내 서재 페이지
 
     const showReading=async()=>{
         try{
-            const response=await axiosInstance.get("/desk/1/books/group/reading/"); //1 자리에 원래는 {memberId}가 와야함
+            const response=await axiosInstance.get("/desk/books/group/reading/",{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+        });
             setReadingStatus(response.data.reading_count);
             setReadStatus(response.data.read_count);
             setPickStatus(response.data.wish_count);
@@ -580,7 +593,11 @@ export function MyLibrary(){  //내 서재 페이지
 
     const showRead=async()=>{
         try{
-            const response=await axiosInstance.get("/desk/1/books/group/read/");
+            const response=await axiosInstance.get("/desk/books/group/read/",{
+                    headers:{
+                        Authorization: `Bearer ${token}`
+                    }
+        });
             setReadingStatus(response.data.reading_count);
             setReadStatus(response.data.read_count);
             setPickStatus(response.data.wish_count);
@@ -594,7 +611,11 @@ export function MyLibrary(){  //내 서재 페이지
 
     const showPicked=async()=>{
         try{
-            const response=await axiosInstance.get("/desk/1/books/group/wish/");
+            const response=await axiosInstance.get("/desk/books/group/wish/",{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            });
             setReadingStatus(response.data.reading_count);
             setReadStatus(response.data.read_count);
             setPickStatus(response.data.wish_count);
@@ -620,7 +641,11 @@ export function MyLibrary(){  //내 서재 페이지
                 }
             }
 
-            const response=await axiosInstance.post("/desk/1/books/reading/",newBook);
+            const response=await axiosInstance.post("/desk/books/reading/",newBook,{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            });
             alert("읽고 있는 책에 성공적으로 추가되었습니다!")
             console.log(response);
         }
