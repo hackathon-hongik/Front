@@ -1054,25 +1054,6 @@ const EmogModalContent = styled.div`
         letter-spacing: 0.252px;
         color: #989BA2;
     }
-
-    /* .modalNickname{
-        width:70px;
-        height:20px;
-        display:flex;
-        flex-direction: row;            
-        justify-content: center;
-        align-items: center;
-        color: #01524D;
-        font-feature-settings: 'ss10' on;
-        text-overflow: ellipsis;
-        font-family: "Pretendard JP";
-        font-size: 13px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 138.5%; 
-        letter-spacing: 0.252px;
-       background-color: beige;
-    } */
   }
 
   .modalShortWritingBox{
@@ -1084,21 +1065,80 @@ const EmogModalContent = styled.div`
     align-items: center;
     //background-color: aqua;
 
+    .line3{
+    width:500px;
+    border-top: 3px dotted #ccc; /* 점선 설정 */
+    margin: 20px 0;
+  }
+
     .QNA{
-      width:500px;
+        margin-top : 100px;
+        width:500px;
         height:300px;
         display: flex;
         flex-direction: column;
-        background: aqua;
+        //background: aqua;
 
-      .modalShortWriting{
-        width:500px;
-        height:250px;
+      .QnaShow{
         display: flex;
         flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        background-color: beige;
+      }
+      
+      .iconQBox{
+        width:50px;
+        height:60px;
+        //background: magenta;
+      }
+
+      .iconABox{
+        width:50px;
+        height:200px;
+        //background: green;
+      }
+      
+      .icon{
+        width: 30px;
+        height: 30px;
+      }
+
+      .modalQuestion{
+        color: var(--kakao-logo, #000);
+        font-feature-settings: 'ss10' on;
+
+        /* Body 2/Reading - Bold */
+        font-family: "Pretendard JP";
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 160%; /* 24px */
+        letter-spacing: 0.144px;
+        width:450px;
+        height:60px;
+        display: flex;
+        flex-direction: row;
+        text-align: left;
+        //background-color: blue;
+        
+      }
+
+
+      .modalAnswer{
+        color: var(--kakao-logo, #000);
+        font-feature-settings: 'ss10' on;
+
+        /* Body 2/Reading - Regular */
+        font-family: "Pretendard JP";
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 160%; /* 24px */
+        letter-spacing: 0.144px;
+        width:450px;
+        height:200px;
+        display: flex;
+        flex-direction: row;
+        text-align: left;
+        //background-color: beige;
       }
 
     } 
@@ -1139,7 +1179,8 @@ const EmogModalContent = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 10px;
+    margin-top: 10px;
+    //padding: 10px;
 
 
     .modalInerBox{
@@ -1640,8 +1681,15 @@ const handleItemClick = (path) => {
                                                     </span>
                                                 </div>
                                                 <div className="QNA">
-                                                  <div className="modalShortWriting">{question.question}</div>
-                                                  <div className="modalShortWriting">{question.answer}</div>
+                                                  <div className="QnaShow">
+                                                    <div className="iconQBox"><img className="icon" src={qImage}/></div>
+                                                    <div className="modalQuestion">{question.question}</div>
+                                                  </div>
+                                                  <div className="line3"></div>
+                                                  <div className="QnaShow">
+                                                    <div className="iconABox"><img className="icon" src={aImage}/></div>
+                                                    <div className="modalAnswer">{question.answer}</div>
+                                                  </div>
                                                 </div>
                                                 <div className="nextBtn" onClick={emoGoToNext} style={{
                                                     color: index === isQue.length - 1 ? '#989BA2 ' : '#000000',
@@ -1657,7 +1705,7 @@ const handleItemClick = (path) => {
                                                 <div className="modalCover"></div>
                                                 <div className="modalBookInfo">
                                                     <div className="modalBookTitle">{question.book_title}</div>
-                                                    <div className="modalBookAuthor">{question.book_title}</div>
+                                                    <div className="modalBookAuthor">{question.book_author}</div>
                                                 </div>
                                                 </div>
                                             </div>

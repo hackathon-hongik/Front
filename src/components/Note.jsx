@@ -246,16 +246,22 @@ const SetQuestions = [
 
 const Select = styled.select`
   width: 100%;
-  height: 40px;
+  height: 50px;
   padding: 10px;
   border: 1px solid #ccc;
   border-radius: 5px;
   margin-bottom: 10px;
   background-color: #F2F2F7;
+  overflow: auto;
+  white-space: normal;
   
   &:focus {
     border-color: #989BA2;
     outline: none;
+  }
+
+  option {
+    white-space: normal;
   }
 `;
 
