@@ -119,24 +119,40 @@ export function AfterLoginMain(){
         );
     }; //즐겨찾기 부분
 
+    // const nextSlide = () => {
+    //     setCurrentIndex((prevIndex) => (prevIndex + 3) % data.length);
+    // };
+
+    // const prevSlide = () => {
+    //     setCurrentIndex((prevIndex) => (prevIndex - 3 + data.length) % data.length);
+    // };
+
+    // const getVisibleItems = () => {
+    //     if (data.length <= 3) {
+    //         return data;
+    //     }
+
+    //     const visibleItems = [];
+    //     for (let i = 0; i < 3; i++) {
+    //         visibleItems.push(data[(currentIndex + i) % data.length]);
+    //     }
+    //     return visibleItems;
+    // };
+
     const nextSlide = () => {
-        setCurrentIndex((prevIndex) => (prevIndex + 3) % data.length);
+        if (currentIndex < data.length - 3) {
+            setCurrentIndex(prevIndex => prevIndex + 1);
+        }
     };
 
     const prevSlide = () => {
-        setCurrentIndex((prevIndex) => (prevIndex - 3 + data.length) % data.length);
+        if (currentIndex > 0) {
+            setCurrentIndex(prevIndex => prevIndex - 1);
+        }
     };
 
     const getVisibleItems = () => {
-        if (data.length <= 3) {
-            return data;
-        }
-
-        const visibleItems = [];
-        for (let i = 0; i < 3; i++) {
-            visibleItems.push(data[(currentIndex + i) % data.length]);
-        }
-        return visibleItems;
+        return data.slice(currentIndex, currentIndex + 3);
     };
 
     return( 
@@ -264,7 +280,7 @@ export function AfterLoginMain(){
 
                 <div className="bestList">
                     {/* <button className="arrow leftArrow" onClick={prevSlide}>{"<"}</button> */}
-                    <span className="material-icons left-arrow-icon" onClick={prevSlide}>
+                    <span className="material-icons left-arrow-icon" onClick={prevSlide} style={{ color: currentIndex === 0 ? 'black' : '#FF6E23' }}>
                         arrow_circle_left
                     </span>
                     {getVisibleItems().map((item) => (
@@ -287,7 +303,7 @@ export function AfterLoginMain(){
                             </div>
                         </div>
                     ))}
-                    <span className="material-icons right-arrow-icon" onClick={nextSlide}>
+                    <span className="material-icons right-arrow-icon" onClick={nextSlide} style={{ color: currentIndex >= data.length - 3 ? 'black' : '#FF6E23' }}>
                         arrow_circle_right
                     </span>
                     {/* <button className="arrow rightArrow" onClick={nextSlide}>{">"}</button> */}

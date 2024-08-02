@@ -107,7 +107,7 @@ const long=[
         like_count:200,
         book_title:'해리포터',
         book_author:'롤링',
-        comment_count : 2,
+        comment_count : 0,
 
 		comment_list : [
 					{
@@ -857,7 +857,7 @@ const ShortModalContent = styled.div`
   .left-arrow-icon:hover{
             color:#FF6E23;
     }
-    
+
   .right-arrow-icon{
     color: #000000;
     font-size: 25px;
@@ -881,15 +881,16 @@ const LongModalOverlay = styled.div`
 
 const LongModalContent = styled.div`
   width:960px;
-  height:800px;
+  height:700px;
   padding: 20px;
   border-radius: 8px 8px 8px 8px;
   text-align: center;
   border-radius: 20px;
   background: #FFF;
   padding: 40px 48px 28px 48px;
-  margin-top:50px;
+  margin-top:90px;
   overflow: auto;
+  position: relative;
    
     /* .scrollableContent{
     width:50px;
@@ -994,12 +995,22 @@ const LongModalContent = styled.div`
         flex-direction: row;
         justify-content: center;
         align-items: center;
+        margin-left: 10px;
         background-color: beige;
     }
+
+    .prevBtn, .nextBtn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    }
+
     .left-arrow-icon{
         color: default;
         font-size: 35px;
-
+        
+       
     }
     .left-arrow-icon:hover{
             color:#FF6E23;
@@ -1008,12 +1019,23 @@ const LongModalContent = styled.div`
     .right-arrow-icon{
         color: default;
         font-size: 35px;
+        
     
     }
     .right-arrow-icon:hover{
             color:#FF6E23;
         }
   }
+
+  .modalLongWritingBox .prevBtn {
+    position: fixed;
+    left: 350px; /* Adjust as necessary */
+    }
+
+    .modalLongWritingBox .nextBtn {
+    position: fixed;
+    right: 360px; /* Adjust as necessary */
+    }
 
   .likeLine{
     width:850px;
@@ -1246,16 +1268,27 @@ export function Community(){
     const closeModal = () => {
         setClickedWritingIndex(null);
       };
-
-    const goToPrevious = () => {
+    
+    const shortGoToPrevious = () => {
         setClickedWritingIndex(prevIndex =>
-            prevIndex === 0 ? shortWritings.length - 1 : prevIndex - 1
+            prevIndex === 0 ? short.length - 1 : prevIndex - 1
         );
     };
 
-    const goToNext = () => {
+    const shortGoToNext = () => {
         setClickedWritingIndex(prevIndex =>
-            prevIndex === shortWritings.length - 1 ? 0 : prevIndex + 1
+            prevIndex === short.length - 1 ? 0 : prevIndex + 1
+        );
+    };
+    const longGoToPrevious = () => {
+        setClickedWritingIndex(prevIndex =>
+            prevIndex === 0 ? long.length - 1 : prevIndex - 1
+        );
+    };
+
+    const longGoToNext = () => {
+        setClickedWritingIndex(prevIndex =>
+            prevIndex === long.length - 1 ? 0 : prevIndex + 1
         );
     };
     return(
@@ -1332,13 +1365,13 @@ export function Community(){
                     {clickedWritingIndex === index && (
                                      <ShortModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
                                         <ShortModalContent onClick={(e) => e.stopPropagation()}> {/*모달창을 눌렀을때는 꺼지지 않도록*/}
-                                            <div className="prevBtn" onClick={goToPrevious}>
+                                            <div className="prevBtn" onClick={shortGoToPrevious}>
                                                 <span className="material-icons left-arrow-icon">
                                                     arrow_circle_left
                                                 </span>
                                             </div>
                                             <div className="modalShortWriting">{item.short_comment}</div>
-                                            <div className="nextBtn" onClick={goToNext}>
+                                            <div className="nextBtn" onClick={shortGoToNext}>
                                                 <span className="material-icons right-arrow-icon">
                                                     arrow_circle_right
                                                 </span>
@@ -1380,13 +1413,13 @@ export function Community(){
                     {clickedWritingIndex === index+6 && (
                                      <ShortModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
                                         <ShortModalContent onClick={(e) => e.stopPropagation()}> {/*모달창을 눌렀을때는 꺼지지 않도록*/}
-                                            <div className="prevBtn" onClick={goToPrevious}>
+                                            <div className="prevBtn" onClick={shortGoToPrevious}>
                                             <span className="material-icons left-arrow-icon">
                                                 arrow_circle_left
                                             </span>
                                             </div>
                                             <div className="modalShortWriting">{item.short_comment}</div>
-                                            <div className="nextBtn" onClick={goToNext}>
+                                            <div className="nextBtn" onClick={shortGoToNext}>
                                             <span className="material-icons right-arrow-icon">
                                                 arrow_circle_right
                                             </span>
@@ -1451,7 +1484,7 @@ export function Community(){
                                                 <div className="modalNickname">{item.nickname}</div>
                                             </div>
                                             <div className="modalLongWritingBox">
-                                                <div className="prevBtn" onClick={goToPrevious} style={{
+                                                <div className="prevBtn" onClick={longGoToPrevious} style={{
                                                 color: index === 0 ? '#989BA2 ' : '#000000 ',
                                                 pointerEvents: index === 0 ? 'none' : 'auto',
                                                 }}>
@@ -1460,7 +1493,7 @@ export function Community(){
                                                     </span>
                                                 </div>
                                                 <div className="modalLongWriting">{item.long_text}</div>
-                                                <div className="nextBtn" onClick={goToNext} style={{
+                                                <div className="nextBtn" onClick={longGoToNext} style={{
                                                     color: index === long.length - 1 ? '#989BA2 ' : '#000000',
                                                     pointerEvents: index === long.length - 1 ? 'none' : 'auto',
                                                 }}>
@@ -1577,7 +1610,7 @@ export function Community(){
                                                 <div className="modalNickname">{item.nickname}</div>
                                             </div>
                                             <div className="modalLongWritingBox">
-                                                <div className="prevBtn" onClick={goToPrevious} style={{
+                                                <div className="prevBtn" onClick={longGoToPrevious} style={{
                                                 color:'#000000 ',
                                                 //pointerEvents: index === 0 ? 'none' : 'auto',
                                                 }}>
@@ -1586,7 +1619,7 @@ export function Community(){
                                                     </span>
                                                 </div>
                                                 <div className="modalLongWriting">{item.long_text}</div>
-                                                <div className="nextBtn" onClick={goToNext} style={{
+                                                <div className="nextBtn" onClick={longGoToNext} style={{
                                                     color: index+4 === long.length - 1 ? '#989BA2 ' : '#000000 ',
                                                     pointerEvents: index+4 === long.length - 1 ? 'none' : 'auto',
                                                 }}>
