@@ -11,9 +11,9 @@ import { AfterBookSearchResult } from "./BookSearch/AfterBookSearchResult";
 import { Recommend } from "./RecommendPage/Recommend";
 import { RecommendResult } from "./RecommendPage/RecommendResult";
 import { Community } from "./Communities/Community";
-import { LookNote } from "./components/LookNote";
-import { CommunityScrap } from "./Communities/CommunityScrap";
 import { CommunityWrite } from "./Communities/CommunityWrite";
+import { CommunityScrap } from "./Communities/CommunityScrap";
+import { LookNote } from "./components/LookNote";
 import {Routes,Route} from "react-router-dom";
 import { ChangeNickName } from "./components/ChangeNickname";
 function App() {
