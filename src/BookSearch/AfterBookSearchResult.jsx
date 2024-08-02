@@ -430,7 +430,8 @@ const ModalContent = styled.div`
 export function AfterBookSearchResult(){  //로그인 전 책 검색하면 나오는 페이지
     const navigate=useNavigate();
     const location = useLocation();
-    const { results,searchWord } = location.state || { results: [],searchWord:'' };  // Use state to get results
+    const { results,searchWord} = location.state || { results: [],searchWord:'' };  // Use state to get results
+    const token = location.state?.token || '';
     const [clickedBookIndex, setClickedBookIndex] = useState(null);
     const [isCheck,setCheck]=useState(false);
     const [newSearchWord,setNewSearchWord]=useState("");  //새로운 책을 입력받기 위한 장치
@@ -454,7 +455,11 @@ export function AfterBookSearchResult(){  //로그인 전 책 검색하면 나�
 
     const fetchWishBooks=async()=>{
         try{
-            const response=await axiosInstance.get('/desk/1/books/group/wish/');
+            const response=await axiosInstance.get('/desk/books/group/wish/',{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            });
             setFetchedBookmarked(response.data);
             console.log(fetchedBookmarked);
         }
@@ -517,7 +522,11 @@ export function AfterBookSearchResult(){  //로그인 전 책 검색하면 나�
                 }
             }
 
-            const response=await axiosInstance.post("/desk/1/books/wish/",newBook);
+            const response=await axiosInstance.post("/desk/books/wish/",newBook,{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            });
             alert("찜한 책에 성공적으로 추가되었습니다!")
             console.log(response);
         }
@@ -548,7 +557,13 @@ export function AfterBookSearchResult(){  //로그인 전 책 검색하면 나�
                 }
             }
 
-            const response=await axiosInstance.post("/desk/1/books/reading/",newBook);
+            const response=await axiosInstance.post("/desk/books/reading/",newBook,{
+                
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+
+                });
             alert("읽고 있는 책에 성공적으로 추가되었습니다!")
             console.log(response);
         }
@@ -568,8 +583,8 @@ export function AfterBookSearchResult(){  //로그인 전 책 검색하면 나�
         setClickedBookIndex(null);
       };
 
-    const handleItemClick=(path)=>{
-        navigate(path);
+      const handleItemClick=(path,token)=>{
+        navigate(path,{state:{token}});
     };
     
     const handleSearchWordChange=(e)=>{
@@ -604,9 +619,9 @@ export function AfterBookSearchResult(){  //로그인 전 책 검색하면 나�
         
     };
         
-    const handleAddClick=(isbn,title,author,thumbnail,content,publisher,date)=>{   //읽고 있는 책으로 추가 처리
+    const handleAddClick=(isbn,title,author,thumbnail,content,publisher,date,token)=>{   //읽고 있는 책으로 추가 처리
        
-        addBook(isbn,title,author,thumbnail,content,publisher,date);
+        addBook(isbn,title,author,thumbnail,content,publisher,date,token);
         
     };
 
@@ -622,7 +637,7 @@ export function AfterBookSearchResult(){  //로그인 전 책 검색하면 나�
                 </div>
 
                 <ul className="nav">
-                    <li><a className="orangeText" onClick={()=>handleItemClick('/afterlogin/mylibrary')}>내 서재</a></li>
+                    <li><a className="orangeText" onClick={()=>handleItemClick('/afterlogin/mylibrary',token)}>내 서재</a></li>
                     <li><a onClick={()=>handleItemClick('/afterlogin/community')}>커뮤니티</a></li>
                     <li>
                         <div className="buttonToggle">

@@ -7,6 +7,7 @@ import findLogo from "../assets/findLogo.png";
 import {bookAPI} from "../api";
 import { axiosInstance } from '../api';
 import axios from 'axios';
+import queryString from 'query-string'; 
 
 
 
@@ -244,6 +245,8 @@ export function Recommend() {
     const [isCheck, setCheck] = useState(false);
     const [selectedQuestion, setSelectedQuestion] = useState(null);
     const [index,setIndex]=useState(6);
+    const location = useLocation();
+    const token = location.state?.token || '';
   
     const questions = [
       "진로 - 앞으로의 진로가 막막해요.",
@@ -262,7 +265,8 @@ export function Recommend() {
     ];
 
     const searchData=async(index)=>{
-      console.log(index);
+      console.log(token)
+      //console.log(index);
         try{
           const response=await axiosInstance.get(`/recommendation/${index}/book/`);
           const results = response.data.map(doc => ({
@@ -279,8 +283,9 @@ export function Recommend() {
 
           console.log(response.data);
 
-          navigate("/afterlogin/recommendation/recommendresult", {state:{results, category:selectedQuestion}});  //selectedQuestion-> 어떤 고민에 대한 추천인지를 알기 위해서
-        }
+          navigate("/afterlogin/recommendation/recommendresult", {state:{results, token, category:selectedQuestion}});  //selectedQuestion-> 어떤 고민에 대한 추천인지를 알기 위해서
+    
+  }
         catch(e){
           console.log(e);
         }

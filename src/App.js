@@ -15,7 +15,7 @@ import { LookNote } from "./components/LookNote";
 import { CommunityScrap } from "./Communities/CommunityScrap";
 import { CommunityWrite } from "./Communities/CommunityWrite";
 import {Routes,Route} from "react-router-dom";
-
+import { ChangeNickName } from "./components/ChangeNickname";
 function App() {
   return (
     <Routes>
@@ -24,6 +24,7 @@ function App() {
       <Route path="/join" element={<Join/>}/>
       <Route path='/booksearchresult' element={<BeforeBookSearchResult/>}/>
       <Route path="/afterlogin" element={<AfterLoginMain/>}/>
+      <Route path="/afterlogin/changenickname" element={<ChangeNickName/>}/>
       <Route path='/auth/kakao' element={<Redirect/>}/>
       <Route path='/afterlogin/note' element={<Note/>}/>
       <Route path='/afterlogin/looknote' element={<LookNote/>}/>
