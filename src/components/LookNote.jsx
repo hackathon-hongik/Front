@@ -15,10 +15,9 @@ import okayImage from '../assets/괜찮아요.png';
 import tiredImage from '../assets/피곤해요.png';
 import sadImage from '../assets/슬퍼요.png';
 import worriedImage from '../assets/걱정돼요.png';
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { faBookmark } from "@fortawesome/free-solid-svg-icons";
+import qImage from '../assets/Q.png';
+import aImage from '../assets/A.png';
+
 
 export const getShortNotes = async (memberId, isbn) => {
     try {
@@ -974,8 +973,8 @@ const EmogModalOverlay = styled.div`
 `;
 
 const EmogModalContent = styled.div`
-  width:640px;
-  height:510px;
+  width:600px;
+  height:520px;
   padding: 20px;
   border-radius: 8px;
   text-align: center;
@@ -984,23 +983,226 @@ const EmogModalContent = styled.div`
   padding: 40px 48px 28px 48px;
   margin-top:230px;
   
-  .left-arrow-icon{
-    color: #000000;
-    font-size: 25px;
-  }
+  .top0{
+    width: 500px;
+    display: flex;
+    flex-direction: row;
+    //background: aqua;
+    margin-left: 50px;
+    margin-top: 10px;
 
-  .left-arrow-icon:hover{
-            color:#FF6E23;
+    .detail{
+      width: 200px;
+      font-size: 15px;
+      //background: beige;
+      margin-right: 50px;
+      margin-top: 10px;
+      overflow: hidden;
+      color: #989BA2;
+      font-feature-settings: 'ss10' on;
+      text-overflow: ellipsis;
+
+
+      font-family: "Pretendard JP";
+      font-style: normal;
+      font-weight: 400;
+      line-height: 138.5%; /* 18.005px */
+      letter-spacing: 0.252px;
     }
     
-  .right-arrow-icon{
-    color: #000000;
-    font-size: 25px;
+    .close{
+    margin-left:260px;
+    font-size: 33px;
+    cursor: default;
+    //background-color: magenta;
+    }
   }
 
-  .right-arrow-icon:hover{
-            color:#FF6E23;
+  .line1{
+    width:500px;
+    height:1px;
+    margin-top: 20px;
+    margin-left: 50px;
+    background-color:rgba(112, 115, 124, 0.22);
+  }
+
+  .top1{
+    width:500px;
+    height:20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 50px;
+   // background-color: beige;
+  }
+
+  .top2{
+    width:500px;
+    height:20px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin-left: 50px;
+   // background-color: aqua;
+
+    .modalCreateDate{
+        font-family: "Pretendard JP";
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 138.5%; /* 18.005px */
+        letter-spacing: 0.252px;
+        color: #989BA2;
     }
+
+    /* .modalNickname{
+        width:70px;
+        height:20px;
+        display:flex;
+        flex-direction: row;            
+        justify-content: center;
+        align-items: center;
+        color: #01524D;
+        font-feature-settings: 'ss10' on;
+        text-overflow: ellipsis;
+        font-family: "Pretendard JP";
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 138.5%; 
+        letter-spacing: 0.252px;
+       background-color: beige;
+    } */
+  }
+
+  .modalShortWritingBox{
+    width:600px;
+    height:300px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    //background-color: aqua;
+
+    .QNA{
+      width:500px;
+        height:300px;
+        display: flex;
+        flex-direction: column;
+        background: aqua;
+
+      .modalShortWriting{
+        width:500px;
+        height:250px;
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        background-color: beige;
+      }
+
+    } 
+    .left-arrow-icon{
+        color: default;
+        font-size: 35px;
+
+    }
+    .left-arrow-icon:hover{
+            color:#FF6E23;
+    
+        }
+    .right-arrow-icon{
+        color: default;
+        font-size: 35px;
+    
+    }
+    .right-arrow-icon:hover{
+            color:#FF6E23;
+        }
+
+
+  }
+        
+    /* .prevBtn, .nextBtn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    } */
+
+    .modalBookBox{
+    width: 500px;
+    height: 100px;
+    border-radius: 4px;
+    background: #F2F2F7;
+    margin-left: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+
+
+    .modalInerBox{
+      display: flex;
+      align-items: center;
+      justify-content : flex-start;
+
+      .modalCover{
+      border-radius: 4px;
+      width: 40px;
+      height: 60px;
+      background: #FFF;
+    }
+    
+
+    .modalBookInfo{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: auto;
+        margin-left:20px;
+        //background-color: #01524D;
+    }
+
+    .modalBookTitle{
+        display: inline-flex;
+        width: auto;
+        height:20px;
+        overflow: hidden;
+        color: var(--kakao-logo, #000);
+        font-feature-settings: 'ss10' on;
+        text-overflow: ellipsis;
+        font-family: "Pretendard JP";
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 138.5%; /* 18.005px */
+        letter-spacing: 0.252px;
+        align-items: center;
+        //background-color: palegreen;
+        
+    }
+
+    .modalBookAuthor{
+        display: inline-flex;
+        width: auto;
+        height:20px;
+        overflow: hidden;
+        color: #989BA2;
+        font-feature-settings: 'ss10' on;
+        text-overflow: ellipsis;
+
+        font-family: "Pretendard JP";
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 138.5%; /* 18.005px */
+        letter-spacing: 0.252px;
+        align-items: center;
+        //background-color: red;
+    }
+    }
+  }
 `;
 
 
@@ -1044,21 +1246,21 @@ const [short, setShort] = useState([
       book_author: "빅터프랭클",
       review_title: "사람은 미래에 대한 기대가 있어야만 세상을 살아갈 수 있다.", 
       long_text: "'나를 위해 살지 않으면 남을 위해 살게 된다' 책을 읽고 난 후, 나의 웰빙에 대한 새로운 관점을 얻게 되었다. 우리는 종종 타인의 기대에 부응하려고 하며, 그 과정에서 자신을 잃어버리기 쉽다. 이 책은 자신을 위한 삶의 중요성을 강조하며, 스스로의 행복과 만족을 우선시하는 것이 왜 중요한지에 대해 다시 한 번 생각해 보게 한다.나의 웰빙은 단순히 신체적 건강을 넘어선다. 정신적, 감정적 건강 또한 중요한 부분이다. 이 책을 통해 나는 나 자신에게 더 많은 시간을 투자하고, 내가 진정으로 원하는 것을 추구하는 것이 얼마나 중요한지 깨달았다. 타인의 기대에 얽매이지 않고, 나만의 목표와 꿈을 향해 나아갈 때 비로소 진정한 웰빙을 실현할 수 있다. 또한, 자기 자신을 돌보는 것이 이기적인 것이 아님을 깨달았다. 내가 행복하고 건강할 때, 주변 사람들에게도 긍정적인 영향을 미칠 수 있다. 따라서 나의 웰빙을 위해 나를 위한 시간을 갖고, 나의 가치를 존중하며 살아가는 것이 중요하다. 이 책은 나에게 새로운 동기부여가 되었고, 앞으로의 삶에서 나를 위해 더 많이 살 것을 다짐하게 만들었다.", 
-      created_at: "2024.07.21" },
+      created_at: "2024-07-28T05:41:31.341060+09:00" },
     { long_review_id: 2, 
       isbn: "9791188331793",
       review_title: "글 제목 입력",
       book_title: "나를 위해 살지 않으면 남을 위해 살게 된다",
       book_author: "빅터프랭클",
       long_text: "이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<", 
-      created_at: "2024.07.21" },
+      created_at: "2024-07-28T05:41:31.341060+09:00" },
    { long_review_id: 3, 
      isbn: "9791188331793",
      review_title: "글 제목 입력",
      book_title: "나를 위해 살지 않으면 남을 위해 살게 된다",
      book_author: "빅터프랭클",
      long_text: "이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ", 
-     created_at: "2024.07.21" }  
+     created_at: "2024-07-28T05:41:31.341060+09:00" }  
   ]);
   
 
@@ -1075,14 +1277,18 @@ const [emo, setEmo] = useState([
 
 const [isQue, setIsQue] = useState([
     { id: 1,
-      question: "오늘의 질문은 최대 2줄", 
-      answer: "자연 속의 평온함을 느끼며 휴식을 취하는 것만큼 좋은 것은 없습니다. 현대의 바쁜 생활 속에서 잠시라도 자연을 접하는 순간은 큰 힘이 됩니다. 새로운 에너지를 얻고 재충전할 수 있는 기회가 됩니다.",
-      date: "2024.07.21", 
+      question: "책을 읽고 나서 내 진로에 대한 새로운 아이디어나 방향성이 생겼다면, 그것을 구체적으로 어떻게 실행할 수 있을까요?", 
+      answer: "진로에 대한 새로운 아이디어가 떠올랐다. 먼저, 관련 업계의 동향을 조사하고 필요한 기술과 지식을 정리해야겠다. 작은 프로젝트를 통해 실전 경험을 쌓고, 인턴십이나 프리랜서 활동을 통해 실력을 키워야지. 전문가들과 네트워킹하며 조언을 얻고 꾸준히 학습하며 목표를 향해 나아가야겠다. 오늘은 정말 유익한 하루였다.",
+      created_at: "2024-07-28T05:41:31.341060+09:00", 
+      book_title: "나를 위해 살지 않으면 남을 위해 살게 된다",
+      book_author: "빅터프랭클",
       mood: goodImage },
     { id: 2, 
       question: "오늘의 질문은 최대 2줄", 
       answer: "나의 대답은 최대 3줄까지지만 \"자세한 기록\" 페이지와 동일", 
-      date: "2024.07.21", 
+      book_title: "나를 위해 살지 않으면 남을 위해 살게 된다",
+      book_author: "빅터프랭클",
+      created_at: "2024-07-28T05:41:31.341060+09:00", 
       mood: sadImage }
   ]);
   
@@ -1392,39 +1598,72 @@ const handleItemClick = (path) => {
                     </EmotionIconsContainer>
                     <EmotionContainer> 
                         {isQue.map((question,index) => (
+
                         <QuestionCard key={question.id}  onClick={()=>showInfo(index)}>
                             <QuestionText>Q. {question.question}</QuestionText>
                             <AnswerText>A. {question.answer}</AnswerText>
                             <NoteActions>
-                            <div style={{ display: 'flex', alignItems: 'center'}}>
-                                <NoteDate>{question.date}</NoteDate>
-                                <Emoji src={question.mood} />
-                            </div>
-                            <div>
-                                <EditButton><Emoji src={modifyButton} /></EditButton>
-                                <DeleteButton><Emoji src={deleteButton} /></DeleteButton>
-                            </div>
+                                    <div style={{ display: 'flex', alignItems: 'center'}}>
+                                     <NoteDate onClick={(e) => e.stopPropagation()}>{new Date(question.created_at).toLocaleDateString()}</NoteDate>
+                                    </div>
+                                    <div>
+                                     <EditButton onClick={(e) => e.stopPropagation()}><Emoji src={modifyButton} /></EditButton>
+                                     <DeleteButton onClick={(e) => e.stopPropagation()}><Emoji src={deleteButton} /></DeleteButton>
+                                     </div>
                             </NoteActions>
-                            
-                            
-                            {clickedWritingIndex === index && (
-                                    <EmogModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
+
+                                  {clickedWritingIndex === index && (
+                                     <EmogModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
                                         <EmogModalContent onClick={(e) => e.stopPropagation()}> {/*모달창을 눌렀을때는 꺼지지 않도록*/}
-                                            <div className="prevBtn" onClick={emoGoToPrevious}>
-                                                <span className="material-icons left-arrow-icon">
-                                                    arrow_circle_left
-                                                </span>
+                                        <div className="top0">
+                                          <span className="detail"> 오늘의 질문 상세보기</span>
+                                          <span className="material-icons close" onClick={closeModal}>
+                                            close
+                                          </span>
+                                        </div>
+
+                                          <div className="line1"></div>
+                                          <div className="top1">
                                             </div>
-                                            <div className="modalShortWriting">{question.question}</div>
-                                            <div className="modalShortWriting">{question.answer}</div>
-                                            <div className="nextBtn" onClick={emoGoToNext}>
-                                                <span className="material-icons right-arrow-icon">
-                                                    arrow_circle_right
-                                                </span>
+                                            <div className="top2">
+                                                <div className="modalCreateDate">{new Date(question.created_at).toLocaleDateString()}</div>
+                      
+                                            </div>
+
+                                            <div className="modalShortWritingBox">  
+                                                <div className="prevBtn" onClick={emoGoToPrevious} style={{
+                                                color: index === 0 ? '#989BA2 ' : '#000000 ',
+                                                pointerEvents: index === 0 ? 'none' : 'auto',
+                                                }}>
+                                                    <span className="material-icons left-arrow-icon">
+                                                        arrow_circle_left
+                                                    </span>
+                                                </div>
+                                                <div className="QNA">
+                                                  <div className="modalShortWriting">{question.question}</div>
+                                                  <div className="modalShortWriting">{question.answer}</div>
+                                                </div>
+                                                <div className="nextBtn" onClick={emoGoToNext} style={{
+                                                    color: index === isQue.length - 1 ? '#989BA2 ' : '#000000',
+                                                    pointerEvents: index === isQue.length - 1 ? 'none' : 'auto',
+                                                }}>
+                                                    <span className="material-icons right-arrow-icon">
+                                                        arrow_circle_right
+                                                    </span>
+                                                </div>
+                                              </div>   
+                                            <div className="modalBookBox">
+                                               <div className="modalInerBox">
+                                                <div className="modalCover"></div>
+                                                <div className="modalBookInfo">
+                                                    <div className="modalBookTitle">{question.book_title}</div>
+                                                    <div className="modalBookAuthor">{question.book_title}</div>
+                                                </div>
+                                                </div>
                                             </div>
                                         </EmogModalContent>
                                      </EmogModalOverlay>    
-                                 )}
+                                 )}   
                         </QuestionCard>
                          ))}
                     </EmotionContainer>
