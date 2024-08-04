@@ -1728,8 +1728,8 @@ const handleItemClick=(path,token,isbn)=>{
                             <AnswerText>A. {question.short_note.answer}</AnswerText>
                             <NoteActions>
                                     <div style={{ display: 'flex', alignItems: 'center'}}>
-                                     <NoteDate onClick={(e) => e.stopPropagation()}>{new Date(question.ShortReviewList.created_at).toLocaleDateString()}</NoteDate>
-                                     <EmotionImg onClick={(e) => e.stopPropagation()} src={question.ShortReviewList.mood}/>
+                                     <NoteDate onClick={(e) => e.stopPropagation()}>{new Date(question.created_at).toLocaleDateString()}</NoteDate>
+                                     {/* <EmotionImg onClick={(e) => e.stopPropagation()} src={question.ShortReviewList.mood}/> */}
                                     </div>
                                     <div>
                                      <EditButton onClick={(e) => e.stopPropagation()}><Emoji src={modifyButton} /></EditButton>
@@ -1751,7 +1751,7 @@ const handleItemClick=(path,token,isbn)=>{
                                           <div className="top1">
                                             </div>
                                             <div className="top2">
-                                                <div className="modalCreateDate">{new Date(question.ShortReviewList.created_at).toLocaleDateString()}</div>
+                                                <div className="modalCreateDate">{new Date(question.created_at).toLocaleDateString()}</div>
                       
                                             </div>
 

@@ -287,6 +287,7 @@ const BookInfoBox = styled.div`
   }
 `;
 
+
 export function ThisBook(){
 const [isCheck, setCheck] = useState(false);
 const [activeSubNav, setActiveSubNav] = useState('bookinfo');
@@ -393,7 +394,18 @@ const handleAddClick=(isbn,title,author,thumbnail,content,publisher,date,token)=
                         {activeSubNav === 'myrecords' && <img src={contract} alt="active" />}
                         내 기록보기</SubNavItem>
                   </SubNav>  
-
+                  
+                  {thisBook.map((bookData, index) => (
+                  <BookInfoBox key={index} onClick={(e) => e.stopPropagation()}>
+                                            <img className="Cover" src={bookData.book.thumbnail} alt="Book Thumbnail"/>
+                                            <p className="Title">{bookData.book.title || "N/A"}</p>
+                                            <p className="Author">{bookData.book.author || "N/A"}</p>
+                                            <p className="Publisher">{bookData.book.publisher || "N/A"} · {new Date(bookData.book.date).toLocaleDateString() || "N/A"}</p>  {/* "N/A는 저 카테고리가 없는경우 처리" */}
+                                            <button className="AddBtn" onClick={()=>handleAddClick(bookData.book.isbn,bookData.book.title,bookData.book.author,bookData.book.thumbnail,bookData.book.content,bookData.book.publisher,bookData.book.date)}>읽고 있는 책에 추가</button>
+                                            <div className="line"></div>
+                                            <p className="Contents">{bookData.book.content || "N/A"}</p>
+                  </BookInfoBox>
+                  ))}
 
             </NoteContainer>
         </AppContainer>

@@ -651,7 +651,9 @@ const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
 
-
+  const handleMoodChange=(selectedMood)=>{
+    setMood(selectedMood);
+};
 
 
 // 질문 선택
