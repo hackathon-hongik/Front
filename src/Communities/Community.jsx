@@ -1538,12 +1538,12 @@ export function Community(){
     const [clickedWritingIndex, setClickedWritingIndex] = useState(null);
     const [shortWritings,setShortWritings]=useState([]);
     const [longWritings,setLongWritings]=useState([]);
-    const token = location.state?.token || '';
     const location = useLocation();
+    const token = location.state?.token || '';
 
-    const handleItemClick = (path) => {
-        navigate(path);
-      };
+    const handleItemClick=(path,token,isbn)=>{
+        navigate(path,{state:{token,isbn}});
+    };
     
       const fetchShortData=async()=>{
         try{
@@ -1608,10 +1608,10 @@ export function Community(){
         
                 <ul className="nav">
                     <li>
-                    <a onClick={() => handleItemClick('/afterlogin/mylibrary')}>내 서재</a>
+                    <a onClick={() => handleItemClick('/afterlogin/mylibrary',token)}>내 서재</a>
                     </li>
                     <li>
-                    <a className="orangeText" onClick={() => handleItemClick("/afterlogin/community")}>커뮤니티</a>
+                    <a className="orangeText" onClick={() => handleItemClick("/afterlogin/community",token)}>커뮤니티</a>
                     </li>
                     <li>
                     <div className="buttonToggle">
@@ -1633,13 +1633,13 @@ export function Community(){
                 <p>커뮤니티</p>
             </TitleBanner>
             <BtnBanner>
-                <div className="meWrite" onClick={()=>handleItemClick('/afterlogin/community/communitywrite')}>
+                <div className="meWrite" onClick={()=>handleItemClick('/afterlogin/community/communitywrite',token)}>
                     <p className="meWriteText">내가 쓴 글</p>
                     <span class="material-symbols-outlined">
                         arrow_right
                     </span>
                 </div>
-                <div className="meScrap" onClick={()=>handleItemClick('/afterlogin/community/communityscrap')}>
+                <div className="meScrap" onClick={()=>handleItemClick('/afterlogin/community/communityscrap',token)}>
                     <p className="meScrapText">내가 스크랩한 글</p>
                     <span class="material-symbols-outlined">
                         arrow_right
@@ -1728,7 +1728,7 @@ export function Community(){
                 ))}
             </ShortWritingList>
             
-            <OrangeBanner onClick={()=>handleItemClick("/afterlogin/recommendation")}>
+            <OrangeBanner onClick={()=>handleItemClick("/afterlogin/recommendation",token)}>
                 <div className="text3">
                     <p className="first_row">당신의 고민에 맞는</p>
                     <p className="second_row">책 추천 받기</p>

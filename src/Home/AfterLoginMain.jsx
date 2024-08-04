@@ -204,7 +204,7 @@ export function AfterLoginMain(){
 
                 <ul className="nav">
                     <li><a onClick={()=>handleItemClick('/afterlogin/mylibrary',token)}>내 서재</a></li>
-                    <li><a onClick={()=>handleItemClick("/afterlogin/community")}>커뮤니티</a></li>
+                    <li><a onClick={()=>handleItemClick("/afterlogin/community",token)}>커뮤니티</a></li>
                     <li>
                         <div className="buttonToggle">
                             <button className="mypageBtn" onClick={()=>{setCheck((e)=>!e)}}>마이페이지</button>
