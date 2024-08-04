@@ -720,7 +720,7 @@ export function MyLibrary(){  //내 서재 페이지
                         <div className="showNum"><span className="number">{readingStatus}</span><span className="gwon">권</span></div>
                         </div>
                     </div>
-                    <div className="read" onClick={()=>showRead}>
+                    <div className="read" onClick={showRead}>
                         <p className="text2">지금까지 읽은 책</p>
                         <div className="numBox">
                         <span className="material-symbols-outlined">

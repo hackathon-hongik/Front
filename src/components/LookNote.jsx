@@ -201,7 +201,7 @@ const Tab = styled.button`
 const NoteCardContainer = styled.div`
   display: flex;
   flex-wrap: wrap; /* 줄바꿈을 허용하여 한 줄에 3개씩 배치되도록 함 */
-  justify-content: space-between; /* 카드 사이의 간격을 고르게 분배 */
+  justify-content: flex-start; /* 카드 사이의 간격을 고르게 분배 */
   width: 800px;
   margin-top: 20px;
 `;
@@ -655,6 +655,11 @@ const ShortModalContent = styled.div`
       width: 40px;
       height: 60px;
       background: #FFF;
+
+      img{
+        width:40px;
+        height:60px;
+      }
     }
     
 
@@ -909,6 +914,11 @@ const LongModalContent = styled.div`
       width: 40px;
       height: 60px;
       background: #FFF;
+
+      img{
+        width:40px;
+        height:60px;
+      }
     }
     
 
@@ -1194,6 +1204,11 @@ const EmogModalContent = styled.div`
       width: 40px;
       height: 60px;
       background: #FFF;
+
+      img{
+        width: 40px;
+        height: 60px;
+      }
     }
     
 
@@ -1259,72 +1274,68 @@ const query = useQuery();
 const [activeTab, setActiveTab] = useState('simple');
 const [isCheck, setCheck] = useState(false);
 const [memberId, setMemberId] = useState('');
-const [isbn, setMyBookId] = useState('');
+//const [isbn, setMyBookId] = useState('');
+const [short_review_id, setShortReviewId] = useState('');
+const [long_review_id, setLongReviewId] = useState('');
 const [activeSubNav, setActiveSubNav] = useState('myrecords');
 const [isModalOpen, setModalOpen] = useState(false);
 const [selectedNote, setSelectedNote] = useState(null);
 const [clickedWritingIndex, setClickedWritingIndex] = useState(null);
 const [shortNotes, setShortNotes] = useState([]);
 const [longNotes, setLongNotes] = useState([]);
-const [emotions, setEmotions] = useState([]);
-const [isQuestions, setIsQuestions] = useState([]);
+const [good, setGood] = useState('');
+const [okay, setOkay] = useState('');
+const [tired, setTired] = useState('');
+const [sad, setSad] = useState('');
+const [worried, setWorried] = useState('');
+const [feelings, setFeelings] = useState([]);
 const location = useLocation();
 const token = location.state?.token || '';
+const isbn=location.state?.isbn || '';
+const [emogi, setEmogi] = useState([]);
 
 //더미 데이터
-const [short, setShort] = useState([
-    {id: 1, created_at: "2024-07-28T05:41:31.341060+09:00", book: {thumbnail:"",  title:'해리포터', author:'롤링', isbn: "9791188331793"} , open:1, short_comment: "책을 읽고 느낀 점을 자유롭게 적어주세요.가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라"},
-    {id: 2, created_at: "2024-07-28T05:41:31.341060+09:00", book: {thumbnail:"",  title:'나를 위해 살지 않으면 남을 위해 살게 된다', author:'빅터프랭클', isbn: "9791188331793" }, open:1, short_comment: "1자신의 가치를 발견하고 존중하는 것이 진정한 웰빙의 시작이다."},
-    {id: 3, created_at: "2024-07-28T05:41:31.341060+09:00", book: {thumbnail:"",  title:'나를 위해 살지 않으면 남을 위해 살게 된다', author:'빅터프랭클', isbn: "9791188331793" }, open:0, short_comment: "2자신의 가치를 발견하고 존중하는 것이 진정한 웰빙의 시작이다."},
-    {id: 4, created_at: "2024-07-28T05:41:31.341060+09:00", book: {thumbnail:"",  title:'나를 위해 살지 않으면 남을 위해 살게 된다', author:'빅터프랭클', isbn: "9791188331793" }, open:0, short_comment: "3자신의 가치를 발견하고 존중하는 것이 진정한 웰빙의 시작이다."},
-    {id: 5, created_at: "2024-07-28T05:41:31.341060+09:00", book: {thumbnail:"",  title:'나를 위해 살지 않으면 남을 위해 살게 된다', author:'빅터프랭클', isbn: "9791188331793" }, open:0, short_comment: "4자신의 가치를 발견하고 존중하는 것이 진정한 웰빙의 시작이다."},
-    {id: 6, created_at: "2024-07-28T05:41:31.341060+09:00", book: {thumbnail:"",  title:'나를 위해 살지 않으면 남을 위해 살게 된다', author:'빅터프랭클', isbn: "9791188331793" }, open:0, short_comment: "5자신의 가치를 발견하고 존중하는 것이 진정한 웰빙의 시작이다."},
-  ]);
+// const [short, setShort] = useState([
+//     { short_review_id: 1, img:"", book_title:'해리포터', book_author:'롤링', isbn: "9791188331793" , created_at: "2024-07-28T05:41:31.341060+09:00", short_comment: "책을 읽고 느낀 점을 자유롭게 적어주세요.가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라"},
+//     { short_review_id: 2, img:"", book_title:'나를 위해 살지 않으면 남을 위해 살게 된다', book_author:'빅터프랭클', isbn: "9791188331793" , created_at: "2024-07-28T05:41:31.341060+09:00", short_comment: "자신의 가치를 발견하고 존중하는 것이 진정한 웰빙의 시작이다."},
+//     { short_review_id: 3, img:"", book_title:'해리포터', book_author:'롤링', isbn: "9791188331793" , created_at: "2024-07-28T05:41:31.341060+09:00", short_comment: "타인의 기대에 부응하는 삶이 아닌, 내가 진정으로 원하는 삶을 추구하는 것이 중요하다. 이는 나의 웰빙과 만족도를 높이는 핵심 요소다."},
+//     { short_review_id: 4, img:"", book_title:'해리포터', book_author:'롤링', isbn: "9791188331793" , created_at: "2024-07-28T05:41:31.341060+09:00", short_comment: "타인의 기대보다 자신의 꿈과 목표를 우선시하는 용기가 필요하다."},
+//     { short_review_id: 5, img:"", book_title:'해리포터', book_author:'롤링', isbn: "9791188331793" , created_at: "2024-07-28T05:41:31.341060+09:00", short_comment: "나를 위한 시간 투자가 곧 삶의 만족도를 높이는 길이다."},
+//     { short_review_id: 6, img:"", book_title:'해리포터', book_author:'롤링', isbn: "9791188331793" , created_at: "2024-07-28T05:41:31.341060+09:00", short_comment: "건강한 자기에만 주번 사람들에게도 긍정적인 영향을 미친다. 나를 돌보는 것이 이기적인 것이 아니라 필수적인 일이다."}
+//   ]);
   
-  const [long, setLong] = useState([
-    { id: 1, 
-      created_at: "2024-07-28T05:41:31.341060+09:00",
-      book:{
-      isbn: "9791188331793",
-      title: "나를 위해 살지 않으면 남을 위해 살게 된다",
-      author: "빅터프랭클",
-      thumbnail:"",
-      },
-      review_title: "사람은 미래에 대한 기대가 있어야만 세상을 살아갈 수 있다.", 
-      long_text: "'나를 위해 살지 않으면 남을 위해 살게 된다' 책을 읽고 난 후, 나의 웰빙에 대한 새로운 관점을 얻게 되었다. 우리는 종종 타인의 기대에 부응하려고 하며, 그 과정에서 자신을 잃어버리기 쉽다. 이 책은 자신을 위한 삶의 중요성을 강조하며, 스스로의 행복과 만족을 우선시하는 것이 왜 중요한지에 대해 다시 한 번 생각해 보게 한다.나의 웰빙은 단순히 신체적 건강을 넘어선다. 정신적, 감정적 건강 또한 중요한 부분이다. 이 책을 통해 나는 나 자신에게 더 많은 시간을 투자하고, 내가 진정으로 원하는 것을 추구하는 것이 얼마나 중요한지 깨달았다. 타인의 기대에 얽매이지 않고, 나만의 목표와 꿈을 향해 나아갈 때 비로소 진정한 웰빙을 실현할 수 있다. 또한, 자기 자신을 돌보는 것이 이기적인 것이 아님을 깨달았다. 내가 행복하고 건강할 때, 주변 사람들에게도 긍정적인 영향을 미칠 수 있다. 따라서 나의 웰빙을 위해 나를 위한 시간을 갖고, 나의 가치를 존중하며 살아가는 것이 중요하다. 이 책은 나에게 새로운 동기부여가 되었고, 앞으로의 삶에서 나를 위해 더 많이 살 것을 다짐하게 만들었다."
-       },
-    { id: 2, 
-      book:{
-        isbn: "9791188331793",
-        title: "나를 위해 살지 않으면 남을 위해 살게 된다",
-        author: "빅터프랭클",
-        thumbnail:"",
-        },
-      review_title: "글 제목 입력",
-      title: "나를 위해 살지 않으면 남을 위해 살게 된다",
-      author: "빅터프랭클",
-      long_text: "이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<", 
-      created_at: "2024-07-28T05:41:31.341060+09:00" },
-   { id: 3, 
-    book:{
-      isbn: "9791188331793",
-      title: "나를 위해 살지 않으면 남을 위해 살게 된다",
-      author: "빅터프랭클",
-      thumbnail:"",
-      },
-     review_title: "글 제목 입력",
-     long_text: "이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ", 
-     created_at: "2024-07-28T05:41:31.341060+09:00" }  
-  ]);
+  // const [long, setLong] = useState([
+  //   { long_review_id: 1, 
+  //     isbn: "9791188331793",
+  //     book_title: "나를 위해 살지 않으면 남을 위해 살게 된다",
+  //     book_author: "빅터프랭클",
+  //     review_title: "사람은 미래에 대한 기대가 있어야만 세상을 살아갈 수 있다.", 
+  //     long_text: "'나를 위해 살지 않으면 남을 위해 살게 된다' 책을 읽고 난 후, 나의 웰빙에 대한 새로운 관점을 얻게 되었다. 우리는 종종 타인의 기대에 부응하려고 하며, 그 과정에서 자신을 잃어버리기 쉽다. 이 책은 자신을 위한 삶의 중요성을 강조하며, 스스로의 행복과 만족을 우선시하는 것이 왜 중요한지에 대해 다시 한 번 생각해 보게 한다.나의 웰빙은 단순히 신체적 건강을 넘어선다. 정신적, 감정적 건강 또한 중요한 부분이다. 이 책을 통해 나는 나 자신에게 더 많은 시간을 투자하고, 내가 진정으로 원하는 것을 추구하는 것이 얼마나 중요한지 깨달았다. 타인의 기대에 얽매이지 않고, 나만의 목표와 꿈을 향해 나아갈 때 비로소 진정한 웰빙을 실현할 수 있다. 또한, 자기 자신을 돌보는 것이 이기적인 것이 아님을 깨달았다. 내가 행복하고 건강할 때, 주변 사람들에게도 긍정적인 영향을 미칠 수 있다. 따라서 나의 웰빙을 위해 나를 위한 시간을 갖고, 나의 가치를 존중하며 살아가는 것이 중요하다. 이 책은 나에게 새로운 동기부여가 되었고, 앞으로의 삶에서 나를 위해 더 많이 살 것을 다짐하게 만들었다.", 
+  //     created_at: "2024-07-28T05:41:31.341060+09:00" },
+  //   { long_review_id: 2, 
+  //     isbn: "9791188331793",
+  //     review_title: "글 제목 입력",
+  //     book_title: "나를 위해 살지 않으면 남을 위해 살게 된다",
+  //     book_author: "빅터프랭클",
+  //     long_text: "이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<", 
+  //     created_at: "2024-07-28T05:41:31.341060+09:00" },
+  //  { long_review_id: 3, 
+  //    isbn: "9791188331793",
+  //    review_title: "글 제목 입력",
+  //    book_title: "나를 위해 살지 않으면 남을 위해 살게 된다",
+  //    book_author: "빅터프랭클",
+  //    long_text: "이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ", 
+  //    created_at: "2024-07-28T05:41:31.341060+09:00" }  
+  // ]);
   
 
-const [emo, setEmo] = useState([
-  { id: 1, type: "good", displayName: "좋아요", count: 0, img: goodImage },
-  { id: 2, type: "okay", displayName: "괜찮아요", count: 0, img: okayImage },
-  { id: 3, type: "tired", displayName: "피곤해요", count: 0, img: tiredImage },
-  { id: 4, type: "sad", displayName: "슬퍼요", count: 0, img: sadImage },
-  { id: 5, type: "worried", displayName: "걱정돼요", count: 0, img: worriedImage },
-]);
+// const [emo, setEmo] = useState([
+//   { id: 1, type: "good", displayName: "좋아요", count: 0, img: goodImage },
+//   { id: 2, type: "okay", displayName: "괜찮아요", count: 0, img: okayImage },
+//   { id: 3, type: "tired", displayName: "피곤해요", count: 0, img: tiredImage },
+//   { id: 4, type: "sad", displayName: "슬퍼요", count: 0, img: sadImage },
+//   { id: 5, type: "worried", displayName: "걱정돼요", count: 0, img: worriedImage },
+// ]);
 
   
 
@@ -1350,55 +1361,108 @@ const [isQue, setIsQue] = useState([
   
 
 
-useEffect(() => {
-    const memberIdFromQuery = query.get("memberId");
-    const myBookIdFromQuery = query.get("isbn");
-    if (memberIdFromQuery && myBookIdFromQuery) {
-      setMemberId(memberIdFromQuery);
-      setMyBookId(myBookIdFromQuery);
-    }
-  }, [query]);
+// useEffect(() => {
+//     const memberIdFromQuery = query.get("memberId");
+//     const myBookIdFromQuery = query.get("isbn");
+//     if (memberIdFromQuery && myBookIdFromQuery) {
+//       setMemberId(memberIdFromQuery);
+//       setMyBookId(myBookIdFromQuery);
+//     }
+//   }, [query]);
 
-
-useEffect(() => {
-    const fetchShortNotes = async () => {
-      const notes = await getShortNotes(memberId, isbn);
-      setShortNotes(notes);
-    };
-    fetchShortNotes();
-  }, []);
-
-useEffect(() => {
-    const fetchLongNotes = async () => {
-      const notes = await getLongNotes(memberId, isbn);
-      setLongNotes(notes);
-    };
-    fetchLongNotes();
-  }, []);
-
-  useEffect(() => {
-    const fetchMood = async () => {
-      const notes = await getMood(memberId, isbn);
-      setIsQuestions(notes);
-    };
-    fetchMood();
-  }, []);
-
-
-  useEffect(() => {
-    const updateEmotionCounts = async () => {
-      const data = await getMood();
-      if (data) {
-        setEmotions(emotions =>
-          emotions.map(emotion => ({
-            ...emotion,
-            count: data[emotion.type + "_count"] || 0
-          }))
-        );
+const fetchShortNotes = async () => {
+  try{
+    const response=await axiosInstance.get(`/desk/books/${isbn}/note/short`,{
+      headers:{
+        Authorization: `Bearer ${token}`
       }
-    };
-    updateEmotionCounts();
+    })
+    setShortNotes(response.data);
+  }
+  catch(e){
+    console.log(e);
+    alert("짧은글");
+  }
+ 
+};
+
+const fetchLongNotes=async()=>{
+  try{
+    const response=await axiosInstance.get(`/desk/books/${isbn}/note/long`,{
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    })
+    setLongNotes(response.data);
+  }
+  catch(e){
+    console.log(e);
+    alert("긴글");
+  }
+}
+
+const fetchEmotionNotes=async()=>{
+  try{
+    const response=await axiosInstance.get(`/desk/books/${isbn}/note/mood`,{
+      headers:{
+        Authorization: `Bearer ${token}`
+      }
+    })
+    const newEmogi = [
+      { type: "good", displayName: "좋아요", count: response.data.good_count, img: goodImage },
+      { type: "okay", displayName: "괜찮아요", count: response.data.okay_count, img: okayImage },
+      { type: "tired", displayName: "피곤해요", count: response.data.tired_count, img: tiredImage },
+      { type: "sad", displayName: "슬퍼요", count: response.data.sad_count, img: sadImage },
+      { type: "worried", displayName: "걱정돼요", count: response.data.worried_count, img: worriedImage },
+    ];
+
+    setEmogi(newEmogi);
+    setFeelings(response.data.short_notes);
+
+  }
+  catch(e){
+    console.log(e);
+  }
+}
+
+useEffect(() => {
+    console.log(isbn);
+    fetchShortNotes();
+    fetchLongNotes();
+    fetchEmotionNotes();
   }, []);
+
+// useEffect(() => {
+//     const fetchLongNotes = async () => {
+//       const notes = await getLongNotes(memberId, isbn);
+//       setLongNotes(notes);
+//     };
+//     fetchLongNotes();
+//   }, []);
+
+//   useEffect(() => {
+//     const fetchMood = async () => {
+//       const notes = await getMood(memberId, isbn);
+//       setIsQuestions(notes);
+//     };
+//     fetchMood();
+//   }, []);
+
+
+//   useEffect(() => {
+//     const updateEmotionCounts = async () => {
+//       const data = await getMood();
+//       if (data) {
+//         setEmotions(emotions =>
+//           emotions.map(emotion => ({
+//             ...emotion,
+//             count: data[emotion.type + "_count"] || 0
+//           }))
+//         );
+//       }
+//     };
+//     updateEmotionCounts();
+//   }, []);
   
 
   const showInfo = (index) => {
@@ -1412,37 +1476,37 @@ const closeModal = () => {
 
 const shortGoToPrevious = () => {
    setClickedWritingIndex(prevIndex =>
-       prevIndex === 0 ? short.length - 1 : prevIndex - 1
+       prevIndex === 0 ? shortNotes.length - 1 : prevIndex - 1
    );
 };
 
 const shortGoToNext = () => {
    setClickedWritingIndex(prevIndex =>
-       prevIndex === short.length - 1 ? 0 : prevIndex + 1
+       prevIndex === shortNotes.length - 1 ? 0 : prevIndex + 1
    );
 };
 
 const longGoToPrevious = () => {
   setClickedWritingIndex(prevIndex =>
-      prevIndex === 0 ? long.length - 1 : prevIndex - 1
+      prevIndex === 0 ? longNotes.length - 1 : prevIndex - 1
   );
 };
 
 const longGoToNext = () => {
   setClickedWritingIndex(prevIndex =>
-      prevIndex === long.length - 1 ? 0 : prevIndex + 1
+      prevIndex === longNotes.length - 1 ? 0 : prevIndex + 1
   );
 };
 
 const emoGoToPrevious = () => {
   setClickedWritingIndex(prevIndex =>
-      prevIndex === 0 ? isQue.length - 1 : prevIndex - 1
+      prevIndex === 0 ? feelings.length - 1 : prevIndex - 1
   );
 };
 
 const emoGoToNext = () => {
   setClickedWritingIndex(prevIndex =>
-      prevIndex === isQue.length - 1 ? 0 : prevIndex + 1
+      prevIndex === feelings.length - 1 ? 0 : prevIndex + 1
   );
 };
 
@@ -1460,8 +1524,8 @@ const handleItemClick=(path,token,isbn)=>{
                          <p>로고</p>
                       </Logo>
                     <Nav>
-                    <li><a onClick={() => handleItemClick("/afterlogin/mylibrary")}>내 서재</a></li>
-                    <li><a onClick={() => handleItemClick("/afterlogin/community")}>커뮤니티</a></li>
+                    <li><a onClick={() => handleItemClick("/afterlogin/mylibrary",token)}>내 서재</a></li>
+                    <li><a onClick={() => handleItemClick("/afterlogin/community",token)}>커뮤니티</a></li>
                       <li>
                          <ButtonToggle>
                            <MypageBtn onClick={() => { setCheck((e) => !e) }}>마이페이지</MypageBtn>
@@ -1500,9 +1564,9 @@ const handleItemClick=(path,token,isbn)=>{
             
                  {activeTab === 'simple' && (  //하루 기록
                     <NoteCardContainer>
-                         {short.map((note, index) => (
+                         {shortNotes.map((note, index) => (
                              <NoteCard key={note.id} onClick={()=>showInfo(index)}>
-                                  <NoteText>{note.short_comment}</NoteText>
+                                  <NoteText>{note.short_note.short_comment}</NoteText>
                                   <NoteActions>
                                     <div style={{ display: 'flex', alignItems: 'center'}}>
                                      <NoteDate onClick={(e) => e.stopPropagation()}>{new Date(note.created_at).toLocaleDateString()}</NoteDate>
@@ -1540,10 +1604,10 @@ const handleItemClick=(path,token,isbn)=>{
                                                         arrow_circle_left
                                                     </span>
                                                 </div>
-                                                <div className="modalShortWriting">{note.short_comment}</div>
+                                                <div className="modalShortWriting">{note.short_note.short_comment}</div>
                                                 <div className="nextBtn" onClick={shortGoToNext} style={{
-                                                    color: index === short.length - 1 ? '#989BA2 ' : '#000000',
-                                                    pointerEvents: index === short.length - 1 ? 'none' : 'auto',
+                                                    color: index === shortNotes.length - 1 ? '#989BA2 ' : '#000000',
+                                                    pointerEvents: index === shortNotes.length - 1 ? 'none' : 'auto',
                                                 }}>
                                                     <span className="material-icons right-arrow-icon">
                                                         arrow_circle_right
@@ -1552,7 +1616,9 @@ const handleItemClick=(path,token,isbn)=>{
                                               </div>   
                                             <div className="modalBookBox">
                                                <div className="modalInerBox">
-                                                <div className="modalCover">{note.book.thumbnail}</div>
+                                                <div className="modalCover">
+                                                  <img src={note.book.thumbnail}></img>
+                                                </div>
                                                 <div className="modalBookInfo">
                                                     <div className="modalBookTitle">{note.book.title}</div>
                                                     <div className="modalBookAuthor">{note.book.author}</div>
@@ -1568,10 +1634,10 @@ const handleItemClick=(path,token,isbn)=>{
              )}
             {activeTab === 'detailed' && ( //자유 기록
                 <NoteCardContainer>
-                 {long.map((note,index) => (
+                 {longNotes.map((note,index) => (
                      <DetCard key={note.id}  onClick={()=>showInfo(index)}>
-                         <DetTitle>{note.review_title}</DetTitle>
-                         <NoteText>{note.long_text}</NoteText>
+                         <DetTitle>{note.long_note.long_title}</DetTitle>
+                         <NoteText>{note.long_note.long_text}</NoteText>
                          <NoteActions>
                             <div style={{ display: 'flex', alignItems: 'center'}}>
                               <NoteDate>{new Date(note.created_at).toLocaleDateString()}</NoteDate>
@@ -1593,11 +1659,11 @@ const handleItemClick=(path,token,isbn)=>{
                                           </div>
                                           <div className="line1"></div>
                                           <div className="top1">
-                                            <div className="modalTitle">{note.review_title}</div>
+                                            <div className="modalTitle">{note.long_note.long_title}</div>
                                             </div>
                                             <div className="top2">
-                                                <div className="modalCreateDate">{note.created_at}</div>
-                          
+                                                <div className="modalCreateDate">{new Date(note.created_at).toLocaleDateString()}</div>
+                                                <div className="modalNickname">{note.writer}</div>
                                             </div>
                                             <div className="modalLongWritingBox">
                                                 <div className="prevBtn" onClick={longGoToPrevious} style={{
@@ -1608,10 +1674,10 @@ const handleItemClick=(path,token,isbn)=>{
                                                         arrow_circle_left
                                                     </span>
                                                 </div>
-                                                <div className="modalLongWriting">{note.long_text}</div>
+                                                <div className="modalLongWriting">{note.long_note.long_text}</div>
                                                 <div className="nextBtn" onClick={longGoToNext} style={{
-                                                    color: index === long.length - 1 ? '#989BA2 ' : '#000000',
-                                                    pointerEvents: index === long.length - 1 ? 'none' : 'auto',
+                                                    color: index === longNotes.length - 1 ? '#989BA2 ' : '#000000',
+                                                    pointerEvents: index === longNotes.length - 1 ? 'none' : 'auto',
                                                 }}>
                                                     <span className="material-icons right-arrow-icon">
                                                         arrow_circle_right
@@ -1621,7 +1687,9 @@ const handleItemClick=(path,token,isbn)=>{
                                             </div>
                                             <div className="modalBookBox">
                                                <div className="modalInerBox">
-                                                <div className="modalCover"></div>
+                                                <div className="modalCover">
+                                                  <img src={note.book.thumbnail}></img>
+                                                </div>
                                                 <div className="modalBookInfo">
                                                     <div className="modalBookTitle">{note.book.title}</div>
                                                     <div className="modalBookAuthor">{note.book.author}</div>
@@ -1642,7 +1710,7 @@ const handleItemClick=(path,token,isbn)=>{
                 <FormContainer>
                     
                     <EmotionIconsContainer>
-                        {emo.map(emotion => (
+                        {emogi.map(emotion => (
                             <EmotionIcon key={emotion.id}>
                                 <EmotionImgCountWrapper>
                                     <EmotionImg src={emotion.img}/>
@@ -1653,15 +1721,15 @@ const handleItemClick=(path,token,isbn)=>{
                     ))}
                     </EmotionIconsContainer>
                     <EmotionContainer> 
-                        {isQue.map((question,index) => (
+                        {feelings.map((question,index) => (
 
-                        <QuestionCard key={question.ShortReviewList.id}  onClick={()=>showInfo(index)}>
-                            <QuestionText>Q. {question.ShortReviewList.question}</QuestionText>
-                            <AnswerText>A. {question.ShortReviewList.answer}</AnswerText>
+                        <QuestionCard key={question.id}  onClick={()=>showInfo(index)}>
+                            <QuestionText>Q. {question.short_note.question}</QuestionText>
+                            <AnswerText>A. {question.short_note.answer}</AnswerText>
                             <NoteActions>
                                     <div style={{ display: 'flex', alignItems: 'center'}}>
-                                     <NoteDate onClick={(e) => e.stopPropagation()}>{new Date(question.ShortReviewList.created_at).toLocaleDateString()}</NoteDate>
-                                     <EmotionImg onClick={(e) => e.stopPropagation()} src={question.ShortReviewList.mood}/>
+                                     <NoteDate onClick={(e) => e.stopPropagation()}>{new Date(question.created_at).toLocaleDateString()}</NoteDate>
+                                     {/* <EmotionImg onClick={(e) => e.stopPropagation()} src={question.ShortReviewList.mood}/> */}
                                     </div>
                                     <div>
                                      <EditButton onClick={(e) => e.stopPropagation()}><Emoji src={modifyButton} /></EditButton>
@@ -1683,7 +1751,7 @@ const handleItemClick=(path,token,isbn)=>{
                                           <div className="top1">
                                             </div>
                                             <div className="top2">
-                                                <div className="modalCreateDate">{new Date(question.ShortReviewList.created_at).toLocaleDateString()}</div>
+                                                <div className="modalCreateDate">{new Date(question.created_at).toLocaleDateString()}</div>
                       
                                             </div>
 
@@ -1699,17 +1767,17 @@ const handleItemClick=(path,token,isbn)=>{
                                                 <div className="QNA">
                                                   <div className="QnaShow">
                                                     <div className="iconQBox"><img className="icon" src={qImage}/></div>
-                                                    <div className="modalQuestion">{question.ShortReviewList.question}</div>
+                                                    <div className="modalQuestion">{question.short_note.question}</div>
                                                   </div>
                                                   <div className="line3"></div>
                                                   <div className="QnaShow">
                                                     <div className="iconABox"><img className="icon" src={aImage}/></div>
-                                                    <div className="modalAnswer">{question.ShortReviewList.answer}</div>
+                                                    <div className="modalAnswer">{question.short_note.answer}</div>
                                                   </div>
                                                 </div>
                                                 <div className="nextBtn" onClick={emoGoToNext} style={{
-                                                    color: index === isQue.length - 1 ? '#989BA2 ' : '#000000',
-                                                    pointerEvents: index === isQue.length - 1 ? 'none' : 'auto',
+                                                    color: index === feelings.length - 1 ? '#989BA2 ' : '#000000',
+                                                    pointerEvents: index === feelings.length - 1 ? 'none' : 'auto',
                                                 }}>
                                                     <span className="material-icons right-arrow-icon">
                                                         arrow_circle_right
@@ -1718,10 +1786,12 @@ const handleItemClick=(path,token,isbn)=>{
                                               </div>   
                                             <div className="modalBookBox">
                                                <div className="modalInerBox">
-                                                <div className="modalCover"></div>
+                                                <div className="modalCover">
+                                                  <img src={question.book.thumbnail}></img>
+                                                </div>
                                                 <div className="modalBookInfo">
-                                                    <div className="modalBookTitle">{question.ShortReviewList.title}</div>
-                                                    <div className="modalBookAuthor">{question.ShortReviewList.author}</div>
+                                                    <div className="modalBookTitle">{question.book.title}</div>
+                                                    <div className="modalBookAuthor">{question.book.author}</div>
                                                 </div>
                                                 </div>
                                             </div>

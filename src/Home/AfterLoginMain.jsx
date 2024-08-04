@@ -27,6 +27,7 @@ export function AfterLoginMain(){
     const location = useLocation();
     const token = location.state?.access || '';
     const refresh = location.state?.refresh || '';
+    const [isbn,setIsbn]=useState([]);
 
     const mockData = [
         { id: 1, title: "책 1", content: "사람은 미래에 대한 기대가 있어야만 세상을 살아갈 수 있다.", hearts: 620 },
@@ -68,6 +69,8 @@ export function AfterLoginMain(){
           
               setBookResults(results);
               setReadingCount(response.data.reading_count);
+              const isbnList = response.data.recent_reading_books.map(item => item.book.isbn);
+              setIsbn(isbnList); 
             console.log(response);
         }
         catch(e){
@@ -112,8 +115,8 @@ export function AfterLoginMain(){
         }
     }
 
-    const handleItemClick=(path,token)=>{
-        navigate(path,{state:{token}});
+    const handleItemClick=(path,token,isbn)=>{
+        navigate(path,{state:{token,isbn}});
     };
 
     const handleTitleChange=(e)=>{
@@ -262,8 +265,8 @@ export function AfterLoginMain(){
                                 </div>
                             </div>
                             <div className="buttons">
-                                <button className="toMyShelf" onClick={()=>handleItemClick('/afterlogin/thisbook')}>내 서재 가기</button>
-                                <button className="record" onClick={()=>handleItemClick('/afterlogin/note')}>바로 기록하기</button>
+                                <button className="toMyShelf" onClick={()=>handleItemClick('/afterlogin/thisbook',token,isbn[index])}>내 서재 가기</button>
+                                <button className="record" onClick={()=>handleItemClick('/afterlogin/note',token,isbn[index])}>바로 기록하기</button>
                             </div>
                         </div>))}
 
