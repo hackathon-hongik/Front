@@ -292,8 +292,30 @@ const [isCheck, setCheck] = useState(false);
 const [activeSubNav, setActiveSubNav] = useState('bookinfo');
 const navigate=useNavigate();
 const location = useLocation();
-const token = location.state?.token || '';
-const isbn=location.state?.isbn || '';
+const [token, setToken] = useState(location.state?.token || '');
+const [isbn, setIsbn] = useState(location.state?.isbn || '');
+const [bookData, setBookData] = useState(null);
+
+
+useEffect(() => {
+  const fetchBookData = async (isbn) => {
+    try {
+      const response = await axiosInstance.get(`/desk/books/${isbn}`, {
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      });
+      setBookData(response.data);
+    } catch (error) {
+      console.error('Failed to fetch book data:', error);
+    }
+  };
+
+  if (isbn) {
+    fetchBookData();
+  }
+}, [isbn, token]);
+
 
 const [thisBook, setThisBook] = useState([
   { deskdate: "2024-07-28T05:41:31.341060+09:00",
@@ -404,6 +426,22 @@ const handleAddClick=(isbn,title,author,thumbnail,content,publisher,date,token)=
                                             <div className="line"></div>
                                             <p className="Contents">{bookData.book.content || "N/A"}</p>
                   </BookInfoBox>
+                  
+                  // 더미 말고 받아와서 할 때 메소드
+                  // {bookData.map((bookData, index) => (
+                  //   <BookInfoBox key={index} onClick={(e) => e.stopPropagation()}>
+                  //     <img className="Cover" src={bookData.book.thumbnail} alt="Book Thumbnail"/>
+                  //     <p className="Title">{bookData.book.title || "N/A"}</p>
+                  //     <p className="Author">{bookData.book.author || "N/A"}</p>
+                  //     <p className="Publisher">{bookData.book.publisher || "N/A"} · {new Date(bookData.book.date).toLocaleDateString() || "N/A"}</p>
+                  //     <button className="AddBtn" onClick={() => handleAddClick(bookData.book.isbn,bookData.book.title,bookData.book.author,bookData.book.thumbnail,bookData.book.content,bookData.book.publisher,bookData.book.date)}>읽고 있는 책에 추가</button>
+                  //     <div className="line"></div>
+                  //     <p className="Contents">{bookData.book.content || "N/A"}</p>
+                  //   </BookInfoBox>
+                  // ) : (
+                  //   <p>Loading...</p>
+                  // )}
+
                   ))}
                   
             </NoteContainer>
