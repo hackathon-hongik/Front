@@ -400,6 +400,7 @@ export function RecommendResult(){
     const [bookmarked, setBookmarked] = useState([]);
     const [fetchedBookmarked,setFetchedBookmarked]=useState([]);
     const token = location.state?.token || '';
+    const refresh = location.state?.refresh || '';
     // const { results: resultsString, category, token } = queryString.parse(location.search);
     // const results = JSON.parse(resultsString || '[]');
    
@@ -462,8 +463,9 @@ export function RecommendResult(){
         }
     };
 
-    const handleItemClick=(path,token)=>{
-        navigate(path,{state:{token}});
+   
+    const handleItemClick=(path,token,refresh,isbn)=>{
+        navigate(path,{state:{token,refresh,isbn}});
     };
 
     const handlePickClick=(isbn,title,author,thumbnail,content,publisher,date)=>{  //찜 처리
@@ -489,12 +491,31 @@ export function RecommendResult(){
             setBookmarked((prev) => [...prev, id]);
         }  //이렇게 하면 북마크가 취소 불가
     }; 
+
+    const handleLogOut=async()=>{
+        try{
+            const newRefresh={
+                refresh: refresh
+            }
+            const response=await axiosInstance.post('/auth/logout/',newRefresh,{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            handleItemClick('/');
+            console.log(response);
+        }
+        catch(e){
+            console.log(e);
+            alert("로그아웃 실패");
+        }
+    }
   
     return(
         <RecommendResultPage>
             <Header>
                 <div className="logo">
-                    <p onClick={()=>handleItemClick('/afterlogin',token)}>로고</p>
+                    <p onClick={()=>handleItemClick('/afterlogin',token,refresh)}>로고</p>
                 </div>
         
                 <ul className="nav">
@@ -511,7 +532,7 @@ export function RecommendResult(){
                         <div className="toggleList">
                             <p onClick={()=>handleItemClick('/afterlogin/changenickname',token)}>닉네임 변경</p>
                             <p>1:1 문의</p>
-                            <p>로그아웃</p>
+                            <p onClick={handleLogOut}>로그아웃</p>
                             <p>회원탈퇴</p>
                         </div>
                         )}

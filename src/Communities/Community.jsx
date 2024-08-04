@@ -536,7 +536,7 @@ const ShortWritingList = styled.div`
 
 const BelowShortWritingList = styled.div`
   width: 1200px;
-  height: 1200px;
+  //height: 1200px;
   background-color: antiquewhite;
   display: flex;
   flex-wrap: wrap;
@@ -1541,15 +1541,24 @@ export function Community(){
     const location = useLocation();
     const token = location.state?.token || '';
 
+    useEffect(() => {
+        fetchShortData();
+        fetchLongData();
+    }, []);
+
     const handleItemClick=(path,token,isbn)=>{
         navigate(path,{state:{token,isbn}});
     };
     
       const fetchShortData=async()=>{
         try{
-            const response=await axiosInstance.get('/community/short/');
+            const response=await axiosInstance.get('/community/short-reviews',{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            });
             setShortWritings(response.data);
-
+            console.log(response);
         }
         catch(e){
             console.log(e);
@@ -1558,7 +1567,11 @@ export function Community(){
 
       const fetchLongData=async()=>{
         try{
-            const response=await axiosInstance.get('/community/long/');
+            const response=await axiosInstance.get('/community/long-reviews',{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                } 
+            });
             setLongWritings(response.data);
 
         }
@@ -1632,7 +1645,7 @@ export function Community(){
             <TitleBanner>
                 <p>커뮤니티</p>
             </TitleBanner>
-            <BtnBanner>
+            {/* <BtnBanner>
                 <div className="meWrite" onClick={()=>handleItemClick('/afterlogin/community/communitywrite',token)}>
                     <p className="meWriteText">내가 쓴 글</p>
                     <span class="material-symbols-outlined">
@@ -1645,7 +1658,7 @@ export function Community(){
                         arrow_right
                     </span>
                 </div>
-            </BtnBanner>
+            </BtnBanner> */}
 
             <TabsContainer>
                 <Tab active={activeTab === 'simple'} onClick={() => setActiveTab('simple')}>함께하는 책 속 한 줄</Tab>
@@ -1653,11 +1666,11 @@ export function Community(){
             </TabsContainer>
             {activeTab==='simple'&&(<>        
             <ShortWritingList>
-                {short.slice(0, 6).map((item, index) => (
+                {shortWritings.slice(0, 6).map((item, index) => (
                 <ShortWritingCard key={index} onClick={()=>showInfo(index)}>
-                    <div className="shortWriting">{item.short_comment}</div>
+                    <div className="shortWriting">{item.short_note.short_comment}</div>
                     <div className="likePick">
-                        <div className="nickName">{item.nickname}</div>
+                        <div className="nickName">{item.writer}</div>
                         <div className="heart">
                             <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
                             <div className="heartNum">{item.like_count}</div>
@@ -1667,8 +1680,8 @@ export function Community(){
                         </div>
                     </div>
                     <div className="bookInfo">
-                        <div className="bookTitle">{item.book_title}</div>
-                        <div className="bookAuthor">{item.book_author}</div>
+                        <div className="bookTitle">{item.book.title}</div>
+                        <div className="bookAuthor">{item.book.author}</div>
                     </div>
                     {clickedWritingIndex === index && (
                                      <ShortModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
@@ -1682,8 +1695,8 @@ export function Community(){
                                             <div className="line1"></div>
                                             <div className="top1"></div>
                                             <div className="top2">
-                                                <div className="modalCreateDate">{new Date(item.created_at).toLocaleDateString()}</div>
-                                                <div className="modalNickname">{item.nickname}</div>
+                                                <div className="modalCreateDate">{new Date(item.short_note.created_at).toLocaleDateString()}</div>
+                                                <div className="modalNickname">{item.writer}</div>
                                                 <div className="heart">
                                                     <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
                                                     <div className="heartNum">{item.like_count}</div>
@@ -1702,10 +1715,10 @@ export function Community(){
                                                         arrow_circle_left
                                                     </span>
                                                 </div>
-                                                <div className="modalShortWriting">{item.short_comment}</div>
+                                                <div className="modalShortWriting">{item.short_note.short_comment}</div>
                                                 <div className="nextBtn" onClick={shortGoToNext} style={{
-                                                    color: index === short.length - 1 ? '#989BA2 ' : '#000000',
-                                                    pointerEvents: index === short.length - 1 ? 'none' : 'auto',
+                                                    color: index === shortWritings.length - 1 ? '#989BA2 ' : '#000000',
+                                                    pointerEvents: index === shortWritings.length - 1 ? 'none' : 'auto',
                                                 }}>
                                                     <span className="material-icons right-arrow-icon">
                                                         arrow_circle_right
@@ -1716,8 +1729,8 @@ export function Community(){
                                                <div className="modalInerBox">
                                                 <div className="modalCover"></div>
                                                 <div className="modalBookInfo">
-                                                    <div className="modalBookTitle">{item.book_title}</div>
-                                                    <div className="modalBookAuthor">{item.book_author}</div>
+                                                    <div className="modalBookTitle">{item.book.title}</div>
+                                                    <div className="modalBookAuthor">{item.book.author}</div>
                                                 </div>
                                                 </div>
                                             </div>
@@ -1738,11 +1751,11 @@ export function Community(){
             </OrangeBanner>
 
             <BelowShortWritingList>
-                {short.slice(6).map((item, index) => (
+                {shortWritings.slice(6).map((item, index) => (
                 <ShortWritingCard key={index+6} onClick={()=>showInfo(index+6)}>
-                    <div className="shortWriting">{item.short_comment}</div>
+                    <div className="shortWriting">{item.short_note.short_comment}</div>
                     <div className="likePick">
-                        <div className="nickName">{item.nickname}</div>
+                        <div className="nickName">{item.writer}</div>
                         <div className="heart">
                             <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
                             <div className="heartNum">{item.like_count}</div>
@@ -1752,8 +1765,8 @@ export function Community(){
                         </div>
                     </div>
                     <div className="bookInfo">
-                        <div className="bookTitle">{item.book_title}</div>
-                        <div className="bookAuthor">{item.book_author}</div>
+                        <div className="bookTitle">{item.book.title}</div>
+                        <div className="bookAuthor">{item.book.author}</div>
                     </div>
                     {clickedWritingIndex === index+6 && (
                                      <ShortModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
@@ -1767,8 +1780,8 @@ export function Community(){
                                          <div className="line1"></div>
                                          <div className="top1"></div>
                                          <div className="top2">
-                                             <div className="modalCreateDate">{new Date(item.created_at).toLocaleDateString()}</div>
-                                             <div className="modalNickname">{item.nickname}</div>
+                                             <div className="modalCreateDate">{new Date(item.short_note.created_at).toLocaleDateString()}</div>
+                                             <div className="modalNickname">{item.writer}</div>
                                              <div className="heart">
                                                 <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
                                                 <div className="heartNum">{item.like_count}</div>
@@ -1788,10 +1801,10 @@ export function Community(){
                                                      arrow_circle_left
                                                  </span>
                                              </div>
-                                             <div className="modalShortWriting">{item.short_comment}</div>
+                                             <div className="modalShortWriting">{item.short_note.short_comment}</div>
                                              <div className="nextBtn" onClick={shortGoToNext} style={{
-                                                 color: index+6 === short.length - 1 ? '#989BA2 ' : '#000000',
-                                                 pointerEvents: index+6 === short.length - 1 ? 'none' : 'auto',
+                                                 color: index+6 === shortWritings.length - 1 ? '#989BA2 ' : '#000000',
+                                                 pointerEvents: index+6 === shortWritings.length - 1 ? 'none' : 'auto',
                                              }}>
                                                  <span className="material-icons right-arrow-icon">
                                                      arrow_circle_right
@@ -1802,8 +1815,8 @@ export function Community(){
                                                <div className="modalInerBox">
                                                 <div className="modalCover"></div>
                                                 <div className="modalBookInfo">
-                                                    <div className="modalBookTitle">{item.book_title}</div>
-                                                    <div className="modalBookAuthor">{item.book_author}</div>
+                                                    <div className="modalBookTitle">{item.book.title}</div>
+                                                    <div className="modalBookAuthor">{item.book.author}</div>
                                                 </div>
                                                 </div>
                                             </div>
@@ -1818,13 +1831,13 @@ export function Community(){
 
             {activeTab==='detailed' &&(<>
                 <LongWritingList>
-                    {long.slice(0,4).map((item, index) => (
+                    {longWritings.slice(0,4).map((item, index) => (
                     <LongWritingCard key={index} onClick={()=>showInfo(index)}>
-                        <div className="title">{item.review_title}</div>
-                        <div className="longWriting">{item.long_text}</div>
+                        <div className="title">{item.long_note.long_title}</div>
+                        <div className="longWriting">{item.long_note.long_text}</div>
                         <div className="likePick">
-                            <div className="createDate">{new Date(item.created_at).toLocaleDateString()}</div>
-                            <div className="nickName">{item.nickname}</div>
+                            <div className="createDate">{new Date(item.long_note.created_at).toLocaleDateString()}</div>
+                            <div className="nickName">{item.writer}</div>
                             <div className="heart" onClick={(e)=>e.stopPropagation()}>
                                 <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
                                 <div className="heartNum">{item.like_count}</div>
@@ -1837,8 +1850,8 @@ export function Community(){
                             </span>
                         </div>
                         <div className="bookInfo">
-                            <div className="bookTitle">{item.book_title}</div>
-                            <div className="bookAuthor">{item.book_author}</div>
+                            <div className="bookTitle">{item.book.title}</div>
+                            <div className="bookAuthor">{item.book.author}</div>
                         </div>
                         {clickedWritingIndex === index && (
                                     
@@ -1851,7 +1864,7 @@ export function Community(){
                                             </span>
                                             <div className="line1"></div>
                                             <div className="top1">
-                                                <div className="modalTitle">{item.review_title}</div>
+                                                <div className="modalTitle">{item.long_note.long_title}</div>
                                                 <div className="heart">
                                                     <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
                                                     <div className="heartNum">{item.like_count}</div>
@@ -1864,8 +1877,8 @@ export function Community(){
                                                 </span>
                                             </div>
                                             <div className="top2">
-                                                <div className="modalCreateDate">{new Date(item.created_at).toLocaleDateString()}</div>
-                                                <div className="modalNickname">{item.nickname}</div>
+                                                <div className="modalCreateDate">{new Date(item.long_note.created_at).toLocaleDateString()}</div>
+                                                <div className="modalNickname">{item.writer}</div>
                                             </div>
                                             <div className="modalLongWritingBox">
                                                 <div className="prevBtn" onClick={longGoToPrevious} style={{
@@ -1876,10 +1889,10 @@ export function Community(){
                                                         arrow_circle_left
                                                     </span>
                                                 </div>
-                                                <div className="modalLongWriting">{item.long_text}</div>
+                                                <div className="modalLongWriting">{item.long_note.long_text}</div>
                                                 <div className="nextBtn" onClick={longGoToNext} style={{
-                                                    color: index === long.length - 1 ? '#989BA2 ' : '#000000',
-                                                    pointerEvents: index === long.length - 1 ? 'none' : 'auto',
+                                                    color: index === longWritings.length - 1 ? '#989BA2 ' : '#000000',
+                                                    pointerEvents: index === longWritings.length - 1 ? 'none' : 'auto',
                                                 }}>
                                                     <span className="material-icons right-arrow-icon">
                                                         arrow_circle_right
@@ -1898,8 +1911,8 @@ export function Community(){
                                             <div className="modalBookBox">
                                                 <div className="modalCover"></div>
                                                 <div className="modalBookInfo">
-                                                    <div className="modalBookTitle">{item.book_title}</div>
-                                                    <div className="modalBookAuthor">{item.book_author}</div>
+                                                    <div className="modalBookTitle">{item.book.title}</div>
+                                                    <div className="modalBookAuthor">{item.book.author}</div>
                                                 </div>
                                             </div>
 
@@ -1907,7 +1920,7 @@ export function Community(){
 
                                             <CommentInputBox>
                                                 <div className="inputLine">
-                                                    <div className="commentMyNickName">{item.nickname}</div>
+                                                    {/* <div className="commentMyNickName">{item.writer}</div> */}
                                                     <input type="text" className="commentInput" placeholder="댓글입력"></input>
                                                 </div>
                                                 <button className="submitBtn">등록</button>
@@ -1918,11 +1931,11 @@ export function Community(){
                                                     <p>댓글<span className='numComment'style={{color:item.comment_count===0?'#989BA2':'#FF6E23'}}>{item.comment_count}</span></p>
                                                 </div>
                                                 <CommentList>
-                                                    {item.comment_list.map((comment) => (
-                                                    <CommentCard key={comment.comment_id}>
-                                                        <div className="commentNickName">{comment.comment_nickname}</div>
-                                                        <div className="commentCreatedAt">{new Date(comment.comment_created_at).toLocaleDateString()}</div>
-                                                        <div className="commentText">{comment.comment_text}</div>
+                                                    {item.comments.map((comment) => (
+                                                    <CommentCard key={comment.id}>
+                                                        <div className="commentNickName">{comment.user}</div>
+                                                        <div className="commentCreatedAt">{new Date(comment.created_at).toLocaleDateString()}</div>
+                                                        <div className="commentText">{comment.comment}</div>
                                                     </CommentCard>
                                                     ))}
                                                 </CommentList>
@@ -1937,7 +1950,7 @@ export function Community(){
                     ))}
                 </LongWritingList>
 
-                <OrangeBanner onClick={()=>handleItemClick("/afterlogin/recommendation")}>
+                <OrangeBanner onClick={()=>handleItemClick("/afterlogin/recommendation",token)}>
                     <div className="text3">
                         <p className="first_row">당신의 고민에 맞는</p>
                         <p className="second_row">책 추천 받기</p>
@@ -1947,13 +1960,13 @@ export function Community(){
                 </OrangeBanner>
 
                 <BelowLongWritingList>
-                    {long.slice(4).map((item, index) => (
+                    {longWritings.slice(4).map((item, index) => (
                    <LongWritingCard key={index+4} onClick={()=>showInfo(index+4)}>
-                        <div className="title">{item.review_title}</div>
-                        <div className="longWriting">{item.long_text}</div>
+                        <div className="title">{item.long_note.long_title}</div>
+                        <div className="longWriting">{item.long_note.long_text}</div>
                         <div className="likePick">
-                            <div className="createDate">{new Date(item.created_at).toLocaleDateString()}</div>
-                            <div className="nickName">{item.nickname}</div>
+                            <div className="createDate">{new Date(item.long_note.created_at).toLocaleDateString()}</div>
+                            <div className="nickName">{item.writer}</div>
                             <div className="heart" onClick={(e)=>e.stopPropagation()}>
                                 <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
                                 <div className="heartNum">{item.like_count}</div>
@@ -1966,8 +1979,8 @@ export function Community(){
                             </span>
                         </div>
                         <div className="bookInfo">
-                            <div className="bookTitle">{item.book_title}</div>
-                            <div className="bookAuthor">{item.book_author}</div>
+                            <div className="bookTitle">{item.book.title}</div>
+                            <div className="bookAuthor">{item.book.author}</div>
                         </div>
                         {clickedWritingIndex === index+4 && (
                                      <LongModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
@@ -1979,7 +1992,7 @@ export function Community(){
                                             </span>
                                             <div className="line1"></div>
                                             <div className="top1">
-                                                <div className="modalTitle">{item.review_title}</div>
+                                                <div className="modalTitle">{item.long_note.long_title}</div>
                                                 <div className="heart">
                                                     <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
                                                     <div className="heartNum">{item.like_count}</div>
@@ -1992,8 +2005,8 @@ export function Community(){
                                                 </span>
                                             </div>
                                             <div className="top2">
-                                                <div className="modalCreateDate">{new Date(item.created_at).toLocaleDateString()}</div>
-                                                <div className="modalNickname">{item.nickname}</div>
+                                                <div className="modalCreateDate">{new Date(item.long_note.created_at).toLocaleDateString()}</div>
+                                                <div className="modalNickname">{item.writer}</div>
                                             </div>
                                             <div className="modalLongWritingBox">
                                                 <div className="prevBtn" onClick={longGoToPrevious} style={{
@@ -2004,10 +2017,10 @@ export function Community(){
                                                         arrow_circle_left
                                                     </span>
                                                 </div>
-                                                <div className="modalLongWriting">{item.long_text}</div>
+                                                <div className="modalLongWriting">{item.long_note.long_text}</div>
                                                 <div className="nextBtn" onClick={longGoToNext} style={{
-                                                    color: index+4 === long.length - 1 ? '#989BA2 ' : '#000000 ',
-                                                    pointerEvents: index+4 === long.length - 1 ? 'none' : 'auto',
+                                                    color: index+4 === longWritings.length - 1 ? '#989BA2 ' : '#000000 ',
+                                                    pointerEvents: index+4 === longWritings.length - 1 ? 'none' : 'auto',
                                                 }}>
                                                     <span className="material-icons right-arrow-icon">
                                                         arrow_circle_right
@@ -2026,8 +2039,8 @@ export function Community(){
                                             <div className="modalBookBox">
                                                 <div className="modalCover"></div>
                                                 <div className="modalBookInfo">
-                                                    <div className="modalBookTitle">{item.book_title}</div>
-                                                    <div className="modalBookAuthor">{item.book_author}</div>
+                                                    <div className="modalBookTitle">{item.book.title}</div>
+                                                    <div className="modalBookAuthor">{item.book.author}</div>
                                                 </div>
                                             </div>
 
@@ -2035,7 +2048,7 @@ export function Community(){
 
                                             <CommentInputBox>
                                                 <div className="inputLine">
-                                                    <div className="commentMyNickName">{item.nickname}</div>
+                                                    {/* <div className="commentMyNickName">{item.writer}</div> */}
                                                     <input type="text" className="commentInput" placeholder="댓글입력"></input>
                                                 </div>
                                                 <button className="submitBtn">등록</button>
@@ -2043,14 +2056,14 @@ export function Community(){
 
                                             <PeopleCommentBox>
                                                 <div className="commentNum">
-                                                    <p>댓글<span>{item.comment_count}</span></p>
+                                                    <p>댓글<span className='numComment'style={{color:item.comment_count===0?'#989BA2':'#FF6E23'}}>{item.comment_count}</span></p>
                                                 </div>
                                                 <CommentList>
-                                                    {item.comment_list.map((comment) => (
+                                                    {item.comments.map((comment) => (
                                                     <CommentCard key={comment.comment_id}>
-                                                        <div className="commentNickName">{comment.comment_nickname}</div>
-                                                        <div className="commentCreatedAt">{new Date(comment.comment_created_at).toLocaleDateString()}</div>
-                                                        <div className="commentText">{comment.comment_text}</div>
+                                                        <div className="commentNickName">{comment.user}</div>
+                                                        <div className="commentCreatedAt">{new Date(comment.created_at).toLocaleDateString()}</div>
+                                                        <div className="commentText">{comment.comment}</div>
                                                     </CommentCard>
                                                     ))}
                                                 </CommentList>
