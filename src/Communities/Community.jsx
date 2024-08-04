@@ -11,7 +11,6 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
-
 const short = [
     {
         id: 1,
@@ -329,7 +328,7 @@ const Header = styled.div`
         }
     
     }
-    
+
     .mypageBtn{
     width:112px;
     height: 34px;
@@ -1539,6 +1538,8 @@ export function Community(){
     const [clickedWritingIndex, setClickedWritingIndex] = useState(null);
     const [shortWritings,setShortWritings]=useState([]);
     const [longWritings,setLongWritings]=useState([]);
+    const token = location.state?.token || '';
+    const location = useLocation();
 
     const handleItemClick = (path) => {
         navigate(path);
@@ -1602,7 +1603,7 @@ export function Community(){
         <CommunityPage>
             <Header>
                 <div className="logo">
-                    <p>로고</p>
+                    <p onClick={()=>handleItemClick('/afterlogin',token)}>로고</p>
                 </div>
         
                 <ul className="nav">
@@ -1617,7 +1618,7 @@ export function Community(){
                         <button className="mypageBtn" onClick={() => { setCheck((e) => !e) }}>마이페이지</button>
                         {isCheck && (
                         <div className="toggleList">
-                            <p>닉네임 변경</p>
+                            <p onClick={()=>handleItemClick('/afterlogin/changenickname',token)}>닉네임 변경</p>
                             <p>1:1 문의</p>
                             <p>로그아웃</p>
                             <p>회원탈퇴</p>

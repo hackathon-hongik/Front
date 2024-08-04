@@ -285,7 +285,7 @@ const handleItemClick=(path,token,isbn)=>{
               <NoteContainer>
                 <Header>
                     <Logo>
-                  <p>로고</p>
+                  <p onClick={()=>handleItemClick('/afterlogin',token)}>로고</p>
                     </Logo>
                 <Nav>
                   <li><a onClick={() => handleItemClick("/afterlogin/mylibrary",token)}>내 서재</a></li>

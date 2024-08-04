@@ -634,7 +634,7 @@ export function AfterBookSearchResult(){  //로그인 전 책 검색하면 나�
         <ResultPage>
             <Header>
                 <div className="logo">
-                    <p>로고</p>
+                    <p onClick={()=>handleItemClick('/afterlogin',token)}>로고</p>
                 </div>
 
                 <ul className="nav">
@@ -645,7 +645,7 @@ export function AfterBookSearchResult(){  //로그인 전 책 검색하면 나�
                             <button className="mypageBtn" onClick={()=>{setCheck((e)=>!e)}}>마이페이지</button>
                             {isCheck &&(
                                 <div className="toggleList">
-                                    <p>닉네임 변경</p>
+                                    <p onClick={()=>handleItemClick('/afterlogin/changenickname',token)}>닉네임 변경</p>
                                     <p>1:1 문의</p>
                                     <p>로그아웃</p>
                                     <p>회원탈퇴</p>

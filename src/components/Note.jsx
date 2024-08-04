@@ -745,7 +745,7 @@ const handleLongCommentChange = (event) => {
       <NoteContainer>
         <Header>
             <Logo>
-          <p>로고</p>
+          <p onClick={()=>handleItemClick('/afterlogin',token)}>로고</p>
             </Logo>
         <Nav>
           <li><a onClick={() => handleItemClick("/afterlogin/mylibrary",token)}>내 서재</a></li>
@@ -755,7 +755,7 @@ const handleLongCommentChange = (event) => {
               <MypageBtn onClick={() => { setCheck((e) => !e) }}>마이페이지</MypageBtn>
               {isCheck && (
                 <ToggleList>
-                  <p>닉네임 변경</p>
+                  <p onClick={()=>handleItemClick('/afterlogin/changenickname',token)}>닉네임 변경</p>
                   <p>1:1 문의</p>
                   <p>로그아웃</p>
                   <p>회원탈퇴</p>

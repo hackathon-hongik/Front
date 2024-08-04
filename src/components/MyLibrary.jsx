@@ -685,7 +685,7 @@ export function MyLibrary(){  //내 서재 페이지
         <LibraryPage>
            <Header>
                 <div className="logo">
-                    <p>로고</p>
+                    <p onClick={()=>handleItemClick('/afterlogin',token)}>로고</p>
                 </div>
 
                 <ul className="nav">

@@ -199,7 +199,7 @@ export function AfterLoginMain(){
         <div className="mainPage2">
             <div className="header">
                 <div className="logo">
-                    <p>로고</p>
+                    <p onClick={()=>handleItemClick('/afterlogin',token)}>로고</p>
                 </div>
 
                 <ul className="nav">
