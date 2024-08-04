@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { axiosInstance } from "../api";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 import info from '../assets/info.png';
 import noteImage from '../assets/note.png';
 import contract from '../assets/contract.png';
@@ -293,7 +294,7 @@ const [activeSubNav, setActiveSubNav] = useState('bookinfo');
 const navigate=useNavigate();
 const location = useLocation();
 const token = location.state?.token || '';
-
+const isbn=location.state?.isbn || '';
 
 const [thisBook, setThisBook] = useState([
   { deskdate: "2024-07-28T05:41:31.341060+09:00",
@@ -310,51 +311,12 @@ const [thisBook, setThisBook] = useState([
   }
 ])
 
-// const navigateToNote = (memberId, isbn) => {
-//         navigate(`/note?memberId=${memberId}&myBookId=${isbn}`);
-// };
 
-const handleItemClick = (path) => {
-    navigate(path);
-};   
-
-const addBook=async(isbn,title,author,thumbnail,content,publisher,date)=>{
-  try{
-      const newBook={
-          book:{
-              isbn:isbn,
-              title:title,
-              author:author,
-              date:date,
-              publisher:publisher,
-              thumbnail:thumbnail,
-              content:content
-          }
-      }
-
-      const response=await axiosInstance.post("/desk/books/reading/",newBook,{
-          
-          headers:{
-              Authorization: `Bearer ${token}`
-          }
-
-          });
-      alert("읽고 있는 책에 성공적으로 추가되었습니다!")
-      console.log(response);
-  }
-  catch(e){
-      if(e.response && e.response.status===409){
-          alert("이미 읽고 있는 책에 추가하신 책입니다");
-          console.log(e);
-      }
-  }
-}
-
-const handleAddClick=(isbn,title,author,thumbnail,content,publisher,date,token)=>{   //읽고 있는 책으로 추가 처리
-       
-  addBook(isbn,title,author,thumbnail,content,publisher,date,token);
-  
+const handleItemClick=(path,token,isbn)=>{
+  navigate(path,{state:{token,isbn}});
 };
+
+      
 
 
     return(
@@ -389,10 +351,10 @@ const handleAddClick=(isbn,title,author,thumbnail,content,publisher,date,token)=
                         <SubNavItem active={activeSubNav === 'bookinfo'} onClick={() => { handleItemClick("/afterlogin/thisbook"); setActiveSubNav('bookinfo'); }}>
                         {activeSubNav === 'bookinfo' && <img src={info} alt="active" />}
                         책 정보보기</SubNavItem>
-                        <SubNavItem active={activeSubNav === 'record'} onClick={() => { handleItemClick("/afterlogin/note"); setActiveSubNav('record'); }}>
+                        <SubNavItem active={activeSubNav === 'record'} onClick={() => { handleItemClick("/afterlogin/note",token,isbn); setActiveSubNav('record'); }}>
                         {activeSubNav === 'record' && <img src={noteImage} alt="active" />}
                         기록하기</SubNavItem>
-                        <SubNavItem active={activeSubNav === 'myrecords'} onClick={() => { handleItemClick("/afterlogin/looknote"); setActiveSubNav('myrecords'); }}>
+                        <SubNavItem active={activeSubNav === 'myrecords'} onClick={() => { handleItemClick("/afterlogin/looknote",token); setActiveSubNav('myrecords'); }}>
                         {activeSubNav === 'myrecords' && <img src={contract} alt="active" />}
                         내 기록보기</SubNavItem>
                   </SubNav>  

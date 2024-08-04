@@ -203,6 +203,12 @@ export function Join(){
         navigate(path);
       };
 
+      const handleKeyDown = (e) => {       //책 검색 후 엔터버튼을 눌렀을때 책 검색이 이루어지도록 -> 돋보기 표시 클릭했을때와 같은 기능
+        if (e.key === 'Enter') {
+            handleJoinClick();
+        }               
+    };
+
     const joinMember=async()=>{
 
         try{
@@ -218,8 +224,18 @@ export function Join(){
             console.log(response);
         }
         catch(e){
-            alert('회원가입에 실패하셨습니다');
-            console.log(e);
+            if(e.response && e.response.status===400){
+                alert("비밀번호가 일치하지 않습니다.");
+                console.log(e);
+            }
+
+            else if(e.response && e.response.status===409){
+                alert("이미 존재하는 이메일입니다");
+            }
+
+            else if(e.response && e.response.status===406){
+                alert("이미 존재하는 닉네임입니다.");
+            }
         }
     }
     
@@ -250,13 +266,13 @@ export function Join(){
             <div className="realJoin">
                 <p>회원가입</p>
                 <div className="idText">아이디</div>
-                <input type="text" className="idInput" value={id} placeholder="이메일 입력" onChange={handleIdChange}></input>
+                <input type="text" className="idInput" value={id} placeholder="이메일 입력" onChange={handleIdChange} onKeyDown={handleKeyDown}></input>
                 <div className="pwText">비밀번호</div>
-                <input type="text" className="pwInput" value={password} placeholder="비밀번호 입력" onChange={handlePwChange}></input>
+                <input type="text" className="pwInput" value={password} placeholder="비밀번호 입력" onChange={handlePwChange} onKeyDown={handleKeyDown}></input>
                 <div className="pwConfirmText">비밀번호 확인</div>
-                <input type="text" className="pwConfirmInput" value={confirmPassword} placeholder="비밀번호 확인" onChange={handlePwConfirmChange}></input>
+                <input type="text" className="pwConfirmInput" value={confirmPassword} placeholder="비밀번호 확인" onChange={handlePwConfirmChange} onKeyDown={handleKeyDown}></input>
                 <div className="nicknameText">닉네임</div>
-                <input type="text" className="nicknameInput" value={nickname} placeholder="닉네임" onChange={handleNicknameChange}></input>
+                <input type="text" className="nicknameInput" value={nickname} placeholder="닉네임" onChange={handleNicknameChange} onKeyDown={handleKeyDown}></input>
                 <button className="joinBtn" onClick={handleJoinClick}>회원가입</button>
                 <div className="textBtn">
                     <p>회원이신가요?</p>

@@ -18,7 +18,7 @@ const short = [
         short_comment: "1안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
         nickname:"롯데 우승은 언제쯤",
         like_count:200,
-        book_title:"해리포터",
+        book_title:"나를 위해 살지 않으면 남을 위해 살게 된다",
         book_author:"롤링",
         nickname:"닉네임",
         created_at:"2024-07-28T05:41:31.341060+09:00"
@@ -655,7 +655,7 @@ const ShortWritingCard=styled.div`
         font-style: normal;
         font-weight: 400;
         background-color: red;
-        margin: 0; 
+        margin-top: 10px; 
         margin-right:20px;
     }
 
@@ -871,7 +871,7 @@ const ShortModalContent = styled.div`
   margin-top:230px;
   
   .left-arrow-icon{
-    color: #000000;
+    //color: #000000;
     font-size: 25px;
   }
 
@@ -880,7 +880,7 @@ const ShortModalContent = styled.div`
     }
 
   .right-arrow-icon{
-    color: #000000;
+    //color: #000000;
     font-size: 25px;
   }
 
@@ -1006,6 +1006,81 @@ const ShortModalContent = styled.div`
         background-color: beige;
     }
   }
+
+  .modalBookBox{
+    width: 500px;
+    height: 70px;
+    border-radius: 4px;
+    background: #F2F2F7;
+    margin-left: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin-top: 20px;
+
+
+    .modalInerBox{
+      display: flex;
+      align-items: center;
+      justify-content : flex-start;
+
+      .modalCover{
+      border-radius: 4px;
+      width: 40px;
+      height: 60px;
+      background: #FFF;
+    }
+    
+
+    .modalBookInfo{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: auto;
+        margin-left:20px;
+        //background-color: #01524D;
+    }
+
+    .modalBookTitle{
+        display: inline-flex;
+        width: auto;
+        height:20px;
+        overflow: hidden;
+        color: var(--kakao-logo, #000);
+        font-feature-settings: 'ss10' on;
+        text-overflow: ellipsis;
+        font-family: "Pretendard JP";
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 138.5%; /* 18.005px */
+        letter-spacing: 0.252px;
+        align-items: center;
+        //background-color: palegreen;
+        
+    }
+
+    .modalBookAuthor{
+        display: inline-flex;
+        width: auto;
+        height:20px;
+        overflow: hidden;
+        color: #989BA2;
+        font-feature-settings: 'ss10' on;
+        text-overflow: ellipsis;
+
+        font-family: "Pretendard JP";
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 138.5%; /* 18.005px */
+        letter-spacing: 0.252px;
+        align-items: center;
+        //background-color: red;
+    }
+    }
+  }
 `;
 
 const LongModalOverlay = styled.div`
@@ -1019,16 +1094,28 @@ const LongModalOverlay = styled.div`
   justify-content: center;
 `;
 
+const LongModalWrapper = styled.div`
+  width: 960px;
+  height: 800px;
+  padding: 30px;
+  padding-right: 0px;
+  border-radius: 20px;
+  background: #FFF;
+  margin-top: 30px;
+  display: flex;
+  flex-direction: column;
+`;
+
 const LongModalContent = styled.div`
-  width:960px;
-  height:700px;
-  padding: 20px;
+  /* width:960px;
+  height:700px; */
+  //padding: 20px;
   border-radius: 8px 8px 8px 8px;
   text-align: center;
   border-radius: 20px;
   background: #FFF;
-  padding: 40px 48px 28px 48px;
-  margin-top:90px;
+  //padding: 40px 48px 28px 48px;
+  margin-top:30px;
   overflow: auto;
   //position: relative;
    
@@ -1196,6 +1283,82 @@ const LongModalContent = styled.div`
         height:1px;
         background-color:rgba(112, 115, 124, 0.22);
     }
+
+    .modalBookBox{
+    width: 500px;
+    height: 100px;
+    border-radius: 4px;
+    background: #F2F2F7;
+    margin-left: 210px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin-top: 20px;
+
+
+
+    .modalInerBox{
+      display: flex;
+      align-items: center;
+      justify-content : flex-start;
+
+      .modalCover{
+      border-radius: 4px;
+      width: 40px;
+      height: 60px;
+      background: #FFF;
+    }
+    
+
+    .modalBookInfo{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        width: auto;
+        margin-left:20px;
+        //background-color: #01524D;
+    }
+
+    .modalBookTitle{
+        display: inline-flex;
+        width: auto;
+        height:20px;
+        overflow: hidden;
+        color: var(--kakao-logo, #000);
+        font-feature-settings: 'ss10' on;
+        text-overflow: ellipsis;
+        font-family: "Pretendard JP";
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 138.5%; /* 18.005px */
+        letter-spacing: 0.252px;
+        align-items: center;
+        //background-color: palegreen;
+        
+    }
+
+    .modalBookAuthor{
+        display: inline-flex;
+        width: auto;
+        height:20px;
+        overflow: hidden;
+        color: #989BA2;
+        font-feature-settings: 'ss10' on;
+        text-overflow: ellipsis;
+
+        font-family: "Pretendard JP";
+        font-size: 15px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 138.5%; /* 18.005px */
+        letter-spacing: 0.252px;
+        align-items: center;
+        //background-color: red;
+    }
+    }
+  }
 
     .heartBox{
         width:90px;
@@ -1548,7 +1711,15 @@ export function Community(){
                                                     </span>
                                                 </div>
                                               </div>   
-
+                                              <div className="modalBookBox">
+                                               <div className="modalInerBox">
+                                                <div className="modalCover"></div>
+                                                <div className="modalBookInfo">
+                                                    <div className="modalBookTitle">{item.book_title}</div>
+                                                    <div className="modalBookAuthor">{item.book_author}</div>
+                                                </div>
+                                                </div>
+                                            </div>
                                         </ShortModalContent>
                                      </ShortModalOverlay>
                                  )}
@@ -1626,7 +1797,15 @@ export function Community(){
                                                  </span>
                                              </div>
                                            </div>   
-
+                                           <div className="modalBookBox">
+                                               <div className="modalInerBox">
+                                                <div className="modalCover"></div>
+                                                <div className="modalBookInfo">
+                                                    <div className="modalBookTitle">{item.book_title}</div>
+                                                    <div className="modalBookAuthor">{item.book_author}</div>
+                                                </div>
+                                                </div>
+                                            </div>
                                      </ShortModalContent>
                                   </ShortModalOverlay>
                                  )}
@@ -1663,6 +1842,7 @@ export function Community(){
                         {clickedWritingIndex === index && (
                                     
                                      <LongModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
+                                        <LongModalWrapper onClick={(e) => e.stopPropagation()}>
                                         <LongModalContent onClick={(e) => e.stopPropagation()}> {/*모달창을 눌렀을때는 꺼지지 않도록*/}
                                             
                                             <span className="material-icons close" onClick={closeModal}>
@@ -1748,6 +1928,7 @@ export function Community(){
                                             </PeopleCommentBox>
                                             
                                         </LongModalContent>
+                                        </LongModalWrapper>
                                      </LongModalOverlay>
                                          
                                  )}
@@ -1789,6 +1970,7 @@ export function Community(){
                         </div>
                         {clickedWritingIndex === index+4 && (
                                      <LongModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
+                                        <LongModalWrapper onClick={(e) => e.stopPropagation()}>
                                         <LongModalContent onClick={(e) => e.stopPropagation()}> {/*모달창을 눌렀을때는 꺼지지 않도록*/}
                                             
                                             <span className="material-icons close" onClick={closeModal}>
@@ -1874,6 +2056,7 @@ export function Community(){
                                             </PeopleCommentBox>
                                             
                                         </LongModalContent>
+                                        </LongModalWrapper>
                                      </LongModalOverlay>
                                  )}
                     </LongWritingCard>

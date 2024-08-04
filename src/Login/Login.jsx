@@ -156,12 +156,18 @@ export function Login(){
     const[id,setId]=useState("");
     const[password,setPassword]=useState("");
     const navigate=useNavigate();
-    const [refresh2,setRefresh]=useState('');
+    const [refresh,setRefresh]=useState('');
     const [access,setAccess]=useState('');
 
     const handleItemClick = (path) => {
         navigate(path);
       };
+
+      const handleKeyDown = (e) => {       //책 검색 후 엔터버튼을 눌렀을때 책 검색이 이루어지도록 -> 돋보기 표시 클릭했을때와 같은 기능
+        if (e.key === 'Enter') {
+            handleLoginClick();
+        }               
+    };
 
 
     const loginMember=async()=>{
@@ -179,7 +185,7 @@ export function Login(){
             setAccess(access);
 
             console.log(response);
-            navigate("/afterlogin", { state: { access } });
+            navigate("/afterlogin", { state: { access, refresh } });
            
         }
         catch(e){
@@ -216,9 +222,9 @@ export function Login(){
 
                     </div>
                 </div> */}
-                <input type="text" className="idInput" value={id} placeholder="아이디 입력" onChange={handleIdChange}></input>
-                <input type="text" className="pwInput" value={password} placeholder="비밀번호 입력" onChange={handlePwChange}></input>
-                <button className="loginBtn" onClick={handleLoginClick}>로그인</button>
+                <input type="text" className="idInput" value={id} placeholder="아이디 입력" onChange={handleIdChange} onKeyDown={handleKeyDown}></input>
+                <input type="text" className="pwInput" value={password} placeholder="비밀번호 입력" onChange={handlePwChange} onKeyDown={handleKeyDown}></input>
+                <button className="loginBtn" onClick={handleLoginClick} >로그인</button>
                 <div className="textBtn">
                     <p>회원이 아니신가요?</p>
                     <p className="gotoJoinBtn" onClick={()=>navigate("/join")}>회원가입</p>

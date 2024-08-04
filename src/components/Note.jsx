@@ -15,6 +15,7 @@ import contract from '../assets/contract.png';
 
 
 
+
 const AppContainer = styled.div`
     width:1620px;
     height:1440px;
@@ -556,27 +557,34 @@ export function Note() {
   const[short_review_id,setShortReviewId]=useState('');
   const[long_review_id,setLongReviewId]=useState('');
   const [selectedQuestion, setSelectedQuestion] = useState(SetQuestions[0]);
-  const [question, setQuestion] = useState('');
+  // const [question, setQuestion] = useState('');
+  const [question, setQuestion] = useState('Q1');
   const [activeSubNav, setActiveSubNav] = useState('record');
+  const location = useLocation();
+  const token = location.state?.token || '';
+  const isbn=location.state?.isbn || '';
+  //const {isbn} = location.state|| {isbn:[]};
 
+  // useEffect(() => {
+  //   const memberIdFromQuery = query.get("memberId");
+  //   const myBookIdFromQuery = query.get("myBookId");
+  //   if (memberIdFromQuery && myBookIdFromQuery) {
+  //     setMemberId(memberIdFromQuery);
+  //     setMyBookId(myBookIdFromQuery);
+  //   }
 
-  useEffect(() => {
-    const memberIdFromQuery = query.get("memberId");
-    const myBookIdFromQuery = query.get("myBookId");
-    if (memberIdFromQuery && myBookIdFromQuery) {
-      setMemberId(memberIdFromQuery);
-      setMyBookId(myBookIdFromQuery);
-    }
+  //       // 고유 번호 생성
+  //       setShortReviewId(Date.now() + '-short');
+  //       setLongReviewId(Date.now() + '-long');
+  // }, [query]);
 
-        // 고유 번호 생성
-        setShortReviewId(Date.now() + '-short');
-        setLongReviewId(Date.now() + '-long');
-  }, [query]);
+  useEffect(()=>{
+    console.log(isbn);   //화면 처음 랜더링 될때 찜한 정보들 띄우기
+},[]);
 
-
-  const handleItemClick = (path) => {
-    navigate(path);
-  };
+  const handleItemClick=(path,token,isbn)=>{
+    navigate(path,{state:{token,isbn}});
+};
 
 // 체크박스 구현
 
@@ -604,8 +612,10 @@ const handleMoodChange=(selectedMood)=>{
 
 // 질문 선택
 const handleQuestionChange = (event) => {
+  const selectedIndex = SetQuestions.indexOf(event.target.value) + 1;
+  const questionCode = `Q${selectedIndex}`;
   setSelectedQuestion(event.target.value);
-  setQuestion(event.target.value);
+  setQuestion(questionCode);
 };
 
 //질문 답변
@@ -633,25 +643,27 @@ const handleLongCommentChange = (event) => {
   const handleShortNoteSubmit = async (memberId, myBookId) => {
     try{
       const newShortNote = {
-        short_review_id : short_review_id,
-        memberId : memberId,
-        isbn : myBookId,
-        read_complete: checked, // 읽기 완료 체크박스
+         
         start_page : start,
         end_page : end,
+        read_complete: checked, // 읽기 완료 체크박스
         mood : mood,
         question : question,
         answer : answer,
         short_comment : short_comment,
-        created_at: new Date().toISOString(),
         open: selectedOption === "public", // 공개여부
       }
       
-      const response = await axiosInstance.post(`/desk/${memberId}/${myBookId}/note/short`, newShortNote);
+      const response = await axiosInstance.post(`/desk/books/${isbn}/note/short`, newShortNote,{
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+      });
       console.log(response.data);
       // fetchNotes(); // 전체 노트를 get 하는 함수
 
     } catch(e){
+      console.log(isbn);
       console.log(e);
   }
 
@@ -672,7 +684,7 @@ const handleLongCommentChange = (event) => {
         created_at: new Date().toISOString(),
         open: selectedOption === "public" // boolean 값으로 설정
       };
-      const response = await axiosInstance.post(`/desk/${memberId}/${myBookId}/note/long`, newLongNote);
+      const response = await axiosInstance.post(`/desk/books/${isbn}/note/long`, newLongNote);
       console.log(response.data);
     } catch (e) {
       console.log(e);
@@ -708,13 +720,13 @@ const handleLongCommentChange = (event) => {
       </Header>
 
       <SubNav>
-          <SubNavItem active={activeSubNav === 'bookinfo'} onClick={() => { handleItemClick("/afterlogin/thisbook"); setActiveSubNav('bookinfo'); }}>
+          <SubNavItem active={activeSubNav === 'bookinfo'} onClick={() => { handleItemClick("/afterlogin/thisbook",token,isbn); setActiveSubNav('bookinfo'); }}>
                         {activeSubNav === 'bookinfo' && <img src={info} alt="active" />}
                         책 정보보기</SubNavItem>
-          <SubNavItem active={activeSubNav === 'record'} onClick={() => { handleItemClick("/afterlogin/note"); setActiveSubNav('record'); }}>
+          <SubNavItem active={activeSubNav === 'record'} onClick={() => { handleItemClick("/afterlogin/note",token,isbn); setActiveSubNav('record'); }}>
                         {activeSubNav === 'record' && <img src={noteImage} alt="active" />}
                         기록하기</SubNavItem>
-          <SubNavItem active={activeSubNav === 'myrecords'} onClick={() => { handleItemClick("/afterlogin/looknote"); setActiveSubNav('myrecords'); }}>
+          <SubNavItem active={activeSubNav === 'myrecords'} onClick={() => { handleItemClick("/afterlogin/looknote",token); setActiveSubNav('myrecords'); }}>
                         {activeSubNav === 'myrecords' && <img src={contract} alt="active" />}
                         내 기록보기</SubNavItem>
       </SubNav>  
@@ -747,35 +759,35 @@ const handleLongCommentChange = (event) => {
           <Label>02. 오늘의 기분</Label>
           <InputRow>
                 <SmallInputContainer>
-                    <SmallInput  active={mood === '좋아요'} onClick={() => handleMoodChange('좋아요')}>
+                    <SmallInput  active={mood === '좋아요'} onClick={() => handleMoodChange('good')}>
                         <Emoji src={goodImage} alt="좋아요" />  
                     </SmallInput>
                     <SmallInputLabel>좋아요</SmallInputLabel>
                 </SmallInputContainer>
 
                 <SmallInputContainer>
-                    <SmallInput active={mood === '괜찮아요'} onClick={() => handleMoodChange('괜찮아요')}>
+                    <SmallInput active={mood === '괜찮아요'} onClick={() => handleMoodChange('okay')}>
                         <Emoji src={okayImage} alt="괜찮아요" />
                     </SmallInput>
                     <SmallInputLabel>괜찮아요</SmallInputLabel>
                 </SmallInputContainer>
                 
                 <SmallInputContainer>
-                   <SmallInput active={mood === '피곤해요'} onClick={() => handleMoodChange('피곤해요')}>
+                   <SmallInput active={mood === '피곤해요'} onClick={() => handleMoodChange('tired')}>
                         <Emoji src={tiredImage} alt="피곤해요" />
                     </SmallInput>
                 <SmallInputLabel>피곤해요</SmallInputLabel>
                 </SmallInputContainer>
 
                 <SmallInputContainer>
-                    <SmallInput active={mood === '슬퍼요'} onClick={() => handleMoodChange('슬퍼요')}>
+                    <SmallInput active={mood === '슬퍼요'} onClick={() => handleMoodChange('sad')}>
                         <Emoji src={sadImage} alt="슬퍼요" />
                     </SmallInput>
                     <SmallInputLabel>슬퍼요</SmallInputLabel>
                 </SmallInputContainer>
 
                 <SmallInputContainer>
-                    <SmallInput active={mood === '걱정돼요'} onClick={() => handleMoodChange('걱정돼요')}>
+                    <SmallInput active={mood === '걱정돼요'} onClick={() => handleMoodChange('worried')}>
                         <Emoji src={worriedImage} alt="걱정돼요" />
                     </SmallInput>
                     <SmallInputLabel>걱정돼요</SmallInputLabel>
