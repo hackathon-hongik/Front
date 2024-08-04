@@ -293,45 +293,47 @@ const [isCheck, setCheck] = useState(false);
 const [activeSubNav, setActiveSubNav] = useState('bookinfo');
 const navigate=useNavigate();
 const location = useLocation();
-const [token, setToken] = useState(location.state?.token || '');
-const [isbn, setIsbn] = useState(location.state?.isbn || '');
-const [bookData, setBookData] = useState(null);
+const token = location.state?.token || '';
+const isbn = location.state?.isbn || '';
+const [bookData, setBookData] = useState([]);
 
+const fetchBookData = async () => {
+  try {
+    const response = await axiosInstance.get(`/desk/books/${isbn}`, {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    });
+    setBookData(response.data);
+    console.log(response);
+
+  } catch (error) {
+    console.log('Failed to fetch book data:', error);
+    //console.log(token);
+  }
+};
 
 useEffect(() => {
-  const fetchBookData = async (isbn) => {
-    try {
-      const response = await axiosInstance.get(`/desk/books/${isbn}`, {
-        headers: {
-          Authorization: `Bearer ${token}`
-        }
-      });
-      setBookData(response.data);
-    } catch (error) {
-      console.error('Failed to fetch book data:', error);
-    }
-  };
-
-  if (isbn) {
-    fetchBookData();
-  }
-}, [isbn, token]);
+  //console.log(token);
+  fetchBookData();
+  
+}, []);
 
 
-const [thisBook, setThisBook] = useState([
-  { deskdate: "2024-07-28T05:41:31.341060+09:00",
-    book:{
-    isbn: "9791188331793",
-    title: "나를 위해 살지 않으면 남을 위해 살게 된다",
-    author: "에픽테토스",
-    date: "2024-07-28T05:41:31.341060+09:00",
-    publisher: "페이지2북스",
-    thumbnail: bookCover,
-    content: "바꿀 수 없는 것을 걱정하지 마라.\n스토아 철학자 에픽테토스가 전하는 \'내 삶의 주도권을 되찾는 법\'\n \"인생은 고통이다.\" 부처와 쇼펜하우어는 말했다. 이 말처럼 인생에는 수많은 고통이 있고, 우리는 누구나 고통을 겪으며 살아간다. 그런데 고통은 어디서 오는 것일까? 바로 우리가 세상일을 맘대..."
-    },
-    status: "새 책"
-  }
-])
+// const [thisBook, setThisBook] = useState([
+//   { deskdate: "2024-07-28T05:41:31.341060+09:00",
+//     book:{
+//     isbn: "9791188331793",
+//     title: "나를 위해 살지 않으면 남을 위해 살게 된다",
+//     author: "에픽테토스",
+//     date: "2024-07-28T05:41:31.341060+09:00",
+//     publisher: "페이지2북스",
+//     thumbnail: bookCover,
+//     content: "바꿀 수 없는 것을 걱정하지 마라.\n스토아 철학자 에픽테토스가 전하는 \'내 삶의 주도권을 되찾는 법\'\n \"인생은 고통이다.\" 부처와 쇼펜하우어는 말했다. 이 말처럼 인생에는 수많은 고통이 있고, 우리는 누구나 고통을 겪으며 살아간다. 그런데 고통은 어디서 오는 것일까? 바로 우리가 세상일을 맘대..."
+//     },
+//     status: "새 책"
+//   }
+// ])
 
 
 const addBook=async(isbn,title,author,thumbnail,content,publisher,date)=>{
@@ -417,33 +419,25 @@ const handleAddClick=(isbn,title,author,thumbnail,content,publisher,date,token)=
                         내 기록보기</SubNavItem>
                   </SubNav>  
                   
-                  {thisBook.map((bookData, index) => (
-                  <BookInfoBox key={index} onClick={(e) => e.stopPropagation()}>
-                                            <img className="Cover" src={bookData.book.thumbnail} alt="Book Thumbnail"/>
-                                            <p className="Title">{bookData.book.title || "N/A"}</p>
-                                            <p className="Author">{bookData.book.author || "N/A"}</p>
-                                            <p className="Publisher">{bookData.book.publisher || "N/A"} · {new Date(bookData.book.date).toLocaleDateString() || "N/A"}</p>  {/* "N/A는 저 카테고리가 없는경우 처리" */}
-                                            <button className="AddBtn" onClick={()=>handleAddClick(bookData.book.isbn,bookData.book.title,bookData.book.author,bookData.book.thumbnail,bookData.book.content,bookData.book.publisher,bookData.book.date)}>읽고 있는 책에 추가</button>
-                                            <div className="line"></div>
-                                            <p className="Contents">{bookData.book.content || "N/A"}</p>
-                  </BookInfoBox>
+              
                   
-                  // 더미 말고 받아와서 할 때 메소드
-                  // {bookData.map((bookData, index) => (
-                  //   <BookInfoBox key={index} onClick={(e) => e.stopPropagation()}>
-                  //     <img className="Cover" src={bookData.book.thumbnail} alt="Book Thumbnail"/>
-                  //     <p className="Title">{bookData.book.title || "N/A"}</p>
-                  //     <p className="Author">{bookData.book.author || "N/A"}</p>
-                  //     <p className="Publisher">{bookData.book.publisher || "N/A"} · {new Date(bookData.book.date).toLocaleDateString() || "N/A"}</p>
-                  //     <button className="AddBtn" onClick={() => handleAddClick(bookData.book.isbn,bookData.book.title,bookData.book.author,bookData.book.thumbnail,bookData.book.content,bookData.book.publisher,bookData.book.date)}>읽고 있는 책에 추가</button>
-                  //     <div className="line"></div>
-                  //     <p className="Contents">{bookData.book.content || "N/A"}</p>
-                  //   </BookInfoBox>
-                  // ) : (
-                  //   <p>Loading...</p>
-                  // )}
+                  
+                  {bookData && bookData.book ? (
+                  <BookInfoBox onClick={(e) => e.stopPropagation()}>
+                    <img className="Cover" src={bookData.book.thumbnail} alt="Book Thumbnail" />
+                    <p className="Title">{bookData.book.title || "N/A"}</p>
+                    <p className="Author">{bookData.book.author.replace(/[\[\]']+/g, '') || "N/A"}</p>
+                    <p className="Publisher">{bookData.book.publisher || "N/A"} · {new Date(bookData.book.date).toLocaleDateString() || "N/A"}</p>
+                    <button className="AddBtn" onClick={() => handleAddClick(bookData.book.isbn, bookData.book.title, bookData.book.author, bookData.book.thumbnail, bookData.book.content, bookData.book.publisher, bookData.book.date)}>읽고 있는 책에 추가</button>
+                    <div className="line"></div>
+                    <p className="Contents">{bookData.book.content || "N/A"}</p>
+                  </BookInfoBox>
+                    ) : (
+                      <p>책 정보를 불러오는 중입니다...</p>
+                    )}
+                  
 
-                  ))}
+                  
 
             </NoteContainer>
         </AppContainer>
