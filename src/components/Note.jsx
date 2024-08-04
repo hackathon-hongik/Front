@@ -802,7 +802,46 @@ const handleLongCommentChange = (event) => {
           
           <SetContainer> 
           <Label>02. 오늘의 기분</Label>
+<<<<<<< HEAD
           <MoodSelector />
+=======
+          <InputRow>
+                <SmallInputContainer>
+                    <SmallInput  active={mood === 'good'} onClick={() => handleMoodChange('good')}>
+                        <Emoji src={goodImage} alt="좋아요" />  
+                    </SmallInput>
+                    <SmallInputLabel>좋아요</SmallInputLabel>
+                </SmallInputContainer>
+
+                <SmallInputContainer>
+                    <SmallInput active={mood === 'okay'} onClick={() => handleMoodChange('okay')}>
+                        <Emoji src={okayImage} alt="괜찮아요" />
+                    </SmallInput>
+                    <SmallInputLabel>괜찮아요</SmallInputLabel>
+                </SmallInputContainer>
+                
+                <SmallInputContainer>
+                   <SmallInput active={mood === 'tired'} onClick={() => handleMoodChange('tired')}>
+                        <Emoji src={tiredImage} alt="피곤해요" />
+                    </SmallInput>
+                <SmallInputLabel>피곤해요</SmallInputLabel>
+                </SmallInputContainer>
+
+                <SmallInputContainer>
+                    <SmallInput active={mood === 'sad'} onClick={() => handleMoodChange('sad')}>
+                        <Emoji src={sadImage} alt="슬퍼요" />
+                    </SmallInput>
+                    <SmallInputLabel>슬퍼요</SmallInputLabel>
+                </SmallInputContainer>
+
+                <SmallInputContainer>
+                    <SmallInput active={mood === 'worried'} onClick={() => handleMoodChange('worried')}>
+                        <Emoji src={worriedImage} alt="걱정돼요" />
+                    </SmallInput>
+                    <SmallInputLabel>걱정돼요</SmallInputLabel>
+                </SmallInputContainer>
+          </InputRow>
+>>>>>>> cd129ba (기록 이모지 수정)
           </SetContainer>
 
           {/* 질문선택 부분*/}
