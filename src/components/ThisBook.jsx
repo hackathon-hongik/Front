@@ -362,8 +362,8 @@ const handleAddClick=(isbn,title,author,thumbnail,content,publisher,date,token)=
                          <p>로고</p>
                       </Logo>
                     <Nav>
-                    <li><a onClick={() => handleItemClick("/afterlogin/mylibrary")}>내 서재</a></li>
-                    <li><a onClick={() => handleItemClick("/afterlogin/community")}>커뮤니티</a></li>
+                    <li><a onClick={() => handleItemClick("/afterlogin/mylibrary",token)}>내 서재</a></li>
+                    <li><a onClick={() => handleItemClick("/afterlogin/community",token)}>커뮤니티</a></li>
                       <li>
                          <ButtonToggle>
                            <MypageBtn onClick={() => { setCheck((e) => !e) }}>마이페이지</MypageBtn>
@@ -383,29 +383,18 @@ const handleAddClick=(isbn,title,author,thumbnail,content,publisher,date,token)=
 
                   
                   <SubNav>
-                        <SubNavItem active={activeSubNav === 'bookinfo'} onClick={() => { handleItemClick("/afterlogin/thisbook"); setActiveSubNav('bookinfo'); }}>
+                        <SubNavItem active={activeSubNav === 'bookinfo'} onClick={() => { handleItemClick("/afterlogin/thisbook",token,isbn); setActiveSubNav('bookinfo'); }}>
                         {activeSubNav === 'bookinfo' && <img src={info} alt="active" />}
                         책 정보보기</SubNavItem>
                         <SubNavItem active={activeSubNav === 'record'} onClick={() => { handleItemClick("/afterlogin/note",token,isbn); setActiveSubNav('record'); }}>
                         {activeSubNav === 'record' && <img src={noteImage} alt="active" />}
                         기록하기</SubNavItem>
-                        <SubNavItem active={activeSubNav === 'myrecords'} onClick={() => { handleItemClick("/afterlogin/looknote",token); setActiveSubNav('myrecords'); }}>
+                        <SubNavItem active={activeSubNav === 'myrecords'} onClick={() => { handleItemClick("/afterlogin/looknote",token,isbn); setActiveSubNav('myrecords'); }}>
                         {activeSubNav === 'myrecords' && <img src={contract} alt="active" />}
                         내 기록보기</SubNavItem>
                   </SubNav>  
 
-                  {thisBook.map((bookData, index) => (
-                  <BookInfoBox key={index} onClick={(e) => e.stopPropagation()}>
-                                            <img className="Cover" src={bookData.book.thumbnail} alt="Book Thumbnail"/>
-                                            <p className="Title">{bookData.book.title || "N/A"}</p>
-                                            <p className="Author">{bookData.book.author || "N/A"}</p>
-                                            <p className="Publisher">{bookData.book.publisher || "N/A"} · {new Date(bookData.book.date).toLocaleDateString() || "N/A"}</p>  {/* "N/A는 저 카테고리가 없는경우 처리" */}
-                                            <button className="AddBtn" onClick={()=>handleAddClick(bookData.book.isbn,bookData.book.title,bookData.book.author,bookData.book.thumbnail,bookData.book.content,bookData.book.publisher,bookData.book.date)}>읽고 있는 책에 추가</button>
-                                            <div className="line"></div>
-                                            <p className="Contents">{bookData.book.content || "N/A"}</p>
-                  </BookInfoBox>
-                  ))}
-                  
+
             </NoteContainer>
         </AppContainer>
 

@@ -717,18 +717,19 @@ const handleLongCommentChange = (event) => {
   const handleLongNoteSubmit = async (memberId, myBookId) => {
     try {
       const newLongNote = {
-        long_review_id: long_review_id, //게시물 번호 부여
-        member_id: memberId,
-        isbn: myBookId,
+  
         start_page: start,
         end_page: end,
         read_complete: checked,
-        review_title: title,
+        long_title: title,
         long_text: long_comment,
-        created_at: new Date().toISOString(),
         open: selectedOption === "public" // boolean 값으로 설정
       };
-      const response = await axiosInstance.post(`/desk/books/${isbn}/note/long`, newLongNote);
+      const response = await axiosInstance.post(`/desk/books/${isbn}/note/long`, newLongNote,{
+        headers:{
+          Authorization: `Bearer ${token}`
+        }
+      });
       console.log(response.data);
     } catch (e) {
       console.log(e);
@@ -745,8 +746,8 @@ const handleLongCommentChange = (event) => {
           <p>로고</p>
             </Logo>
         <Nav>
-          <li><a onClick={() => handleItemClick("/afterlogin/mylibrary")}>내 서재</a></li>
-          <li><a onClick={() => handleItemClick("/afterlogin/community")}>커뮤니티</a></li>
+          <li><a onClick={() => handleItemClick("/afterlogin/mylibrary",token)}>내 서재</a></li>
+          <li><a onClick={() => handleItemClick("/afterlogin/community",token)}>커뮤니티</a></li>
           <li>
             <ButtonToggle>
               <MypageBtn onClick={() => { setCheck((e) => !e) }}>마이페이지</MypageBtn>
@@ -770,7 +771,7 @@ const handleLongCommentChange = (event) => {
           <SubNavItem active={activeSubNav === 'record'} onClick={() => { handleItemClick("/afterlogin/note",token,isbn); setActiveSubNav('record'); }}>
                         {activeSubNav === 'record' && <img src={noteImage} alt="active" />}
                         기록하기</SubNavItem>
-          <SubNavItem active={activeSubNav === 'myrecords'} onClick={() => { handleItemClick("/afterlogin/looknote",token); setActiveSubNav('myrecords'); }}>
+          <SubNavItem active={activeSubNav === 'myrecords'} onClick={() => { handleItemClick("/afterlogin/looknote",token,isbn); setActiveSubNav('myrecords'); }}>
                         {activeSubNav === 'myrecords' && <img src={contract} alt="active" />}
                         내 기록보기</SubNavItem>
       </SubNav>  
