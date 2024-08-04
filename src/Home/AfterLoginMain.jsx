@@ -26,6 +26,7 @@ export function AfterLoginMain(){
     const [readingCount,setReadingCount]=useState(0);
     const location = useLocation();
     const token = location.state?.access || '';
+    const refresh = location.state?.refresh || '';
 
     const mockData = [
         { id: 1, title: "책 1", content: "사람은 미래에 대한 기대가 있어야만 세상을 살아갈 수 있다.", hearts: 620 },
@@ -38,7 +39,8 @@ export function AfterLoginMain(){
 
    
     useEffect(() => {
-        console.log(token);
+        //console.log(token);
+        //console.log(refresh)
         fetchBook();
         fetchOneLine();
     }, []);
@@ -55,8 +57,17 @@ export function AfterLoginMain(){
                     Authorization: `Bearer ${token}`
                 }
             });
-            setBookResults(response.data.recent_reading_books)
-            setReadingCount(response.data.reading_count);
+            // setBookResults(response.data.recent_reading_books)
+            // setReadingCount(response.data.reading_count);
+
+            const results = response.data.recent_reading_books.map(book => ({
+                thumbnail: book.book.thumbnail,
+                title: book.book.title,
+                author: book.book.author,
+              }));
+          
+              setBookResults(results);
+              setReadingCount(response.data.reading_count);
             console.log(response);
         }
         catch(e){
@@ -163,6 +174,24 @@ export function AfterLoginMain(){
         return data.slice(currentIndex, currentIndex + 3);
     };
 
+    const handleLogOut=async()=>{
+        try{
+            const newRefresh={
+                refresh: refresh
+            }
+            const response=await axiosInstance.post('/auth/logout/',newRefresh,{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            handleItemClick('/');
+            console.log(response);
+        }
+        catch(e){
+            console.log(e);
+            alert("로그아웃 실패");
+        }
+    }
     return( 
         <div className="mainPage2">
             <div className="header">
@@ -180,7 +209,7 @@ export function AfterLoginMain(){
                                 <div className="toggleList">
                                 <p onClick={()=>handleItemClick('/afterlogin/changenickname',token)}>닉네임 변경</p>
                                 <p>1:1 문의</p>
-                                <p>로그아웃</p>
+                                <p onClick={handleLogOut}>로그아웃</p>
                                 <p>회원탈퇴</p>
                             </div>
                             )}
@@ -218,17 +247,17 @@ export function AfterLoginMain(){
         
 
                     <div className="myBooks">
-                        {bookResults.length>0 && (<div className="twoBook"> 
+                        {bookResults.length>0 && bookResults.map((book, index) => (<div className="twoBook"> 
                             <div className="bookInfo">
                                 <div className="bookPic">
-                                    <img src={bookResults[0].book.thumbnail} alt="bookPic"></img>
+                                    <img src={book.thumbnail} alt="bookPic"></img>
                                 </div>
                                 <div className="bookExplain">
                                     <div className="title">
-                                        <p className="bookTitle">{bookResults[0].book.title}</p>
+                                        <p className="bookTitle">{book.title}</p>
                                     </div>
                                     <div className="writer">
-                                        <p className="bookAuthor">{bookResults[0].book.author.replace(/[\[\]']+/g, '')}</p>
+                                        <p className="bookAuthor">{book.author.replace(/[\[\]']+/g, '')}</p>
                                     </div>
                                 </div>
                             </div>
@@ -236,9 +265,9 @@ export function AfterLoginMain(){
                                 <button className="toMyShelf" onClick={()=>handleItemClick('/afterlogin/thisbook')}>내 서재 가기</button>
                                 <button className="record" onClick={()=>handleItemClick('/afterlogin/note')}>바로 기록하기</button>
                             </div>
-                        </div>)}
+                        </div>))}
 
-                        {bookResults.length>0 && (<div className="twoBook">
+                        {/* {bookResults.length>0 && bookResults.map((book, index) => (<div className="twoBook">
                             <div className="bookInfo">
                                 <div className="bookPic">
                                     <img src={bookResults[1].book.thumbnail} alt="bookPic"></img>
@@ -256,7 +285,7 @@ export function AfterLoginMain(){
                                 <button className="toMyShelf" onClick={()=>handleItemClick('/afterlogin/thisbook')}>내 서재 가기</button>
                                 <button className="record" onClick={()=>handleItemClick('/afterlogin/note')}>바로 기록하기</button>
                             </div>
-                        </div>)}
+                        </div>))} */}
                     </div>
 
                     <div className="gotoMyShelfBox">

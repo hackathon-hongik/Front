@@ -8,6 +8,9 @@ import findLogo from "../assets/findLogo.png";
 import {bookAPI} from "../api";
 import { axiosInstance } from '../api';
 
+const ChangeNickNamePage=styled.div`
+    
+`;
 
 export function ChangeNickName(){
     const location = useLocation();

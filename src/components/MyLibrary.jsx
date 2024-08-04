@@ -538,14 +538,15 @@ export function MyLibrary(){  //내 서재 페이지
     const [pickStatus,setPickStatus]=useState(0);
     const [bookResults, setBookResults] = useState([]);
     const [isCheck,setCheck]=useState(false);
+    const [isbn,setIsbn]=useState([]);
     const location = useLocation();
     const token = location.state?.token || '';
     
     const navigate=useNavigate();
     
     
-    const handleItemClick=(path)=>{
-        navigate(path);
+    const handleItemClick=(path,token,isbn)=>{
+        navigate(path,{state:{token,isbn}});
     };
 
     useEffect(() => {
@@ -563,8 +564,12 @@ export function MyLibrary(){  //내 서재 페이지
             setReadStatus(response.data.read_count);
             setPickStatus(response.data.wish_count);
             setBookResults(response.data.mybooks);
-            
+            const isbnList = response.data.mybooks.map(item => item.book.isbn);
+            setIsbn(isbnList);
+        
+
             console.log(response.data);
+            console.log(isbnList);
 
         }
         catch(e){
@@ -583,7 +588,8 @@ export function MyLibrary(){  //내 서재 페이지
             setReadStatus(response.data.read_count);
             setPickStatus(response.data.wish_count);
             setBookResults(response.data.mybooks);    
-            
+            const isbnList = response.data.mybooks.map(item => item.book.isbn);
+            setIsbn(isbnList);
             console.log(response.data);
         }
         catch(e){
@@ -602,6 +608,8 @@ export function MyLibrary(){  //내 서재 페이지
             setReadStatus(response.data.read_count);
             setPickStatus(response.data.wish_count);
             setBookResults(response.data.mybooks);   
+            const isbnList = response.data.mybooks.map(item => item.book.isbn);
+            setIsbn(isbnList);
             console.log(response.data);
         }
         catch(e){
@@ -619,7 +627,9 @@ export function MyLibrary(){  //내 서재 페이지
             setReadingStatus(response.data.reading_count);
             setReadStatus(response.data.read_count);
             setPickStatus(response.data.wish_count);
-            setBookResults(response.data.mybooks);   
+            setBookResults(response.data.mybooks);
+            const isbnList = response.data.mybooks.map(item => item.book.isbn);
+            setIsbn(isbnList); 
             console.log(response.data);
         }
         catch(e){
@@ -734,7 +744,7 @@ export function MyLibrary(){  //내 서재 페이지
                 {bookResults.map((result,index) => (
                 <BookCard key={result.id}>
                     <div className="cover">
-                        <img src={result.book.thumbnail} onClick={()=>handleItemClick("/afterlogin/thisbook")}></img>
+                        <img src={result.book.thumbnail} onClick={()=>handleItemClick("/afterlogin/thisbook",token,isbn[index])}></img>
                     </div>
                     <div className="bookInfo" onClick={() => showInfo(index)}>책 정보보기</div>
                     <div className="title">{result.book.title}</div>

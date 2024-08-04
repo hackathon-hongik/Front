@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import styled from "styled-components";
 import { axiosInstance } from "../api";
 import { useNavigate } from "react-router-dom";
+import { useLocation } from 'react-router-dom';
 import info from '../assets/info.png';
 import noteImage from '../assets/note.png';
 import contract from '../assets/contract.png';
@@ -169,18 +170,23 @@ const SubNavItem = styled.div`
 export function ThisBook(){
 const [isCheck, setCheck] = useState(false);
 const [activeSubNav, setActiveSubNav] = useState('bookinfo');
-
+const location = useLocation();
+const token = location.state?.token || '';
+//const {isbn} = location.state|| {isbn:[]};
+const isbn=location.state?.isbn || '';
 const navigate = useNavigate();
 
 const navigateToNote = (memberId, myBookId) => {
         navigate(`/note?memberId=${memberId}&myBookId=${myBookId}`);
 };
 
-const handleItemClick = (path) => {
-    navigate(path);
-};   
+const handleItemClick=(path,token,isbn)=>{
+  navigate(path,{state:{token,isbn}});
+};
 
-      
+useEffect(() => {
+  console.log(isbn);
+}, []);
 
 
     return(
@@ -215,10 +221,10 @@ const handleItemClick = (path) => {
                         <SubNavItem active={activeSubNav === 'bookinfo'} onClick={() => { handleItemClick("/afterlogin/thisbook"); setActiveSubNav('bookinfo'); }}>
                         {activeSubNav === 'bookinfo' && <img src={info} alt="active" />}
                         책 정보보기</SubNavItem>
-                        <SubNavItem active={activeSubNav === 'record'} onClick={() => { handleItemClick("/afterlogin/note"); setActiveSubNav('record'); }}>
+                        <SubNavItem active={activeSubNav === 'record'} onClick={() => { handleItemClick("/afterlogin/note",token,isbn); setActiveSubNav('record'); }}>
                         {activeSubNav === 'record' && <img src={noteImage} alt="active" />}
                         기록하기</SubNavItem>
-                        <SubNavItem active={activeSubNav === 'myrecords'} onClick={() => { handleItemClick("/afterlogin/looknote"); setActiveSubNav('myrecords'); }}>
+                        <SubNavItem active={activeSubNav === 'myrecords'} onClick={() => { handleItemClick("/afterlogin/looknote",token); setActiveSubNav('myrecords'); }}>
                         {activeSubNav === 'myrecords' && <img src={contract} alt="active" />}
                         내 기록보기</SubNavItem>
                   </SubNav>  

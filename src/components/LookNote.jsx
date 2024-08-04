@@ -19,6 +19,7 @@ import qImage from '../assets/Q.png';
 import aImage from '../assets/A.png';
 
 
+
 export const getShortNotes = async (memberId, isbn) => {
     try {
       const response = await axios.get(`/desk/${memberId}/${isbn}/looknote/short`);
@@ -1269,6 +1270,8 @@ const [shortNotes, setShortNotes] = useState([]);
 const [longNotes, setLongNotes] = useState([]);
 const [emotions, setEmotions] = useState([]);
 const [isQuestions, setIsQuestions] = useState([]);
+const location = useLocation();
+const token = location.state?.token || '';
 
 //더미 데이터
 const [short, setShort] = useState([
@@ -1431,9 +1434,9 @@ const emoGoToNext = () => {
   );
 };
 
-const handleItemClick = (path) => {
-        navigate(path);
-};   
+const handleItemClick=(path,token,isbn)=>{
+  navigate(path,{state:{token,isbn}});
+}; 
 
 
     return(
@@ -1466,13 +1469,13 @@ const handleItemClick = (path) => {
 
                   
                 <SubNav>
-                    <SubNavItem active={activeSubNav === 'bookinfo'} onClick={() => { handleItemClick("/afterlogin/thisbook"); setActiveSubNav('bookinfo'); }}>
+                    <SubNavItem active={activeSubNav === 'bookinfo'} onClick={() => { handleItemClick("/afterlogin/thisbook",token,isbn); setActiveSubNav('bookinfo'); }}>
                         {activeSubNav === 'bookinfo' && <img src={info} alt="active" />}
                         책 정보보기</SubNavItem>
-                    <SubNavItem active={activeSubNav === 'record'} onClick={() => { handleItemClick("/afterlogin/note"); setActiveSubNav('record'); }}>
+                    <SubNavItem active={activeSubNav === 'record'} onClick={() => { handleItemClick("/afterlogin/note",token,isbn); setActiveSubNav('record'); }}>
                         {activeSubNav === 'record' && <img src={noteImage} alt="active" />}
                         기록하기</SubNavItem>
-                    <SubNavItem active={activeSubNav === 'myrecords'} onClick={() => { handleItemClick("/afterlogin/looknote"); setActiveSubNav('myrecords'); }}>
+                    <SubNavItem active={activeSubNav === 'myrecords'} onClick={() => { handleItemClick("/afterlogin/looknote",token,isbn); setActiveSubNav('myrecords'); }}>
                         {activeSubNav === 'myrecords' && <img src={contract} alt="active" />}
                         내 기록보기</SubNavItem>
                 </SubNav>  
