@@ -157,7 +157,7 @@ export function Login(){
     const[password,setPassword]=useState("");
     const navigate=useNavigate();
     const [refresh,setRefresh]=useState('');
-    const [access,setAccess]=useState('');
+    const [token,setAccess]=useState('');
 
     const handleItemClick = (path) => {
         navigate(path);
@@ -179,13 +179,13 @@ export function Login(){
             const response=await axiosInstance.post('/auth/login/',Member);
             
             const refresh = response.data.refresh;
-            const access = response.data.access;
+            const token = response.data.access;
             
             setRefresh(refresh);
-            setAccess(access);
+            setAccess(token);
 
             console.log(response);
-            navigate("/afterlogin", { state: { access, refresh } });
+            navigate("/afterlogin", { state: { token, refresh } });
            
         }
         catch(e){

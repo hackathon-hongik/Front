@@ -16,6 +16,8 @@ import { CommunityScrap } from "./Communities/CommunityScrap";
 import { LookNote } from "./components/LookNote";
 import {Routes,Route} from "react-router-dom";
 import { ChangeNickName } from "./components/ChangeNickname";
+import ModifyNote from "./components/ModifyNote";
+
 function App() {
   return (
     <Routes>
@@ -28,6 +30,7 @@ function App() {
       <Route path='/auth/kakao' element={<Redirect/>}/>
       <Route path='/afterlogin/note' element={<Note/>}/>
       <Route path='/afterlogin/looknote' element={<LookNote/>}/>
+      <Route path='/afterlogin/looknote/modifynote' element={<ModifyNote/>}/>
       <Route path='/afterlogin/mylibrary' element={<MyLibrary/>}/>
       <Route path='/afterlogin/thisbook' element={<ThisBook/>}/>
       <Route path='/afterlogin/booksearchresult' element={<AfterBookSearchResult/>}/>
@@ -40,4 +43,6 @@ function App() {
   );
 }
 export default App;
+
+
 

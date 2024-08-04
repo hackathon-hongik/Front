@@ -1572,7 +1572,9 @@ const handleItemClick=(path,token,isbn)=>{
                                      <NoteDate onClick={(e) => e.stopPropagation()}>{new Date(note.created_at).toLocaleDateString()}</NoteDate>
                                     </div>
                                     <div>
-                                     <EditButton onClick={(e) => e.stopPropagation()}><Emoji src={modifyButton} /></EditButton>
+                                    <EditButton onClick={(e) => {e.stopPropagation(); handleItemClick("/afterlogin/looknote/modifynote", token, isbn); }}>
+                                      <Emoji src={modifyButton} />
+                                    </EditButton>
                                      <DeleteButton onClick={(e) => e.stopPropagation()}><Emoji src={deleteButton} /></DeleteButton>
                                      </div>
                                   </NoteActions>
@@ -1643,7 +1645,9 @@ const handleItemClick=(path,token,isbn)=>{
                               <NoteDate>{new Date(note.created_at).toLocaleDateString()}</NoteDate>
                             </div>
                             <div>
-                            <EditButton><Emoji src={modifyButton}/></EditButton>
+                            <EditButton onClick={(e) => {e.stopPropagation(); handleItemClick("/afterlogin/looknote/modifynote", token, isbn); }}>
+                                      <Emoji src={modifyButton} />
+                            </EditButton>
                             <DeleteButton><Emoji src={deleteButton}/></DeleteButton>
                             </div>
                          </NoteActions>
@@ -1732,7 +1736,9 @@ const handleItemClick=(path,token,isbn)=>{
                                      {/* <EmotionImg onClick={(e) => e.stopPropagation()} src={question.ShortReviewList.mood}/> */}
                                     </div>
                                     <div>
-                                     <EditButton onClick={(e) => e.stopPropagation()}><Emoji src={modifyButton} /></EditButton>
+                                    <EditButton onClick={(e) => {e.stopPropagation(); handleItemClick("/afterlogin/looknote/modifynote", token, isbn); }}>
+                                      <Emoji src={modifyButton} />
+                                    </EditButton>
                                      <DeleteButton onClick={(e) => e.stopPropagation()}><Emoji src={deleteButton} /></DeleteButton>
                                      </div>
                             </NoteActions>

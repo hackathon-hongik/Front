@@ -1533,13 +1533,13 @@ const CommentCard=styled.div`
 
 export function Community(){
     const navigate=useNavigate();
+    const location = useLocation();
     const [isCheck, setCheck] = useState(false);
     const [activeTab, setActiveTab] = useState('simple');
     const [clickedWritingIndex, setClickedWritingIndex] = useState(null);
     const [shortWritings,setShortWritings]=useState([]);
     const [longWritings,setLongWritings]=useState([]);
     const token = location.state?.token || '';
-    const location = useLocation();
 
     const handleItemClick = (path) => {
         navigate(path);

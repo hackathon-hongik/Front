@@ -25,7 +25,7 @@ export function AfterLoginMain(){
     const [bookResults,setBookResults]=useState([]);
     const [readingCount,setReadingCount]=useState(0);
     const location = useLocation();
-    const token = location.state?.access || '';
+    const token = location.state?.token || '';
     const refresh = location.state?.refresh || '';
     const [isbn,setIsbn]=useState([]);
 
