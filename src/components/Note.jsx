@@ -310,9 +310,8 @@ const SmallInput = styled.button`
   flex-shrink: 0;
   padding: 10px;
   border-radius: 8px;
-  border: 1px solid #ccc;
-  background-color: ${({ active }) => (active ? '#FFF2EB' : '#F2F2F7')}; // active prop에 따라 배경 색 변경
-  border: ${({ active }) => (active ? '1px solid #FF6E23' : '1px solid #ccc')}; // active prop에 따라 테두리 색 변경
+  border: ${({ isactive }) => (isactive ? '1px solid #FF6E23' : '1px solid #ccc')};
+  background-color: ${({ isactive }) => (isactive ? '#FFF2EB' : '#F2F2F7')};
   cursor: pointer;
 
   &:last-child {
@@ -323,6 +322,7 @@ const SmallInput = styled.button`
     background-color: #FFDAB9; // 호버 시 배경 색
   }
 `;
+
 
 
 const SmallInputContainer = styled.div`
@@ -379,13 +379,6 @@ const SubmitButton = styled.button`
     cursor: pointer;
 `;
 
-const SubmitDiv = styled.div`
-  width: 480px;
-  display: flex;
-  justify-content: center; // 가운데 정렬
-  margin: 0 auto; // 가운데 정렬을 위한 마진
-  padding: 20px 0; // 상하 패딩 (선택 사항)
-`;
 
 //여기부터 체크박스용 
 
@@ -532,6 +525,56 @@ const SubNavItem = styled.div`
   }
 `;
 
+
+const MoodSelector = () => {
+  const [mood, setMood] = useState('');
+
+  const handleMoodChange = (selectedMood) => {
+    setMood(selectedMood);
+  };
+
+  return(
+            <InputRow>
+                <SmallInputContainer>
+                    <SmallInput isactive={mood === 'good'} onClick={() => handleMoodChange('good')}>
+                        <Emoji src={goodImage} alt="좋아요" />  
+                    </SmallInput>
+                    <SmallInputLabel>좋아요</SmallInputLabel>
+                </SmallInputContainer>
+
+                <SmallInputContainer>
+                    <SmallInput isactive={mood === 'okay'} onClick={() => handleMoodChange('okay')}>
+                        <Emoji src={okayImage} alt="괜찮아요" />
+                    </SmallInput>
+                    <SmallInputLabel>괜찮아요</SmallInputLabel>
+                </SmallInputContainer>
+                
+                <SmallInputContainer>
+                   <SmallInput isactive={mood === 'tired'} onClick={() => handleMoodChange('tired')}>
+                        <Emoji src={tiredImage} alt="피곤해요" />
+                    </SmallInput>
+                <SmallInputLabel>피곤해요</SmallInputLabel>
+                </SmallInputContainer>
+
+                <SmallInputContainer>
+                    <SmallInput isactive={mood === 'sad'} onClick={() => handleMoodChange('sad')}>
+                        <Emoji src={sadImage} alt="슬퍼요" />
+                    </SmallInput>
+                    <SmallInputLabel>슬퍼요</SmallInputLabel>
+                </SmallInputContainer>
+
+                <SmallInputContainer>
+                    <SmallInput isactive={mood === 'worried'} onClick={() => handleMoodChange('worried')}>
+                        <Emoji src={worriedImage} alt="걱정돼요" />
+                    </SmallInput>
+                    <SmallInputLabel>걱정돼요</SmallInputLabel>
+                </SmallInputContainer>
+          </InputRow>
+
+
+  );
+};
+
 //여기까지 글 공개여부
 
 function useQuery() {
@@ -547,7 +590,7 @@ export function Note() {
   const [selectedOption, setSelectedOption] = useState("public"); // 공개여부설정
   const[start,setStart]=useState('');
   const[end,setEnd]=useState('');
-  const[mood,setMood]=useState('');
+  const [mood, setMood] = useState('');
   const[answer,setAnswer]=useState('');
   const[title,setTitle]=useState('');
   const[short_comment,setShortComment]=useState('');
@@ -586,6 +629,9 @@ export function Note() {
     navigate(path,{state:{token,isbn}});
 };
 
+//감정 선택
+
+
 // 체크박스 구현
 
   const handleStartChange=(e)=>{
@@ -605,9 +651,7 @@ const handleOptionChange = (event) => {
     setSelectedOption(event.target.value);
   };
 
-const handleMoodChange=(selectedMood)=>{
-    setMood(selectedMood);
-};
+
 
 
 // 질문 선택
@@ -757,42 +801,7 @@ const handleLongCommentChange = (event) => {
           
           <SetContainer> 
           <Label>02. 오늘의 기분</Label>
-          <InputRow>
-                <SmallInputContainer>
-                    <SmallInput  active={mood === '좋아요'} onClick={() => handleMoodChange('good')}>
-                        <Emoji src={goodImage} alt="좋아요" />  
-                    </SmallInput>
-                    <SmallInputLabel>좋아요</SmallInputLabel>
-                </SmallInputContainer>
-
-                <SmallInputContainer>
-                    <SmallInput active={mood === '괜찮아요'} onClick={() => handleMoodChange('okay')}>
-                        <Emoji src={okayImage} alt="괜찮아요" />
-                    </SmallInput>
-                    <SmallInputLabel>괜찮아요</SmallInputLabel>
-                </SmallInputContainer>
-                
-                <SmallInputContainer>
-                   <SmallInput active={mood === '피곤해요'} onClick={() => handleMoodChange('tired')}>
-                        <Emoji src={tiredImage} alt="피곤해요" />
-                    </SmallInput>
-                <SmallInputLabel>피곤해요</SmallInputLabel>
-                </SmallInputContainer>
-
-                <SmallInputContainer>
-                    <SmallInput active={mood === '슬퍼요'} onClick={() => handleMoodChange('sad')}>
-                        <Emoji src={sadImage} alt="슬퍼요" />
-                    </SmallInput>
-                    <SmallInputLabel>슬퍼요</SmallInputLabel>
-                </SmallInputContainer>
-
-                <SmallInputContainer>
-                    <SmallInput active={mood === '걱정돼요'} onClick={() => handleMoodChange('worried')}>
-                        <Emoji src={worriedImage} alt="걱정돼요" />
-                    </SmallInput>
-                    <SmallInputLabel>걱정돼요</SmallInputLabel>
-                </SmallInputContainer>
-          </InputRow>
+          <MoodSelector />
           </SetContainer>
 
           {/* 질문선택 부분*/}

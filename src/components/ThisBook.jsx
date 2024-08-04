@@ -7,7 +7,6 @@ import { useLocation } from 'react-router-dom';
 import info from '../assets/info.png';
 import noteImage from '../assets/note.png';
 import contract from '../assets/contract.png';
-import { useLocation } from 'react-router-dom';
 import bookCover from '../assets/book.png';
 
 const AppContainer = styled.div`
@@ -312,12 +311,48 @@ const [thisBook, setThisBook] = useState([
 ])
 
 
+const addBook=async(isbn,title,author,thumbnail,content,publisher,date)=>{
+  try{
+      const newBook={
+          book:{
+              isbn:isbn,
+              title:title,
+              author:author,
+              date:date,
+              publisher:publisher,
+              thumbnail:thumbnail,
+              content:content
+          }
+      }
+
+      const response=await axiosInstance.post("/desk/books/reading/",newBook,{
+          
+          headers:{
+              Authorization: `Bearer ${token}`
+          }
+
+          });
+      alert("읽고 있는 책에 성공적으로 추가되었습니다!")
+      console.log(response);
+  }
+  catch(e){
+      if(e.response && e.response.status===409){
+          alert("이미 읽고 있는 책에 추가하신 책입니다");
+          console.log(e);
+      }
+  }
+}
+
 const handleItemClick=(path,token,isbn)=>{
   navigate(path,{state:{token,isbn}});
 };
 
       
-
+const handleAddClick=(isbn,title,author,thumbnail,content,publisher,date,token)=>{   //읽고 있는 책으로 추가 처리
+       
+  addBook(isbn,title,author,thumbnail,content,publisher,date,token);
+  
+};
 
     return(
         <AppContainer>
