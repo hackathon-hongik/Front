@@ -115,8 +115,8 @@ export function AfterLoginMain(){
         }
     }
 
-    const handleItemClick=(path,token,isbn)=>{
-        navigate(path,{state:{token,isbn}});
+    const handleItemClick=(path,token,refresh,isbn)=>{
+        navigate(path,{state:{token,refresh,isbn}});
     };
 
     const handleTitleChange=(e)=>{
@@ -204,7 +204,7 @@ export function AfterLoginMain(){
 
                 <ul className="nav">
                     <li><a onClick={()=>handleItemClick('/afterlogin/mylibrary',token)}>내 서재</a></li>
-                    <li><a onClick={()=>handleItemClick("/afterlogin/community")}>커뮤니티</a></li>
+                    <li><a onClick={()=>handleItemClick("/afterlogin/community",token)}>커뮤니티</a></li>
                     <li>
                         <div className="buttonToggle">
                             <button className="mypageBtn" onClick={()=>{setCheck((e)=>!e)}}>마이페이지</button>
@@ -304,7 +304,7 @@ export function AfterLoginMain(){
             </div>
             
 
-            <div className="banner" onClick={()=>handleItemClick("/afterlogin/recommendation",token)}>
+            <div className="banner" onClick={()=>handleItemClick("/afterlogin/recommendation",token,refresh)}>
                 <div className="text3">
                     <p className="first_row">당신의 고민에 맞는</p>
                     <p className="second_row">책 추천 받기</p>

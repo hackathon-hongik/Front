@@ -246,7 +246,14 @@ export function Recommend() {
     const [index,setIndex]=useState(6);
     const location = useLocation();
     const token = location.state?.token || '';
-  
+    const refresh = location.state?.refresh || '';
+
+  //   useEffect(() => {
+  //     console.log(token);
+  //     console.log(refresh);
+
+  // }, []);
+
     const questions = [
       "진로 - 앞으로의 진로가 막막해요.",
       "인간관계 - 주변 사람들과의 관계가 힘들어요.",
@@ -282,7 +289,7 @@ export function Recommend() {
 
           console.log(response.data);
 
-          navigate("/afterlogin/recommendation/recommendresult", {state:{results, token, category:selectedQuestion}});  //selectedQuestion-> 어떤 고민에 대한 추천인지를 알기 위해서
+          navigate("/afterlogin/recommendation/recommendresult", {state:{results, token, refresh, category:selectedQuestion}});  //selectedQuestion-> 어떤 고민에 대한 추천인지를 알기 위해서
     
   }
         catch(e){
@@ -290,10 +297,10 @@ export function Recommend() {
         }
     }
   
-    const handleItemClick = (path) => {
-      navigate(path);
-    };
-
+    const handleItemClick=(path,token,refresh,isbn)=>{
+      navigate(path,{state:{token,refresh,isbn}});
+  };
+  
     const handleRadioChange = (index) => {
         setSelectedQuestion(categories[index]);
         setIndex(index+1);
@@ -302,12 +309,30 @@ export function Recommend() {
     const handleSearch=(index)=>{
         searchData(index);
     };
-  
+    
+    const handleLogOut=async()=>{
+      try{
+          const newRefresh={
+              refresh: refresh
+          }
+          const response=await axiosInstance.post('/auth/logout/',newRefresh,{
+              headers:{
+                  Authorization: `Bearer ${token}`
+              }
+          });
+          handleItemClick('/');
+          console.log(response);
+      }
+      catch(e){
+          console.log(e);
+          alert("로그아웃 실패");
+      }
+  }
     return (
     <RecommendationPage>   
         <Header>
           <div className="logo">
-            <p onClick={()=>handleItemClick('/afterlogin',token)}>로고</p>
+            <p onClick={()=>handleItemClick('/afterlogin',token,refresh)}>로고</p>
           </div>
   
           <ul className="nav">
@@ -324,7 +349,7 @@ export function Recommend() {
                   <div className="toggleList">
                     <p onClick={()=>handleItemClick('/afterlogin/changenickname',token)}>닉네임 변경</p>
                     <p>1:1 문의</p>
-                    <p>로그아웃</p>
+                    <p onClick={handleLogOut}>로그아웃</p>
                     <p>회원탈퇴</p>
                   </div>
                 )}
