@@ -802,9 +802,6 @@ const handleLongCommentChange = (event) => {
           
           <SetContainer> 
           <Label>02. 오늘의 기분</Label>
-<<<<<<< HEAD
-          <MoodSelector />
-=======
           <InputRow>
                 <SmallInputContainer>
                     <SmallInput  active={mood === 'good'} onClick={() => handleMoodChange('good')}>
@@ -841,7 +838,6 @@ const handleLongCommentChange = (event) => {
                     <SmallInputLabel>걱정돼요</SmallInputLabel>
                 </SmallInputContainer>
           </InputRow>
->>>>>>> cd129ba (기록 이모지 수정)
           </SetContainer>
 
           {/* 질문선택 부분*/}
