@@ -1259,8 +1259,6 @@ const [activeTab, setActiveTab] = useState('simple');
 const [isCheck, setCheck] = useState(false);
 const [memberId, setMemberId] = useState('');
 const [isbn, setMyBookId] = useState('');
-const [short_review_id, setShortReviewId] = useState('');
-const [long_review_id, setLongReviewId] = useState('');
 const [activeSubNav, setActiveSubNav] = useState('myrecords');
 const [isModalOpen, setModalOpen] = useState(false);
 const [selectedNote, setSelectedNote] = useState(null);
@@ -1272,34 +1270,46 @@ const [isQuestions, setIsQuestions] = useState([]);
 
 //더미 데이터
 const [short, setShort] = useState([
-    { short_review_id: 1, img:"", book_title:'해리포터', book_author:'롤링', isbn: "9791188331793" , created_at: "2024-07-28T05:41:31.341060+09:00", short_comment: "책을 읽고 느낀 점을 자유롭게 적어주세요.가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라"},
-    { short_review_id: 2, img:"", book_title:'나를 위해 살지 않으면 남을 위해 살게 된다', book_author:'빅터프랭클', isbn: "9791188331793" , created_at: "2024-07-28T05:41:31.341060+09:00", short_comment: "자신의 가치를 발견하고 존중하는 것이 진정한 웰빙의 시작이다."},
-    { short_review_id: 3, img:"", book_title:'해리포터', book_author:'롤링', isbn: "9791188331793" , created_at: "2024-07-28T05:41:31.341060+09:00", short_comment: "타인의 기대에 부응하는 삶이 아닌, 내가 진정으로 원하는 삶을 추구하는 것이 중요하다. 이는 나의 웰빙과 만족도를 높이는 핵심 요소다."},
-    { short_review_id: 4, img:"", book_title:'해리포터', book_author:'롤링', isbn: "9791188331793" , created_at: "2024-07-28T05:41:31.341060+09:00", short_comment: "타인의 기대보다 자신의 꿈과 목표를 우선시하는 용기가 필요하다."},
-    { short_review_id: 5, img:"", book_title:'해리포터', book_author:'롤링', isbn: "9791188331793" , created_at: "2024-07-28T05:41:31.341060+09:00", short_comment: "나를 위한 시간 투자가 곧 삶의 만족도를 높이는 길이다."},
-    { short_review_id: 6, img:"", book_title:'해리포터', book_author:'롤링', isbn: "9791188331793" , created_at: "2024-07-28T05:41:31.341060+09:00", short_comment: "건강한 자기에만 주번 사람들에게도 긍정적인 영향을 미친다. 나를 돌보는 것이 이기적인 것이 아니라 필수적인 일이다."}
+    {id: 1, created_at: "2024-07-28T05:41:31.341060+09:00", book: {thumbnail:"",  title:'해리포터', author:'롤링', isbn: "9791188331793"} , open:1, short_comment: "책을 읽고 느낀 점을 자유롭게 적어주세요.가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라가나다라"},
+    {id: 2, created_at: "2024-07-28T05:41:31.341060+09:00", book: {thumbnail:"",  title:'나를 위해 살지 않으면 남을 위해 살게 된다', author:'빅터프랭클', isbn: "9791188331793" }, open:1, short_comment: "1자신의 가치를 발견하고 존중하는 것이 진정한 웰빙의 시작이다."},
+    {id: 3, created_at: "2024-07-28T05:41:31.341060+09:00", book: {thumbnail:"",  title:'나를 위해 살지 않으면 남을 위해 살게 된다', author:'빅터프랭클', isbn: "9791188331793" }, open:0, short_comment: "2자신의 가치를 발견하고 존중하는 것이 진정한 웰빙의 시작이다."},
+    {id: 4, created_at: "2024-07-28T05:41:31.341060+09:00", book: {thumbnail:"",  title:'나를 위해 살지 않으면 남을 위해 살게 된다', author:'빅터프랭클', isbn: "9791188331793" }, open:0, short_comment: "3자신의 가치를 발견하고 존중하는 것이 진정한 웰빙의 시작이다."},
+    {id: 5, created_at: "2024-07-28T05:41:31.341060+09:00", book: {thumbnail:"",  title:'나를 위해 살지 않으면 남을 위해 살게 된다', author:'빅터프랭클', isbn: "9791188331793" }, open:0, short_comment: "4자신의 가치를 발견하고 존중하는 것이 진정한 웰빙의 시작이다."},
+    {id: 6, created_at: "2024-07-28T05:41:31.341060+09:00", book: {thumbnail:"",  title:'나를 위해 살지 않으면 남을 위해 살게 된다', author:'빅터프랭클', isbn: "9791188331793" }, open:0, short_comment: "5자신의 가치를 발견하고 존중하는 것이 진정한 웰빙의 시작이다."},
   ]);
   
   const [long, setLong] = useState([
-    { long_review_id: 1, 
+    { id: 1, 
+      created_at: "2024-07-28T05:41:31.341060+09:00",
+      book:{
       isbn: "9791188331793",
-      book_title: "나를 위해 살지 않으면 남을 위해 살게 된다",
-      book_author: "빅터프랭클",
+      title: "나를 위해 살지 않으면 남을 위해 살게 된다",
+      author: "빅터프랭클",
+      thumbnail:"",
+      },
       review_title: "사람은 미래에 대한 기대가 있어야만 세상을 살아갈 수 있다.", 
-      long_text: "'나를 위해 살지 않으면 남을 위해 살게 된다' 책을 읽고 난 후, 나의 웰빙에 대한 새로운 관점을 얻게 되었다. 우리는 종종 타인의 기대에 부응하려고 하며, 그 과정에서 자신을 잃어버리기 쉽다. 이 책은 자신을 위한 삶의 중요성을 강조하며, 스스로의 행복과 만족을 우선시하는 것이 왜 중요한지에 대해 다시 한 번 생각해 보게 한다.나의 웰빙은 단순히 신체적 건강을 넘어선다. 정신적, 감정적 건강 또한 중요한 부분이다. 이 책을 통해 나는 나 자신에게 더 많은 시간을 투자하고, 내가 진정으로 원하는 것을 추구하는 것이 얼마나 중요한지 깨달았다. 타인의 기대에 얽매이지 않고, 나만의 목표와 꿈을 향해 나아갈 때 비로소 진정한 웰빙을 실현할 수 있다. 또한, 자기 자신을 돌보는 것이 이기적인 것이 아님을 깨달았다. 내가 행복하고 건강할 때, 주변 사람들에게도 긍정적인 영향을 미칠 수 있다. 따라서 나의 웰빙을 위해 나를 위한 시간을 갖고, 나의 가치를 존중하며 살아가는 것이 중요하다. 이 책은 나에게 새로운 동기부여가 되었고, 앞으로의 삶에서 나를 위해 더 많이 살 것을 다짐하게 만들었다.", 
-      created_at: "2024-07-28T05:41:31.341060+09:00" },
-    { long_review_id: 2, 
-      isbn: "9791188331793",
+      long_text: "'나를 위해 살지 않으면 남을 위해 살게 된다' 책을 읽고 난 후, 나의 웰빙에 대한 새로운 관점을 얻게 되었다. 우리는 종종 타인의 기대에 부응하려고 하며, 그 과정에서 자신을 잃어버리기 쉽다. 이 책은 자신을 위한 삶의 중요성을 강조하며, 스스로의 행복과 만족을 우선시하는 것이 왜 중요한지에 대해 다시 한 번 생각해 보게 한다.나의 웰빙은 단순히 신체적 건강을 넘어선다. 정신적, 감정적 건강 또한 중요한 부분이다. 이 책을 통해 나는 나 자신에게 더 많은 시간을 투자하고, 내가 진정으로 원하는 것을 추구하는 것이 얼마나 중요한지 깨달았다. 타인의 기대에 얽매이지 않고, 나만의 목표와 꿈을 향해 나아갈 때 비로소 진정한 웰빙을 실현할 수 있다. 또한, 자기 자신을 돌보는 것이 이기적인 것이 아님을 깨달았다. 내가 행복하고 건강할 때, 주변 사람들에게도 긍정적인 영향을 미칠 수 있다. 따라서 나의 웰빙을 위해 나를 위한 시간을 갖고, 나의 가치를 존중하며 살아가는 것이 중요하다. 이 책은 나에게 새로운 동기부여가 되었고, 앞으로의 삶에서 나를 위해 더 많이 살 것을 다짐하게 만들었다."
+       },
+    { id: 2, 
+      book:{
+        isbn: "9791188331793",
+        title: "나를 위해 살지 않으면 남을 위해 살게 된다",
+        author: "빅터프랭클",
+        thumbnail:"",
+        },
       review_title: "글 제목 입력",
-      book_title: "나를 위해 살지 않으면 남을 위해 살게 된다",
-      book_author: "빅터프랭클",
+      title: "나를 위해 살지 않으면 남을 위해 살게 된다",
+      author: "빅터프랭클",
       long_text: "이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<이건 두번째 칸이에요.>=<", 
       created_at: "2024-07-28T05:41:31.341060+09:00" },
-   { long_review_id: 3, 
-     isbn: "9791188331793",
+   { id: 3, 
+    book:{
+      isbn: "9791188331793",
+      title: "나를 위해 살지 않으면 남을 위해 살게 된다",
+      author: "빅터프랭클",
+      thumbnail:"",
+      },
      review_title: "글 제목 입력",
-     book_title: "나를 위해 살지 않으면 남을 위해 살게 된다",
-     book_author: "빅터프랭클",
      long_text: "이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ이건 세번째 칸이랍니다? ㅇ0ㅇ", 
      created_at: "2024-07-28T05:41:31.341060+09:00" }  
   ]);
@@ -1318,19 +1328,21 @@ const [emo, setEmo] = useState([
 
 const [isQue, setIsQue] = useState([
     { id: 1,
+      ShortReviewList:{
       question: "책을 읽고 나서 내 진로에 대한 새로운 아이디어나 방향성이 생겼다면, 그것을 구체적으로 어떻게 실행할 수 있을까요?", 
       answer: "진로에 대한 새로운 아이디어가 떠올랐다. 먼저, 관련 업계의 동향을 조사하고 필요한 기술과 지식을 정리해야겠다. 작은 프로젝트를 통해 실전 경험을 쌓고, 인턴십이나 프리랜서 활동을 통해 실력을 키워야지. 전문가들과 네트워킹하며 조언을 얻고 꾸준히 학습하며 목표를 향해 나아가야겠다. 오늘은 정말 유익한 하루였다.",
       created_at: "2024-07-28T05:41:31.341060+09:00", 
-      book_title: "나를 위해 살지 않으면 남을 위해 살게 된다",
-      book_author: "빅터프랭클",
-      mood: goodImage },
-    { id: 2, 
-      question: "오늘의 질문은 최대 2줄", 
-      answer: "나의 대답은 최대 3줄까지지만 \"자세한 기록\" 페이지와 동일", 
-      book_title: "나를 위해 살지 않으면 남을 위해 살게 된다",
-      book_author: "빅터프랭클",
+      title: "나를 위해 살지 않으면 남을 위해 살게 된다",
+      author: "빅터프랭클",
+      mood: goodImage} },
+    { id: 1,
+      ShortReviewList:{
+      question: "책을 읽고 나서 내 진로에 대한 새로운 아이디어나 방향성이 생겼다면, 그것을 구체적으로 어떻게 실행할 수 있을까요?", 
+      answer: "진로에 대한 새로운 아이디어가 떠올랐다. 먼저, 관련 업계의 동향을 조사하고 필요한 기술과 지식을 정리해야겠다. 작은 프로젝트를 통해 실전 경험을 쌓고, 인턴십이나 프리랜서 활동을 통해 실력을 키워야지. 전문가들과 네트워킹하며 조언을 얻고 꾸준히 학습하며 목표를 향해 나아가야겠다. 오늘은 정말 유익한 하루였다.",
       created_at: "2024-07-28T05:41:31.341060+09:00", 
-      mood: sadImage }
+      title: "나를 위해 살지 않으면 남을 위해 살게 된다",
+      author: "빅터프랭클",
+      mood: sadImage} }
   ]);
   
 
@@ -1486,7 +1498,7 @@ const handleItemClick = (path) => {
                  {activeTab === 'simple' && (  //하루 기록
                     <NoteCardContainer>
                          {short.map((note, index) => (
-                             <NoteCard key={note.short_review_id} onClick={()=>showInfo(index)}>
+                             <NoteCard key={note.id} onClick={()=>showInfo(index)}>
                                   <NoteText>{note.short_comment}</NoteText>
                                   <NoteActions>
                                     <div style={{ display: 'flex', alignItems: 'center'}}>
@@ -1537,10 +1549,10 @@ const handleItemClick = (path) => {
                                               </div>   
                                             <div className="modalBookBox">
                                                <div className="modalInerBox">
-                                                <div className="modalCover"></div>
+                                                <div className="modalCover">{note.book.thumbnail}</div>
                                                 <div className="modalBookInfo">
-                                                    <div className="modalBookTitle">{note.book_title}</div>
-                                                    <div className="modalBookAuthor">{note.book_author}</div>
+                                                    <div className="modalBookTitle">{note.book.title}</div>
+                                                    <div className="modalBookAuthor">{note.book.author}</div>
                                                 </div>
                                                 </div>
                                             </div>
@@ -1554,7 +1566,7 @@ const handleItemClick = (path) => {
             {activeTab === 'detailed' && ( //자유 기록
                 <NoteCardContainer>
                  {long.map((note,index) => (
-                     <DetCard key={note.long_review_id}  onClick={()=>showInfo(index)}>
+                     <DetCard key={note.id}  onClick={()=>showInfo(index)}>
                          <DetTitle>{note.review_title}</DetTitle>
                          <NoteText>{note.long_text}</NoteText>
                          <NoteActions>
@@ -1582,7 +1594,7 @@ const handleItemClick = (path) => {
                                             </div>
                                             <div className="top2">
                                                 <div className="modalCreateDate">{note.created_at}</div>
-                                                <div className="modalNickname">{note.nickname}</div>
+                          
                                             </div>
                                             <div className="modalLongWritingBox">
                                                 <div className="prevBtn" onClick={longGoToPrevious} style={{
@@ -1608,8 +1620,8 @@ const handleItemClick = (path) => {
                                                <div className="modalInerBox">
                                                 <div className="modalCover"></div>
                                                 <div className="modalBookInfo">
-                                                    <div className="modalBookTitle">{note.book_title}</div>
-                                                    <div className="modalBookAuthor">{note.book_author}</div>
+                                                    <div className="modalBookTitle">{note.book.title}</div>
+                                                    <div className="modalBookAuthor">{note.book.author}</div>
                                                 </div>
                                                 </div>
                                             </div>
@@ -1640,12 +1652,13 @@ const handleItemClick = (path) => {
                     <EmotionContainer> 
                         {isQue.map((question,index) => (
 
-                        <QuestionCard key={question.id}  onClick={()=>showInfo(index)}>
-                            <QuestionText>Q. {question.question}</QuestionText>
-                            <AnswerText>A. {question.answer}</AnswerText>
+                        <QuestionCard key={question.ShortReviewList.id}  onClick={()=>showInfo(index)}>
+                            <QuestionText>Q. {question.ShortReviewList.question}</QuestionText>
+                            <AnswerText>A. {question.ShortReviewList.answer}</AnswerText>
                             <NoteActions>
                                     <div style={{ display: 'flex', alignItems: 'center'}}>
-                                     <NoteDate onClick={(e) => e.stopPropagation()}>{new Date(question.created_at).toLocaleDateString()}</NoteDate>
+                                     <NoteDate onClick={(e) => e.stopPropagation()}>{new Date(question.ShortReviewList.created_at).toLocaleDateString()}</NoteDate>
+                                     <EmotionImg onClick={(e) => e.stopPropagation()} src={question.ShortReviewList.mood}/>
                                     </div>
                                     <div>
                                      <EditButton onClick={(e) => e.stopPropagation()}><Emoji src={modifyButton} /></EditButton>
@@ -1667,7 +1680,7 @@ const handleItemClick = (path) => {
                                           <div className="top1">
                                             </div>
                                             <div className="top2">
-                                                <div className="modalCreateDate">{new Date(question.created_at).toLocaleDateString()}</div>
+                                                <div className="modalCreateDate">{new Date(question.ShortReviewList.created_at).toLocaleDateString()}</div>
                       
                                             </div>
 
@@ -1683,12 +1696,12 @@ const handleItemClick = (path) => {
                                                 <div className="QNA">
                                                   <div className="QnaShow">
                                                     <div className="iconQBox"><img className="icon" src={qImage}/></div>
-                                                    <div className="modalQuestion">{question.question}</div>
+                                                    <div className="modalQuestion">{question.ShortReviewList.question}</div>
                                                   </div>
                                                   <div className="line3"></div>
                                                   <div className="QnaShow">
                                                     <div className="iconABox"><img className="icon" src={aImage}/></div>
-                                                    <div className="modalAnswer">{question.answer}</div>
+                                                    <div className="modalAnswer">{question.ShortReviewList.answer}</div>
                                                   </div>
                                                 </div>
                                                 <div className="nextBtn" onClick={emoGoToNext} style={{
@@ -1704,8 +1717,8 @@ const handleItemClick = (path) => {
                                                <div className="modalInerBox">
                                                 <div className="modalCover"></div>
                                                 <div className="modalBookInfo">
-                                                    <div className="modalBookTitle">{question.book_title}</div>
-                                                    <div className="modalBookAuthor">{question.book_author}</div>
+                                                    <div className="modalBookTitle">{question.ShortReviewList.title}</div>
+                                                    <div className="modalBookAuthor">{question.ShortReviewList.author}</div>
                                                 </div>
                                                 </div>
                                             </div>

@@ -329,6 +329,7 @@ const Header = styled.div`
         }
     
     }
+    
     .mypageBtn{
     width:112px;
     height: 34px;

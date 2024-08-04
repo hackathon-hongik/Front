@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import React from "react";
 import styled from "styled-components";
 import { axiosInstance } from '../api';
-import queryString from 'query-string';
+
 
 const RecommendResultPage=styled.div`
     width:1620px;

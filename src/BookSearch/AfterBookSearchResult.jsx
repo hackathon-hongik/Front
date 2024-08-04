@@ -442,6 +442,7 @@ export function AfterBookSearchResult(){  //로그인 전 책 검색하면 나�
     const [fetchedBookmarked,setFetchedBookmarked]=useState([]);   //찜한 책들 북마크 주황색으로 유지위해 찜한 정보들 관리하기 위한 배열 
 
 
+
     useEffect(()=>{
         fetchWishBooks()   //화면 처음 랜더링 될때 찜한 정보들 띄우기
     },[]);

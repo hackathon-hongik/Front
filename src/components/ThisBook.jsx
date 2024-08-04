@@ -6,10 +6,12 @@ import { useNavigate } from "react-router-dom";
 import info from '../assets/info.png';
 import noteImage from '../assets/note.png';
 import contract from '../assets/contract.png';
+import { useLocation } from 'react-router-dom';
+import bookCover from '../assets/book.png';
 
 const AppContainer = styled.div`
     width:1620px;
-    height:1440px;
+    height:900px;
     flex-direction: column;
     align-items: center;
     display: flex;
@@ -22,7 +24,7 @@ const NoteContainer = styled.div`
     font-family: "Pretendard JP";
     background-color: #FFFFFF;
     width:1200px;
-    height:1440px;
+    height:900px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -166,21 +168,193 @@ const SubNavItem = styled.div`
 `;
 
 
+
+const BookInfoBox = styled.div`
+  width:600px;
+  height:700px;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  border-radius: 20px;
+  background: #FFF;
+  padding: 40px 48px 28px 48px;
+  margin-top:20px;
+
+  .Cover{
+    width:160px;
+    height:240px;
+    border-radius: 4px;
+  }
+
+  .Title{
+    color: var(--kakao-logo, #000);
+    text-align: center;
+
+    /* Heading 1/Bold */
+    font-family: "Pretendard JP";
+    font-size: 19px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 136.4%; /* 30.008px */
+    letter-spacing: -0.427px;
+    margin-top: 30px;
+    margin-bottom: 10px;
+  }
+
+  .Author{
+    color: var(--kakao-logo, #000);
+    text-align: center;
+    font-feature-settings: 'ss10' on;
+
+    /* Label 1/Normal - Bold */
+    font-family: "Pretendard JP";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 142.9%; /* 20.006px */
+    letter-spacing: 0.203px;
+    margin-bottom: 0px;
+  }
+
+  .Publisher{
+    color: rgba(60, 60, 67, 0.60);
+    font-feature-settings: 'ss10' on;
+
+    /* Label 1/Normal - Regular */
+    font-family: "Pretendard JP";
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 142.9%; /* 20.006px */
+    letter-spacing: 0.203px;
+    margin-top: 5px;
+
+  }
+
+  .AddBtn{
+    display: flex;
+    width: 160px;
+    height: 56px;
+    padding: 14px 14px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border:none;
+    border-radius: 4px;
+    background: #2EEA7E;
+    margin-left:220px;
+    margin-top:10px;
+
+    color: var(--kakao-logo, #000);
+    text-align: center;
+    font-feature-settings: 'ss10' on;
+
+    /* Body 2/Normal - Bold */
+    font-family: "Pretendard JP";
+    font-size: 13px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 146.7%; /* 22.005px */
+    letter-spacing: 0.144px;
+  }
+
+  .line{
+    width:600px;
+    height:1px;
+    margin-top: 15px;
+    background-color: rgba(112, 115, 124, 0.22);
+  }
+
+  .Contents{
+    display: flex;
+    text-align: left;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 10;
+    align-self: stretch;
+    overflow: hidden;
+    color: var(--kakao-logo, #000);
+    font-feature-settings: 'ss10' on;
+    /* Label 1/Reading - Regular */
+    font-family: "Pretendard JP";
+    text-overflow: ellipsis;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 157.1%;
+    letter-spacing: 0.203px;
+    margin-top: 20px;
+  }
+`;
+
 export function ThisBook(){
 const [isCheck, setCheck] = useState(false);
 const [activeSubNav, setActiveSubNav] = useState('bookinfo');
+const navigate=useNavigate();
+const location = useLocation();
+const token = location.state?.token || '';
 
-const navigate = useNavigate();
 
-const navigateToNote = (memberId, myBookId) => {
-        navigate(`/note?memberId=${memberId}&myBookId=${myBookId}`);
-};
+const [thisBook, setThisBook] = useState([
+  { deskdate: "2024-07-28T05:41:31.341060+09:00",
+    book:{
+    isbn: "9791188331793",
+    title: "나를 위해 살지 않으면 남을 위해 살게 된다",
+    author: "에픽테토스",
+    date: "2024-07-28T05:41:31.341060+09:00",
+    publisher: "페이지2북스",
+    thumbnail: bookCover,
+    content: "바꿀 수 없는 것을 걱정하지 마라.\n스토아 철학자 에픽테토스가 전하는 \'내 삶의 주도권을 되찾는 법\'\n \"인생은 고통이다.\" 부처와 쇼펜하우어는 말했다. 이 말처럼 인생에는 수많은 고통이 있고, 우리는 누구나 고통을 겪으며 살아간다. 그런데 고통은 어디서 오는 것일까? 바로 우리가 세상일을 맘대..."
+    },
+    status: "새 책"
+  }
+])
+
+// const navigateToNote = (memberId, isbn) => {
+//         navigate(`/note?memberId=${memberId}&myBookId=${isbn}`);
+// };
 
 const handleItemClick = (path) => {
     navigate(path);
 };   
 
-      
+const addBook=async(isbn,title,author,thumbnail,content,publisher,date)=>{
+  try{
+      const newBook={
+          book:{
+              isbn:isbn,
+              title:title,
+              author:author,
+              date:date,
+              publisher:publisher,
+              thumbnail:thumbnail,
+              content:content
+          }
+      }
+
+      const response=await axiosInstance.post("/desk/books/reading/",newBook,{
+          
+          headers:{
+              Authorization: `Bearer ${token}`
+          }
+
+          });
+      alert("읽고 있는 책에 성공적으로 추가되었습니다!")
+      console.log(response);
+  }
+  catch(e){
+      if(e.response && e.response.status===409){
+          alert("이미 읽고 있는 책에 추가하신 책입니다");
+          console.log(e);
+      }
+  }
+}
+
+const handleAddClick=(isbn,title,author,thumbnail,content,publisher,date,token)=>{   //읽고 있는 책으로 추가 처리
+       
+  addBook(isbn,title,author,thumbnail,content,publisher,date,token);
+  
+};
 
 
     return(
@@ -223,6 +397,18 @@ const handleItemClick = (path) => {
                         내 기록보기</SubNavItem>
                   </SubNav>  
 
+                  {thisBook.map((bookData, index) => (
+                  <BookInfoBox key={index} onClick={(e) => e.stopPropagation()}>
+                                            <img className="Cover" src={bookData.book.thumbnail} alt="Book Thumbnail"/>
+                                            <p className="Title">{bookData.book.title || "N/A"}</p>
+                                            <p className="Author">{bookData.book.author || "N/A"}</p>
+                                            <p className="Publisher">{bookData.book.publisher || "N/A"} · {new Date(bookData.book.date).toLocaleDateString() || "N/A"}</p>  {/* "N/A는 저 카테고리가 없는경우 처리" */}
+                                            <button className="AddBtn" onClick={()=>handleAddClick(bookData.book.isbn,bookData.book.title,bookData.book.author,bookData.book.thumbnail,bookData.book.content,bookData.book.publisher,bookData.book.date)}>읽고 있는 책에 추가</button>
+                                            <div className="line"></div>
+                                            <p className="Contents">{bookData.book.content || "N/A"}</p>
+                  </BookInfoBox>
+                  ))}
+                  
             </NoteContainer>
         </AppContainer>
 
