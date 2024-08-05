@@ -12,6 +12,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons';
+import axios from 'axios';
+import faceLogo from "../assets/commentFace.png";
+
 const short = [
     {
         id: 1,
@@ -530,19 +533,19 @@ const OrangeBanner=styled.div`
 
 const ShortWritingList = styled.div`
   width: 1200px;
-  height:800px;
+  //height:800px;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 20px;
   margin-top: 50px;
-  background-color: beige;
+  //background-color: beige;
 `;
 
 const BelowShortWritingList = styled.div`
   width: 1200px;
   //height: 1200px;
-  background-color: antiquewhite;
+  //background-color: antiquewhite;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -567,14 +570,14 @@ const ShortWritingCard=styled.div`
     &:nth-child(3n) {
     margin-right: 0;
     }
-    background-color: aqua;
+    //background-color: aqua;
 
     .shortWriting{
         width:290px;
         height:120px;
         overflow: auto;
         margin-top:10px;
-        background-color: rebeccapurple;
+        //background-color: rebeccapurple;
 
     }
 
@@ -584,7 +587,7 @@ const ShortWritingCard=styled.div`
         display: flex;
         flex-direction: row;
         align-items: center;
-        background-color: red;
+        //background-color: red;
         
         .nickName{
         width:70px;
@@ -603,12 +606,13 @@ const ShortWritingCard=styled.div`
         font-weight: 600;
         //line-height: 138.5%; /* 18.005px */
         //letter-spacing: 0.252px;
-        background-color: beige;
+        //background-color: beige;
         }
         .heart{
         width:50px;
         height:50px;
-        background-color: blue;
+        margin-left: 150px;
+        //background-color: blue;
         }
 
         .bookmark{
@@ -620,7 +624,7 @@ const ShortWritingCard=styled.div`
         width:310px;
         height:70px;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         //justify-content: center;
         //align-items: center;
         border-radius: 0px 0px 8px 8px;
@@ -628,58 +632,73 @@ const ShortWritingCard=styled.div`
         border-bottom: 1px solid var(--Line-Normal-Normal, rgba(112, 115, 124, 0.22));
         border-left: 1px solid var(--Line-Normal-Normal, rgba(112, 115, 124, 0.22));
         background: #F2F2F7;
-    }
 
-    .bookTitle{
-        width:160px;
-        height:20px;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        font-family: "Pretendard JP";
-        font-size: 12px;
-        font-style: normal;
-        font-weight: 600;
-        background-color: palegreen;
-        margin: 0; 
-        margin-top: 10px;
-        margin-right:20px;
-    }
+        .bookCover{
+            width:50px;
+            height:60px;
+            margin-left:20px;
+            img{
+                width:20px;
+                height:30px;
+            }
+        }
 
-    .bookAuthor{
-        width:160px;
-        height:20px;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        font-family: "Pretendard JP";
-        font-size: 12px;
-        font-style: normal;
-        font-weight: 400;
-        background-color: red;
-        margin-top: 10px; 
-        margin-right:20px;
-    }
+        .bookInfoText{
+            width:165px;
+            height:50px;
+            display: flex;
+            flex-direction: column;
+            margin-left: 20px;
 
-
+            .bookTitle{
+                width:160px;
+                height:20px;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                font-family: "Pretendard JP";
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 600;
+                //background-color: palegreen;
+                margin: 0; 
+                margin-top: 10px;
+                margin-right:20px;
+            }
+            .bookAuthor{
+                width:160px;
+                height:20px;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                font-family: "Pretendard JP";
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 400;
+                //background-color: red;
+                margin-top: 10px; 
+                margin-right:20px;
+            }
+        }
+}
 `;
 const LongWritingList = styled.div`
   width: 1200px;
-  height:1000px;
+  //height:1000px;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
   gap: 20px;
   margin-top: 50px;
-  background-color: beige;
+  //background-color: beige;
 `;
 
 const BelowLongWritingList = styled.div`
   width: 1200px;
-  height: 1200px;
-  background-color: antiquewhite;
+  //height: 1200px;
+  //background-color: antiquewhite;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -695,18 +714,18 @@ const LongWritingCard=styled.div`
     flex-direction: column;
     align-items: center;
     border-radius: 8px 8px 8px 8px;
-    border-top: 1px rgba(112, 115, 124, 0.22);
+    border-top: solid 1px rgba(112, 115, 124, 0.22);
 
-    border-right: 1px rgba(112, 115, 124, 0.22);
+    border-right: solid 1px rgba(112, 115, 124, 0.22);
 
-    border-left: 1px rgba(112, 115, 124, 0.22);
-
+    border-left: solid 1px rgba(112, 115, 124, 0.22);
+    //border-style: solid black 0.5px;
     background: #FFF;
     
     &:nth-child(2n) {
     margin-right: 0;
     }
-    background-color: aqua;
+    //background-color: aqua;
 
     .title{
         width:480px;
@@ -741,7 +760,7 @@ const LongWritingCard=styled.div`
         font-weight: 400;
         line-height: 160%; /* 24px */
         letter-spacing: 0.144px;
-        background-color: red;
+        //background-color: red;
     }
 
     .likePick{
@@ -750,7 +769,7 @@ const LongWritingCard=styled.div`
         display: flex;
         flex-direction: row;
         align-items: center;
-        background-color: beige;
+        //background-color: beige;
         
         .createDate{
             font-family: "Pretendard JP";
@@ -780,23 +799,35 @@ const LongWritingCard=styled.div`
             font-weight: 600;
             //line-height: 138.5%; /* 18.005px */
             //letter-spacing: 0.252px;
-            background-color: beige;
+            //background-color: beige;
         }
 
         .heart{
-        width:50px;
+        width:35px;
         height:50px;
-        margin-left: 230px;
-        background-color: blue;
+        margin-left: 270px;
+        //background-color: blue;
         }
 
         .bookmark{
             margin-left: 10px;
         }
         
-        .chatIcon{
+        .chat{
+            width:35px;
+            height:50px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
             margin-top:3px;
-            margin-left:15px;
+            margin-left:10px;
+            //background-color: red;
+
+            .chatNum{
+                margin-left: 6px;
+                margin-bottom: 3px;
+            }
         }
         
 
@@ -808,7 +839,7 @@ const LongWritingCard=styled.div`
         width:510px;
         height:70px;
         display: flex;
-        flex-direction: column;
+        flex-direction: row;
         //justify-content: center;
         //align-items: center;
         border-radius: 0px 0px 8px 8px;
@@ -818,37 +849,54 @@ const LongWritingCard=styled.div`
         background: #F2F2F7;
         }
 
-        .bookTitle{
-            width:160px;
-            height:20px;
-            display: flex;
-            flex-direction: row;
-            justify-content: flex-start;
-            align-items: center;
-            font-family: "Pretendard JP";
-            font-size: 12px;
-            font-style: normal;
-            font-weight: 600;
-            background-color: palegreen;
-            margin: 0; 
-            margin-top: 10px;
-            margin-right: 190px;
+        .bookCover{
+            width:50px;
+            height:60px;
+            margin-left:20px;
+            img{
+                width:20px;
+                height:30px;
+            }
         }
 
-        .bookAuthor{
-            width:160px;
-            height:20px;
+        .bookInfoText{
+            width:165px;
+            height:50px;
             display: flex;
-            flex-direction: row;
-            justify-content: flex-start;
-            align-items: center;
-            font-family: "Pretendard JP";
-            font-size: 12px;
-            font-style: normal;
-            font-weight: 400;
-            background-color: red;
-            margin: 0; 
-            margin-right: 190px;
+            flex-direction: column;
+            margin-left: 20px;
+
+            .bookTitle{
+                width:160px;
+                height:20px;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                font-family: "Pretendard JP";
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 600;
+                //background-color: palegreen;
+                margin: 0; 
+                margin-top: 10px;
+                margin-right:20px;
+            }
+            .bookAuthor{
+                width:160px;
+                height:20px;
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                font-family: "Pretendard JP";
+                font-size: 12px;
+                font-style: normal;
+                font-weight: 400;
+                //background-color: red;
+                margin-top: 10px; 
+                margin-right:20px;
+            }
         }
 `;
 
@@ -903,7 +951,7 @@ const ShortModalContent = styled.div`
     .modalText{
         width:150px;
         height:20px;
-        background-color: blue;
+        //background-color: blue;
         font-feature-settings: 'ss10' on;
         text-overflow: ellipsis;
         /* Label 2/Regular */
@@ -955,7 +1003,7 @@ const ShortModalContent = styled.div`
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        background-color: beige;
+        //background-color: beige;
         font-family: "Pretendard JP";
         font-size: 13px;
         font-style: normal;
@@ -986,7 +1034,7 @@ const ShortModalContent = styled.div`
     }
 
      .heart{
-        margin-left: 280px;
+        margin-left: 350px;
     }
   }
 
@@ -997,7 +1045,7 @@ const ShortModalContent = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background-color:aqua;
+    //background-color:aqua;
     margin-top: 20px;
 
     .modalShortWriting{
@@ -1007,7 +1055,7 @@ const ShortModalContent = styled.div`
         flex-direction: row;
         justify-content: center;
         align-items: center;
-        background-color: beige;
+        //background-color: beige;
     }
   }
 
@@ -1153,7 +1201,7 @@ const LongModalContent = styled.div`
     align-items: center;
     margin-top: 30px;
     margin-left: 60px;
-    background-color: beige;
+    //background-color: beige;
 
     .heart{
         margin-left: 550px;
@@ -1162,11 +1210,25 @@ const LongModalContent = styled.div`
     .bookmark{
         margin-left:10px;
     }
-    .chatIcon{
-        margin-top: 3px;
-        margin-left: 10px;
-        font-size: 19px;
-    }
+    .chat{
+            width:35px;
+            height:50px;
+            display: flex;
+            flex-direction: row;
+            justify-content: center;
+            align-items: center;
+            margin-top:3px;
+            margin-left:10px;
+            //background-color: red;
+
+            .chatIcon{
+                font-size:20px;
+            }
+            .chatNum{
+                margin-left: 5px;
+                margin-bottom: 3px;
+            }
+        }
   }
 
   .top2{
@@ -1176,7 +1238,7 @@ const LongModalContent = styled.div`
     flex-direction: row;
     align-items: center;
     margin-left: 60px;
-    background-color: aqua;
+    //background-color: aqua;
 
     .modalCreateDate{
         font-family: "Pretendard JP";
@@ -1205,7 +1267,7 @@ const LongModalContent = styled.div`
         font-weight: 600;
         //line-height: 138.5%; /* 18.005px */
         //letter-spacing: 0.252px;
-        background-color: beige;
+        //background-color: beige;
     }
 
     /* .heart{
@@ -1221,7 +1283,7 @@ const LongModalContent = styled.div`
     justify-content: center;
     align-items: center;
     margin-top: 10px;
-    background-color:aqua;
+    //background-color:aqua;
 
     .modalLongWriting{
         width:800px;
@@ -1231,7 +1293,7 @@ const LongModalContent = styled.div`
         justify-content: center;
         align-items: center;
         margin-left: 10px;
-        background-color: beige;
+        //background-color: beige;
     }
 
     /* .prevBtn, .nextBtn {
@@ -1288,81 +1350,6 @@ const LongModalContent = styled.div`
         background-color:rgba(112, 115, 124, 0.22);
     }
 
-    .modalBookBox{
-    width: 500px;
-    height: 100px;
-    border-radius: 4px;
-    background: #F2F2F7;
-    margin-left: 210px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 10px;
-    margin-top: 20px;
-
-
-
-    .modalInerBox{
-      display: flex;
-      align-items: center;
-      justify-content : flex-start;
-
-      .modalCover{
-      border-radius: 4px;
-      width: 40px;
-      height: 60px;
-      background: #FFF;
-    }
-    
-
-    .modalBookInfo{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        width: auto;
-        margin-left:20px;
-        //background-color: #01524D;
-    }
-
-    .modalBookTitle{
-        display: inline-flex;
-        width: auto;
-        height:20px;
-        overflow: hidden;
-        color: var(--kakao-logo, #000);
-        font-feature-settings: 'ss10' on;
-        text-overflow: ellipsis;
-        font-family: "Pretendard JP";
-        font-size: 15px;
-        font-style: normal;
-        font-weight: 600;
-        line-height: 138.5%; /* 18.005px */
-        letter-spacing: 0.252px;
-        align-items: center;
-        //background-color: palegreen;
-        
-    }
-
-    .modalBookAuthor{
-        display: inline-flex;
-        width: auto;
-        height:20px;
-        overflow: hidden;
-        color: #989BA2;
-        font-feature-settings: 'ss10' on;
-        text-overflow: ellipsis;
-
-        font-family: "Pretendard JP";
-        font-size: 15px;
-        font-style: normal;
-        font-weight: 400;
-        line-height: 138.5%; /* 18.005px */
-        letter-spacing: 0.252px;
-        align-items: center;
-        //background-color: red;
-    }
-    }
-  }
 
     .heartBox{
         width:90px;
@@ -1383,53 +1370,81 @@ const LongModalContent = styled.div`
   }
 
   .modalBookBox{
-    width:400px;
-    height:80px;
+    width: 500px;
+    height: 70px;
     border-radius: 4px;
     background: #F2F2F7;
-    padding: 16px 24px;
-    margin-top: 40px;
-    margin-left:240px;
+    margin-left: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+    margin-top: 20px;
+
+
+    .modalInerBox{
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content : flex-start;
+
+      .modalCover{
+      border-radius: 4px;
+      width: 40px;
+      height: 60px;
+      background: #FFF;
+    
+    }
     
 
     .modalBookInfo{
-        width:170px;
-        height:50px;
-        margin-left:160px;
-        background-color: #01524D;
-    }
-
-    .modalBookTitle{
-        width:160px;
-        height:20px;
         display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
+        flex-direction: column;
+        justify-content: center;
+        width: auto;
+        margin-left:20px;
+        //background-color: #01524D;
+
+        .modalBookTitle{
+        display: inline-flex;
+        width: auto;
+        height:20px;
+        overflow: hidden;
+        color: var(--kakao-logo, #000);
+        font-feature-settings: 'ss10' on;
+        text-overflow: ellipsis;
         font-family: "Pretendard JP";
-        font-size: 12px;
+        font-size: 15px;
         font-style: normal;
         font-weight: 600;
-        background-color: palegreen;
-        margin: 0; 
-        margin-top: 10px;
-        margin-right: 190px;
-    }
+        line-height: 138.5%; /* 18.005px */
+        letter-spacing: 0.252px;
+        align-items: center;
+        //background-color: palegreen;
+        
+        }
 
     .modalBookAuthor{
-        width:160px;
+        display: inline-flex;
+        width: auto;
         height:20px;
-        display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
+        overflow: hidden;
+        color: #989BA2;
+        font-feature-settings: 'ss10' on;
+        text-overflow: ellipsis;
+
         font-family: "Pretendard JP";
-        font-size: 12px;
+        font-size: 15px;
         font-style: normal;
         font-weight: 400;
-        background-color: red;
-        margin: 0; 
-        margin-right: 190px;
+        line-height: 138.5%; /* 18.005px */
+        letter-spacing: 0.252px;
+        align-items: center;
+        //background-color: red;
+    }
+    }
+
+    
     }
   }
 `;
@@ -1464,7 +1479,7 @@ const CommentInputBox=styled.div`
             width:50px;
             height:20px;
             margin-left: 20px;
-            background-color: rebeccapurple;
+            //background-color: rebeccapurple;
         }
 
         .commentInput{
@@ -1506,7 +1521,7 @@ const PeopleCommentBox=styled.div`
     width:850px;
     //height:400px;
     margin-left: 50px;
-    background-color: rebeccapurple;
+    //background-color: rebeccapurple;
 
     .commentNum{
         width:70px;
@@ -1514,7 +1529,7 @@ const PeopleCommentBox=styled.div`
         display: flex;
         flex-direction: row;
         align-items: center;
-        background-color: beige;
+        //background-color: beige;
     }
 
     .numComment{
@@ -1532,8 +1547,72 @@ const CommentList=styled.div`
 const CommentCard=styled.div`
     width:850px;
     height:100px;
+    display:flex;
+    flex-direction: row;
     margin-top: 20px;
-    background-color: red;
+    //background-color: red;
+
+    .commentFace{
+        width:50px;
+        height:50px;
+    }
+
+    .realComment{
+        width:780px;
+        height:90px;
+        display:flex;
+        flex-direction: column;
+        align-items: flex-start;
+        //background-color:beige;
+        margin-left:20px;
+
+        .commentNickName{
+            overflow: hidden;
+            color: #01524D;
+
+            font-feature-settings: 'ss10' on;
+            text-overflow: ellipsis;
+            /* Caption 1/Bold */
+            font-family: "Pretendard JP";
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 600;
+            line-height: 133.4%; /* 16.008px */
+            letter-spacing: 0.302px;
+        }
+
+        .commentCreatedAt{
+            overflow: hidden;
+            color: #989BA2;
+
+            font-feature-settings: 'ss10' on;
+            text-overflow: ellipsis;
+            /* Caption 1/Regular */
+            font-family: "Pretendard JP";
+            font-size: 12px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 133.4%; /* 16.008px */
+            letter-spacing: 0.302px;
+        }
+
+        .commentText{
+            overflow: hidden;
+            color: var(--kakao-logo, #000);
+
+            font-feature-settings: 'ss10' on;
+            text-overflow: ellipsis;
+            /* Body 2/Normal - Regular */
+            font-family: "Pretendard JP";
+            font-size: 15px;
+            font-style: normal;
+            font-weight: 400;
+            line-height: 146.7%; /* 22.005px */
+            letter-spacing: 0.144px;
+        }
+    }
+
+
 `;
 
 export function Community(){
@@ -1543,13 +1622,25 @@ export function Community(){
     const [clickedWritingIndex, setClickedWritingIndex] = useState(null);
     const [shortWritings,setShortWritings]=useState([]);
     const [longWritings,setLongWritings]=useState([]);
+    const [comment,setComment]=useState('');
     const location = useLocation();
+    const [refreshComments, setRefreshComments] = useState(false);
+    const [refreshShortHearts, setRefreshShortHearts] = useState(false);
+    const [refreshLongHearts, setRefreshLongHearts] = useState(false);
     const token = location.state?.token || '';
 
     useEffect(() => {
         fetchShortData();
         fetchLongData();
     }, []);
+
+    useEffect(() => {
+        fetchLongData();
+    }, [refreshComments,refreshLongHearts]);
+
+     useEffect(() => {
+         fetchShortData();
+     }, [refreshShortHearts]);
 
     const handleItemClick=(path,token,isbn)=>{
         navigate(path,{state:{token,isbn}});
@@ -1617,6 +1708,64 @@ export function Community(){
             prevIndex === long.length - 1 ? 0 : prevIndex + 1
         );
     };
+
+    const handleCommentInput=(e)=>{
+        setComment(e.target.value);
+    }
+
+    const submitComment=async(id)=>{
+        try{
+            const newComment={
+                comment:comment
+            }
+            const response=await axiosInstance.post(`community/long-reviews/${id}/comment/`,newComment,{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                } 
+            })
+            console.log(response);
+            setRefreshComments(prev => !prev);
+        }
+        catch(e){
+            console.log(e);
+        }
+    }
+
+    const clickHeartShort=async(id)=>{
+        try{
+            const response=await axiosInstance.post(`community/short-reviews/${id}/like/`,{},{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                } 
+            })
+            console.log(response);
+            setRefreshShortHearts(prev => !prev);
+        }
+        catch(e){
+            if(e.response && e.response.data===400){
+                alert('이미 좋아요를 누르신 리뷰입니다!');
+            }
+            console.log(e);
+        }
+    }
+
+    const clickHeartLong=async(id)=>{
+        try{
+            const response=await axiosInstance.post(`community/long-reviews/${id}/like/`,{},{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                } 
+            })
+            console.log(response);
+            setRefreshLongHearts(prev => !prev);
+        }
+        catch(e){
+            if(e.response && e.response.data===400){
+                alert('이미 좋아요를 누르신 리뷰입니다!');
+            }
+            console.log(e);
+        }
+    }
     return(
         <CommunityPage>
             <Header>
@@ -1672,17 +1821,21 @@ export function Community(){
                     <div className="shortWriting">{item.short_note.short_comment}</div>
                     <div className="likePick">
                         <div className="nickName">{item.writer}</div>
-                        <div className="heart">
-                            <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
+                        <div className="heart" onClick={(e)=>e.stopPropagation()}>
+                            <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} onClick={()=>clickHeartShort(item.id)}/>
                             <div className="heartNum">{item.like_count}</div>
                         </div>
-                        <div className="bookmark">
+                        {/* <div className="bookmark">
                             <FontAwesomeIcon icon={faBookmark} />
-                        </div>
+                        </div> */}
                     </div>
                     <div className="bookInfo">
-                        <div className="bookTitle">{item.book.title}</div>
-                        <div className="bookAuthor">{item.book.author}</div>
+                            <img src={item.book.thumbnail} className="bookCover"/>
+                            <div className="bookInfoText">
+                                <div className="bookTitle">{item.book.title}</div>
+                                <div className="bookAuthor">{item.book.author.replace(/[\[\]']+/g, '')}</div>
+                            </div>
+        
                     </div>
                     {clickedWritingIndex === index && (
                                      <ShortModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
@@ -1702,11 +1855,11 @@ export function Community(){
                                                     <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
                                                     <div className="heartNum">{item.like_count}</div>
                                                 </div>
-                                                <div className="bookmark">
+                                                {/* <div className="bookmark">
                                                     <FontAwesomeIcon icon={faBookmark} />
-                                                </div>
+                                                </div> */}
                                             </div>
-
+                                            
                                             <div className="modalShortWritingBox">  
                                                 <div className="prevBtn" onClick={shortGoToPrevious} style={{
                                                 color: index === 0 ? '#989BA2 ' : '#000000 ',
@@ -1728,11 +1881,11 @@ export function Community(){
                                               </div>   
                                               <div className="modalBookBox">
                                                <div className="modalInerBox">
-                                                <div className="modalCover"></div>
-                                                <div className="modalBookInfo">
-                                                    <div className="modalBookTitle">{item.book.title}</div>
-                                                    <div className="modalBookAuthor">{item.book.author}</div>
-                                                </div>
+                                                    <img src={item.book.thumbnail} className="modalCover"></img>
+                                                    <div className="modalBookInfo">
+                                                        <div className="modalBookTitle">{item.book.title}</div>
+                                                        <div className="modalBookAuthor">{item.book.author.replace(/[\[\]']+/g, '')}</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </ShortModalContent>
@@ -1757,17 +1910,21 @@ export function Community(){
                     <div className="shortWriting">{item.short_note.short_comment}</div>
                     <div className="likePick">
                         <div className="nickName">{item.writer}</div>
-                        <div className="heart">
-                            <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
+                        <div className="heart" onClick={(e)=>e.stopPropagation()}>
+                            <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} onClick={()=>clickHeartShort(item.id)}/>
                             <div className="heartNum">{item.like_count}</div>
                         </div>
-                        <div className="bookmark">
+                        {/* <div className="bookmark">
                             <FontAwesomeIcon icon={faBookmark} />
-                        </div>
+                        </div> */}
                     </div>
                     <div className="bookInfo">
-                        <div className="bookTitle">{item.book.title}</div>
-                        <div className="bookAuthor">{item.book.author}</div>
+                            <img src={item.book.thumbnail} className="bookCover"/>
+                            <div className="bookInfoText">
+                                <div className="bookTitle">{item.book.title}</div>
+                                <div className="bookAuthor">{item.book.author.replace(/[\[\]']+/g, '')}</div>
+                            </div>
+        
                     </div>
                     {clickedWritingIndex === index+6 && (
                                      <ShortModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
@@ -1787,9 +1944,9 @@ export function Community(){
                                                 <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
                                                 <div className="heartNum">{item.like_count}</div>
                                             </div>
-                                            <div className="bookmark">
+                                            {/* <div className="bookmark">
                                                 <FontAwesomeIcon icon={faBookmark} />
-                                            </div>
+                                            </div> */}
 
                                          </div>
 
@@ -1814,11 +1971,11 @@ export function Community(){
                                            </div>   
                                            <div className="modalBookBox">
                                                <div className="modalInerBox">
-                                                <div className="modalCover"></div>
-                                                <div className="modalBookInfo">
-                                                    <div className="modalBookTitle">{item.book.title}</div>
-                                                    <div className="modalBookAuthor">{item.book.author}</div>
-                                                </div>
+                                                    <img src={item.book.thumbnail} className="modalCover"></img>
+                                                    <div className="modalBookInfo">
+                                                        <div className="modalBookTitle">{item.book.title}</div>
+                                                        <div className="modalBookAuthor">{item.book.author.replace(/[\[\]']+/g, '')}</div>
+                                                    </div>
                                                 </div>
                                             </div>
                                      </ShortModalContent>
@@ -1840,19 +1997,26 @@ export function Community(){
                             <div className="createDate">{new Date(item.long_note.created_at).toLocaleDateString()}</div>
                             <div className="nickName">{item.writer}</div>
                             <div className="heart" onClick={(e)=>e.stopPropagation()}>
-                                <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
+                                <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} onClick={()=>clickHeartLong(item.id)}/>
                                 <div className="heartNum">{item.like_count}</div>
                             </div>
-                            <div className="bookmark" onClick={(e)=>e.stopPropagation()}>
+                            {/* <div className="bookmark" onClick={(e)=>e.stopPropagation()}>
                                 <FontAwesomeIcon icon={faBookmark} />
+                            </div> */}
+                            <div className="chat" onClick={(e)=>e.stopPropagation()}>
+                                <span className="material-icons chatIcon" onClick={(e)=>e.stopPropagation()}>
+                                    chat
+                                </span>
+                                <div className="chatNum">{item.comment_count}</div>
                             </div>
-                            <span className="material-icons chatIcon" onClick={(e)=>e.stopPropagation()}>
-                                chat
-                            </span>
                         </div>
                         <div className="bookInfo">
-                            <div className="bookTitle">{item.book.title}</div>
-                            <div className="bookAuthor">{item.book.author}</div>
+                            <img src={item.book.thumbnail} className="bookCover"/>
+                            <div className="bookInfoText">
+                                <div className="bookTitle">{item.book.title}</div>
+                                <div className="bookAuthor">{item.book.author.replace(/[\[\]']+/g, '')}</div>
+                            </div>
+        
                         </div>
                         {clickedWritingIndex === index && (
                                     
@@ -1867,15 +2031,18 @@ export function Community(){
                                             <div className="top1">
                                                 <div className="modalTitle">{item.long_note.long_title}</div>
                                                 <div className="heart">
-                                                    <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
+                                                    <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }}/>
                                                     <div className="heartNum">{item.like_count}</div>
                                                 </div>
-                                                <div className="bookmark">
+                                                {/* <div className="bookmark">
                                                     <FontAwesomeIcon icon={faBookmark} />
+                                                </div> */}
+                                                <div className="chat" onClick={(e)=>e.stopPropagation()}>
+                                                    <span className="material-icons chatIcon" onClick={(e)=>e.stopPropagation()}>
+                                                        chat
+                                                    </span>
+                                                    <div className="chatNum">{item.comment_count}</div>
                                                 </div>
-                                                <span className="material-icons chatIcon">
-                                                    chat
-                                                </span>
                                             </div>
                                             <div className="top2">
                                                 <div className="modalCreateDate">{new Date(item.long_note.created_at).toLocaleDateString()}</div>
@@ -1902,7 +2069,7 @@ export function Community(){
                                             </div>
                                             <div className="likeLine">
                                                 <div className="line2"></div>
-                                                <div className="heartBox">
+                                                <div className="heartBox" onClick={()=>clickHeartLong(item.id)}>
                                                     <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
                                                     <div className="likeText">좋아요</div>
                                                 </div>
@@ -1910,10 +2077,12 @@ export function Community(){
                                             </div>
 
                                             <div className="modalBookBox">
-                                                <div className="modalCover"></div>
+                                            <div className='modalInerBox'>
+                                                <img src={item.book.thumbnail} className="modalCover"></img>
                                                 <div className="modalBookInfo">
                                                     <div className="modalBookTitle">{item.book.title}</div>
-                                                    <div className="modalBookAuthor">{item.book.author}</div>
+                                                    <div className="modalBookAuthor">{item.book.author.replace(/[\[\]']+/g, '')}</div>
+                                                </div>
                                                 </div>
                                             </div>
 
@@ -1922,9 +2091,9 @@ export function Community(){
                                             <CommentInputBox>
                                                 <div className="inputLine">
                                                     {/* <div className="commentMyNickName">{item.writer}</div> */}
-                                                    <input type="text" className="commentInput" placeholder="댓글입력"></input>
+                                                    <input type="text" className="commentInput" placeholder="댓글입력" onChange={handleCommentInput}></input>
                                                 </div>
-                                                <button className="submitBtn">등록</button>
+                                                <button className="submitBtn" onClick={()=>submitComment(item.id)}>등록</button>
                                             </CommentInputBox>
 
                                             <PeopleCommentBox>
@@ -1934,9 +2103,13 @@ export function Community(){
                                                 <CommentList>
                                                     {item.comments.map((comment) => (
                                                     <CommentCard key={comment.id}>
-                                                        <div className="commentNickName">{comment.user}</div>
-                                                        <div className="commentCreatedAt">{new Date(comment.created_at).toLocaleDateString()}</div>
-                                                        <div className="commentText">{comment.comment}</div>
+                                                        <img src={faceLogo} className="commentFace"></img>
+                                                        <div className="realComment">
+                                                            <div className="commentNickName">{comment.user}</div>
+                                                            <div className="commentCreatedAt">{new Date(comment.created_at).toLocaleDateString()}</div>
+                                                            <div className="commentText">{comment.comment}</div>
+                                                        </div>
+                                                    
                                                     </CommentCard>
                                                     ))}
                                                 </CommentList>
@@ -1969,19 +2142,26 @@ export function Community(){
                             <div className="createDate">{new Date(item.long_note.created_at).toLocaleDateString()}</div>
                             <div className="nickName">{item.writer}</div>
                             <div className="heart" onClick={(e)=>e.stopPropagation()}>
-                                <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
+                                <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} onClick={()=>clickHeartLong(item.id)}/>
                                 <div className="heartNum">{item.like_count}</div>
                             </div>
-                            <div className="bookmark" onClick={(e)=>e.stopPropagation()}>
+                            {/* <div className="bookmark" onClick={(e)=>e.stopPropagation()}>
                                 <FontAwesomeIcon icon={faBookmark} />
+                            </div> */}
+                            <div className="chat" onClick={(e)=>e.stopPropagation()}>
+                                <span className="material-icons chatIcon" onClick={(e)=>e.stopPropagation()}>
+                                    chat
+                                </span>
+                                <div className="chatNum">{item.comment_count}</div>
                             </div>
-                            <span className="material-icons chatIcon" onClick={(e)=>e.stopPropagation()}>
-                                chat
-                            </span>
                         </div>
                         <div className="bookInfo">
-                            <div className="bookTitle">{item.book.title}</div>
-                            <div className="bookAuthor">{item.book.author}</div>
+                            <img src={item.book.thumbnail} className="bookCover"/>
+                            <div className="bookInfoText">
+                                <div className="bookTitle">{item.book.title}</div>
+                                <div className="bookAuthor">{item.book.author.replace(/[\[\]']+/g, '')}</div>
+                            </div>
+        
                         </div>
                         {clickedWritingIndex === index+4 && (
                                      <LongModalOverlay onClick={closeModal}> {/*모달창 바깥을 눌렀을때 닫히도록*/}
@@ -1998,12 +2178,15 @@ export function Community(){
                                                     <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
                                                     <div className="heartNum">{item.like_count}</div>
                                                 </div>
-                                                <div className="bookmark">
+                                                {/* <div className="bookmark">
                                                     <FontAwesomeIcon icon={faBookmark} />
+                                                </div> */}
+                                                <div className="chat" onClick={(e)=>e.stopPropagation()}>
+                                                    <span className="material-icons chatIcon" onClick={(e)=>e.stopPropagation()}>
+                                                        chat
+                                                    </span>
+                                                    <div className="chatNum">{item.comment_count}</div>
                                                 </div>
-                                                <span className="material-icons chatIcon">
-                                                    chat
-                                                </span>
                                             </div>
                                             <div className="top2">
                                                 <div className="modalCreateDate">{new Date(item.long_note.created_at).toLocaleDateString()}</div>
@@ -2030,7 +2213,7 @@ export function Community(){
                                             </div>
                                             <div className="likeLine">
                                                 <div className="line2"></div>
-                                                <div className="heartBox">
+                                                <div className="heartBox" onClick={()=>clickHeartLong(item.id)}>
                                                     <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
                                                     <div className="likeText">좋아요</div>
                                                 </div>
@@ -2038,10 +2221,12 @@ export function Community(){
                                             </div>
 
                                             <div className="modalBookBox">
-                                                <div className="modalCover"></div>
+                                                <div className='modalInerBox'>
+                                                <img src={item.book.thumbnail} className="modalCover"></img>
                                                 <div className="modalBookInfo">
                                                     <div className="modalBookTitle">{item.book.title}</div>
-                                                    <div className="modalBookAuthor">{item.book.author}</div>
+                                                    <div className="modalBookAuthor">{item.book.author.replace(/[\[\]']+/g, '')}</div>
+                                                </div>
                                                 </div>
                                             </div>
 
@@ -2050,9 +2235,9 @@ export function Community(){
                                             <CommentInputBox>
                                                 <div className="inputLine">
                                                     {/* <div className="commentMyNickName">{item.writer}</div> */}
-                                                    <input type="text" className="commentInput" placeholder="댓글입력"></input>
+                                                    <input type="text" className="commentInput" placeholder="댓글입력" onChange={handleCommentInput}></input>
                                                 </div>
-                                                <button className="submitBtn">등록</button>
+                                                <button className="submitBtn" onClick={()=>submitComment(item.id)}>등록</button>
                                             </CommentInputBox>
 
                                             <PeopleCommentBox>
@@ -2062,6 +2247,7 @@ export function Community(){
                                                 <CommentList>
                                                     {item.comments.map((comment) => (
                                                     <CommentCard key={comment.comment_id}>
+                                                        <img src={faceLogo} className="commentFace"></img>
                                                         <div className="commentNickName">{comment.user}</div>
                                                         <div className="commentCreatedAt">{new Date(comment.created_at).toLocaleDateString()}</div>
                                                         <div className="commentText">{comment.comment}</div>
