@@ -591,7 +591,7 @@ const ShortWritingCard=styled.div`
         //background-color: red;
         
         .nickName{
-        width:80px;
+        width:150px;
         height:50px;
         display:flex;
         flex-direction: row;
@@ -607,7 +607,7 @@ const ShortWritingCard=styled.div`
         font-weight: 600;
         //line-height: 138.5%; /* 18.005px */
         //letter-spacing: 0.252px;
-        //background-color: beige;
+        background-color: beige;
         }
         .heart{
         width:50px;
@@ -784,7 +784,7 @@ const LongWritingCard=styled.div`
 
         
         .nickName{
-            width:80px;
+            width:150px;
             height:50px;
             display:flex;
             flex-direction: row;
@@ -861,14 +861,14 @@ const LongWritingCard=styled.div`
         }
 
         .bookInfoText{
-            width:165px;
+            width:300px;
             height:50px;
             display: flex;
             flex-direction: column;
             margin-left: 20px;
 
             .bookTitle{
-                width:160px;
+                width:300px;
                 height:20px;
                 display: flex;
                 flex-direction: row;
@@ -878,14 +878,14 @@ const LongWritingCard=styled.div`
                 font-size: 12px;
                 font-style: normal;
                 font-weight: 600;
-                //background-color: palegreen;
+                background-color: palegreen;
                 margin: 0; 
                 margin-top: 10px;
                 margin-right:20px;
             }
             .bookAuthor{
-                width:160px;
-                height:20px;
+                width:180px;
+                height:50px;
                 display: flex;
                 flex-direction: row;
                 justify-content: flex-start;
@@ -894,8 +894,7 @@ const LongWritingCard=styled.div`
                 font-size: 12px;
                 font-style: normal;
                 font-weight: 400;
-                //background-color: red;
-                margin-top: 10px; 
+                background-color: red;
                 margin-right:20px;
             }
         }
@@ -1204,8 +1203,22 @@ const LongModalContent = styled.div`
     margin-left: 60px;
     //background-color: beige;
 
+    .modalTitle{
+        color: var(--kakao-logo, #000);
+
+        /* Headline 1/Bold */
+        font-family: "Pretendard JP";
+        font-size: 18px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 144.5%; /* 26.01px */
+        letter-spacing: -0.004px;
+        text-align: left;
+        width:600px;
+    }
+
     .heart{
-        margin-left: 550px;
+       
     }
 
     .bookmark{
@@ -1287,13 +1300,16 @@ const LongModalContent = styled.div`
     //background-color:aqua;
 
     .modalLongWriting{
-        width:800px;
-        height:490px;
+        overflow: auto;
+        width:810px;
+        height:500px;
         display: flex;
         flex-direction: row;
         justify-content: center;
         align-items: center;
         margin-left: 10px;
+        line-height: 200%;
+        text-align: left;
         //background-color: beige;
     }
 
