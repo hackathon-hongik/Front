@@ -351,7 +351,7 @@ export function Recommend() {
                 {isCheck && (
                   <div className="toggleList">
                   <p onClick={()=>handleItemClick('/afterlogin/changenickname',token)}>닉네임 변경</p>
-                  <p>로그아웃</p>
+                  <p onClick={handleLogOut}>로그아웃</p>
                   </div>
                 )}
               </div>

@@ -298,6 +298,7 @@ const location = useLocation();
 const token = location.state?.token || '';
 const isbn = location.state?.isbn || '';
 const [bookData, setBookData] = useState([]);
+const refresh=location.state?.refresh||'';
 
 const fetchBookData = async () => {
   try {
@@ -308,6 +309,7 @@ const fetchBookData = async () => {
     });
     setBookData(response.data);
     console.log(response);
+    console.log(bookData);
 
   } catch (error) {
     console.log('Failed to fetch book data:', error);
@@ -370,8 +372,8 @@ const addBook=async(isbn,title,author,thumbnail,content,publisher,date)=>{
   }
 }
 
-const handleItemClick=(path,token,isbn)=>{
-  navigate(path,{state:{token,isbn}});
+const handleItemClick=(path,token,refresh,isbn)=>{
+  navigate(path,{state:{token,refresh,isbn}});
 };
 
       
@@ -381,21 +383,42 @@ const handleAddClick=(isbn,title,author,thumbnail,content,publisher,date,token)=
   
 };
 
+const handleLogOut=async()=>{
+  try{
+      const newRefresh={
+          refresh: refresh
+      }
+      const response=await axiosInstance.post('/auth/logout/',newRefresh,{
+          headers:{
+              Authorization: `Bearer ${token}`
+          }
+      });
+      handleItemClick('/');
+      console.log(response);
+  }
+  catch(e){
+      console.log(e);
+      alert("로그아웃 실패");
+  }
+}
+
+
+
     return(
         <AppContainer>
             <NoteContainer>
                   <Header>
-                  <Logo src ={logo} onClick={()=>handleItemClick('/afterlogin',token)}/>
+                  <Logo src ={logo} onClick={()=>handleItemClick('/afterlogin',token,refresh)}/>
                     <Nav>
-                    <li><a onClick={() => handleItemClick("/afterlogin/mylibrary",token)}>내 서재</a></li>
-                    <li><a onClick={() => handleItemClick("/afterlogin/community",token)}>커뮤니티</a></li>
+                    <li><a onClick={() => handleItemClick("/afterlogin/mylibrary",token,refresh)}>내 서재</a></li>
+                    <li><a onClick={() => handleItemClick("/afterlogin/community",token,refresh)}>커뮤니티</a></li>
                       <li>
                          <ButtonToggle>
                            <MypageBtn onClick={() => { setCheck((e) => !e) }}>마이페이지</MypageBtn>
                              {isCheck && (
                                 <ToggleList>
-                                  <p onClick={()=>handleItemClick('/afterlogin/changenickname',token)}>닉네임 변경</p>
-                                  <p>로그아웃</p>
+                                  <p onClick={()=>handleItemClick('/afterlogin/changenickname',token,refresh)}>닉네임 변경</p>
+                                  <p onClick={handleLogOut}>로그아웃</p>
                                 </ToggleList>
                               )}
                          </ButtonToggle>
@@ -406,13 +429,13 @@ const handleAddClick=(isbn,title,author,thumbnail,content,publisher,date,token)=
 
                   
                   <SubNav>
-                        <SubNavItem active={activeSubNav === 'bookinfo'} onClick={() => { handleItemClick("/afterlogin/thisbook",token,isbn); setActiveSubNav('bookinfo'); }}>
+                        <SubNavItem active={activeSubNav === 'bookinfo'} onClick={() => { handleItemClick("/afterlogin/thisbook",token,refresh,isbn); setActiveSubNav('bookinfo'); }}>
                         {activeSubNav === 'bookinfo' && <img src={info} alt="active" />}
                         책 정보보기</SubNavItem>
-                        <SubNavItem active={activeSubNav === 'record'} onClick={() => { handleItemClick("/afterlogin/note",token,isbn); setActiveSubNav('record'); }}>
+                        <SubNavItem active={activeSubNav === 'record'} onClick={() => { handleItemClick("/afterlogin/note",token,refresh,isbn); setActiveSubNav('record'); }}>
                         {activeSubNav === 'record' && <img src={noteImage} alt="active" />}
                         기록하기</SubNavItem>
-                        <SubNavItem active={activeSubNav === 'myrecords'} onClick={() => { handleItemClick("/afterlogin/looknote",token,isbn); setActiveSubNav('myrecords'); }}>
+                        <SubNavItem active={activeSubNav === 'myrecords'} onClick={() => { handleItemClick("/afterlogin/looknote",token,refresh,isbn); setActiveSubNav('myrecords'); }}>
                         {activeSubNav === 'myrecords' && <img src={contract} alt="active" />}
                         내 기록보기</SubNavItem>
                   </SubNav>  

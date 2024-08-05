@@ -1628,6 +1628,7 @@ export function Community(){
     const [refreshShortHearts, setRefreshShortHearts] = useState(false);
     const [refreshLongHearts, setRefreshLongHearts] = useState(false);
     const token = location.state?.token || '';
+    const refresh = location.state?.refresh || '';
 
     useEffect(() => {
         fetchShortData();
@@ -1642,8 +1643,8 @@ export function Community(){
          fetchShortData();
      }, [refreshShortHearts]);
 
-    const handleItemClick=(path,token,isbn)=>{
-        navigate(path,{state:{token,isbn}});
+    const handleItemClick=(path,token,refresh,isbn)=>{
+        navigate(path,{state:{token,refresh,isbn}});
     };
     
       const fetchShortData=async()=>{
@@ -1766,25 +1767,44 @@ export function Community(){
             console.log(e);
         }
     }
+
+    const handleLogOut=async()=>{
+        try{
+            const newRefresh={
+                refresh: refresh
+            }
+            const response=await axiosInstance.post('/auth/logout/',newRefresh,{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            handleItemClick('/');
+            console.log(response);
+        }
+        catch(e){
+            console.log(e);
+            alert("로그아웃 실패");
+        }
+    }
     return(
         <CommunityPage>
             <Header>
-                <img className="logo" src ={logo} onClick={()=>handleItemClick('/afterlogin',token)}/>
+                <img className="logo" src ={logo} onClick={()=>handleItemClick('/afterlogin',token,refresh)}/>
 
                 <ul className="nav">
                     <li>
-                    <a onClick={() => handleItemClick('/afterlogin/mylibrary',token)}>내 서재</a>
+                    <a onClick={() => handleItemClick('/afterlogin/mylibrary',token,refresh)}>내 서재</a>
                     </li>
                     <li>
-                    <a className="orangeText" onClick={() => handleItemClick("/afterlogin/community",token)}>커뮤니티</a>
+                    <a className="orangeText" onClick={() => handleItemClick("/afterlogin/community",token,refresh)}>커뮤니티</a>
                     </li>
                     <li>
                     <div className="buttonToggle">
                         <button className="mypageBtn" onClick={() => { setCheck((e) => !e) }}>마이페이지</button>
                         {isCheck && (
                         <div className="toggleList">
-                        <p onClick={()=>handleItemClick('/afterlogin/changenickname',token)}>닉네임 변경</p>
-                        <p>로그아웃</p>
+                        <p onClick={()=>handleItemClick('/afterlogin/changenickname',token,refresh)}>닉네임 변경</p>
+                        <p onClick={handleLogOut}>로그아웃</p>
                         </div>
                         )}
                     </div>
@@ -1895,7 +1915,7 @@ export function Community(){
                 ))}
             </ShortWritingList>
             
-            <OrangeBanner onClick={()=>handleItemClick("/afterlogin/recommendation",token)}>
+            <OrangeBanner onClick={()=>handleItemClick("/afterlogin/recommendation",token,refresh)}>
                 <div className="text3">
                     <p className="first_row">당신의 고민에 맞는</p>
                     <p className="second_row">책 추천 받기</p>
@@ -2124,7 +2144,7 @@ export function Community(){
                     ))}
                 </LongWritingList>
 
-                <OrangeBanner onClick={()=>handleItemClick("/afterlogin/recommendation",token)}>
+                <OrangeBanner onClick={()=>handleItemClick("/afterlogin/recommendation",token,refresh)}>
                     <div className="text3">
                         <p className="first_row">당신의 고민에 맞는</p>
                         <p className="second_row">책 추천 받기</p>

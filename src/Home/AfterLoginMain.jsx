@@ -199,19 +199,19 @@ export function AfterLoginMain(){
     return( 
         <div className="mainPage2">
             <div className="header">
-                <img className="logo" src ={logo} onClick={()=>handleItemClick('/afterlogin',token)}/>
+                <img className="logo" src ={logo} onClick={()=>handleItemClick('/afterlogin',token,refresh)}/>
 
 
                 <ul className="nav">
-                    <li><a onClick={()=>handleItemClick('/afterlogin/mylibrary',token)}>내 서재</a></li>
-                    <li><a onClick={()=>handleItemClick("/afterlogin/community",token)}>커뮤니티</a></li>
+                    <li><a onClick={()=>handleItemClick('/afterlogin/mylibrary',token,refresh)}>내 서재</a></li>
+                    <li><a onClick={()=>handleItemClick("/afterlogin/community",token,refresh)}>커뮤니티</a></li>
                     <li>
                         <div className="buttonToggle">
                             <button className="mypageBtn" onClick={()=>{setCheck((e)=>!e)}}>마이페이지</button>
                             {isCheck &&(
                                 <div className="toggleList">
-                                    <p onClick={()=>handleItemClick('/afterlogin/changenickname',token)}>닉네임 변경</p>
-                                    <p>로그아웃</p>     
+                                    <p onClick={()=>handleItemClick('/afterlogin/changenickname',token,refresh)}>닉네임 변경</p>
+                                    <p onClick={handleLogOut}>로그아웃</p>     
                             </div>
                             )}
                         </div>
@@ -263,8 +263,8 @@ export function AfterLoginMain(){
                                 </div>
                             </div>
                             <div className="buttons">
-                                <button className="toMyShelf" onClick={()=>handleItemClick('/afterlogin/thisbook',token,isbn[index])}>내 서재 가기</button>
-                                <button className="record" onClick={()=>handleItemClick('/afterlogin/note',token,isbn[index])}>바로 기록하기</button>
+                                <button className="toMyShelf" onClick={()=>handleItemClick('/afterlogin/thisbook',token,refresh,isbn[index])}>내 서재 가기</button>
+                                <button className="record" onClick={()=>handleItemClick('/afterlogin/note',token,refresh,isbn[index])}>바로 기록하기</button>
                             </div>
                         </div>))}
 
@@ -291,7 +291,7 @@ export function AfterLoginMain(){
 
                     <div className="gotoMyShelfBox">
                         {/* <button className="gotoMyShelfBtn" onClick={()=>handleItemClick('/afterlogin/mylibrary')}>{">"}</button> */}
-                        <span className="material-icons right-arrow-icon2" onClick={()=>handleItemClick('/afterlogin/mylibrary',token)}>
+                        <span className="material-icons right-arrow-icon2" onClick={()=>handleItemClick('/afterlogin/mylibrary',token,refresh)}>
                             arrow_circle_right
                         </span>
                         <div className="text5">

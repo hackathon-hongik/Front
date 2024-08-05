@@ -563,6 +563,7 @@ export function Note() {
   const location = useLocation();
   const token = location.state?.token || '';
   const isbn=location.state?.isbn || '';
+  const refresh=location.state?.refresh||'';
   //const {isbn} = location.state|| {isbn:[]};
 
   // useEffect(() => {
@@ -582,8 +583,8 @@ export function Note() {
     console.log(isbn);   //화면 처음 랜더링 될때 찜한 정보들 띄우기
 },[]);
 
-  const handleItemClick=(path,token,isbn)=>{
-    navigate(path,{state:{token,isbn}});
+  const handleItemClick=(path,token,refresh,isbn)=>{
+    navigate(path,{state:{token,refresh,isbn}});
 };
 
 //감정 선택
@@ -641,6 +642,24 @@ const handleLongCommentChange = (event) => {
   setLongComment(event.target.value);
 };
 
+const handleLogOut=async()=>{
+  try{
+      const newRefresh={
+          refresh: refresh
+      }
+      const response=await axiosInstance.post('/auth/logout/',newRefresh,{
+          headers:{
+              Authorization: `Bearer ${token}`
+          }
+      });
+      handleItemClick('/');
+      console.log(response);
+  }
+  catch(e){
+      console.log(e);
+      alert("로그아웃 실패");
+  }
+}
 
   // 짧은기록 넘겨주기 함수 
   const handleShortNoteSubmit = async (memberId, myBookId) => {
@@ -703,17 +722,17 @@ const handleLongCommentChange = (event) => {
     <AppContainer>
       <NoteContainer>
         <Header>
-            <Logo src ={logo} onClick={()=>handleItemClick('/afterlogin',token)}/>
+            <Logo src ={logo} onClick={()=>handleItemClick('/afterlogin',token,refresh)}/>
         <Nav>
-          <li><a onClick={() => handleItemClick("/afterlogin/mylibrary",token)}>내 서재</a></li>
-          <li><a onClick={() => handleItemClick("/afterlogin/community",token)}>커뮤니티</a></li>
+          <li><a onClick={() => handleItemClick("/afterlogin/mylibrary",token,refresh)}>내 서재</a></li>
+          <li><a onClick={() => handleItemClick("/afterlogin/community",token,refresh)}>커뮤니티</a></li>
           <li>
             <ButtonToggle>
               <MypageBtn onClick={() => { setCheck((e) => !e) }}>마이페이지</MypageBtn>
               {isCheck && (
                 <ToggleList>
-                  <p onClick={()=>handleItemClick('/afterlogin/changenickname',token)}>닉네임 변경</p>
-                  <p>로그아웃</p>
+                  <p onClick={()=>handleItemClick('/afterlogin/changenickname',token,refresh)}>닉네임 변경</p>
+                  <p onClick={handleLogOut}>로그아웃</p>
                 </ToggleList>
               )}
             </ButtonToggle>
@@ -722,13 +741,13 @@ const handleLongCommentChange = (event) => {
       </Header>
 
       <SubNav>
-          <SubNavItem active={activeSubNav === 'bookinfo'} onClick={() => { handleItemClick("/afterlogin/thisbook",token,isbn); setActiveSubNav('bookinfo'); }}>
+          <SubNavItem active={activeSubNav === 'bookinfo'} onClick={() => { handleItemClick("/afterlogin/thisbook",token,refresh,isbn); setActiveSubNav('bookinfo'); }}>
                         {activeSubNav === 'bookinfo' && <img src={info} alt="active" />}
                         책 정보보기</SubNavItem>
-          <SubNavItem active={activeSubNav === 'record'} onClick={() => { handleItemClick("/afterlogin/note",token,isbn); setActiveSubNav('record'); }}>
+          <SubNavItem active={activeSubNav === 'record'} onClick={() => { handleItemClick("/afterlogin/note",token,refresh,isbn); setActiveSubNav('record'); }}>
                         {activeSubNav === 'record' && <img src={noteImage} alt="active" />}
                         기록하기</SubNavItem>
-          <SubNavItem active={activeSubNav === 'myrecords'} onClick={() => { handleItemClick("/afterlogin/looknote",token,isbn); setActiveSubNav('myrecords'); }}>
+          <SubNavItem active={activeSubNav === 'myrecords'} onClick={() => { handleItemClick("/afterlogin/looknote",token,refresh,isbn); setActiveSubNav('myrecords'); }}>
                         {activeSubNav === 'myrecords' && <img src={contract} alt="active" />}
                         내 기록보기</SubNavItem>
       </SubNav>  
