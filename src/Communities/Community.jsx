@@ -1720,24 +1720,24 @@ export function Community(){
     
     const shortGoToPrevious = () => {
         setClickedWritingIndex(prevIndex =>
-            prevIndex === 0 ? short.length - 1 : prevIndex - 1
+            prevIndex === 0 ? shortWritings.length - 1 : prevIndex - 1
         );
     };
 
     const shortGoToNext = () => {
         setClickedWritingIndex(prevIndex =>
-            prevIndex === short.length - 1 ? 0 : prevIndex + 1
+            prevIndex === shortWritings.length - 1 ? 0 : prevIndex + 1
         );
     };
     const longGoToPrevious = () => {
         setClickedWritingIndex(prevIndex =>
-            prevIndex === 0 ? long.length - 1 : prevIndex - 1
+            prevIndex === 0 ? longWritings.length - 1 : prevIndex - 1
         );
     };
 
     const longGoToNext = () => {
         setClickedWritingIndex(prevIndex =>
-            prevIndex === long.length - 1 ? 0 : prevIndex + 1
+            prevIndex === longWritings.length - 1 ? 0 : prevIndex + 1
         );
     };
 
