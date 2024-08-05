@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import React from "react";
 import styled from "styled-components";
 import findLogo from "../assets/findLogo.png";
+import logo from "../assets/Logo.png";
 import {bookAPI} from "../api";
 import { axiosInstance } from '../api';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

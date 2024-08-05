@@ -7,6 +7,7 @@ import styled from "styled-components";
 import findLogo from "../assets/findLogo.png";
 import {bookAPI} from "../api";
 import { axiosInstance } from '../api';
+import logo from "../assets/Logo.png";
 
     
 
@@ -45,14 +46,11 @@ const Header = styled.div`
   background: linear-gradient(0deg, rgba(26, 54, 54, 0.04) 0%, rgba(26, 54, 54, 0.04) 100%), #FFF;
 `;
 
-const Logo = styled.div`
-  width: 64px;
-  height: 48px;
-  display: flex;
-  justify-content: center;  
-  align-items: center;  
-  background-color: grey;
-  margin-left: 118px;
+const Logo = styled.img`
+    width: 145px;
+    height: 44px;
+    margin-top:58px;
+    background: linear-gradient(0deg, rgba(26, 54, 54, 0.04) 0%, rgba(26, 54, 54, 0.04) 100%), #FFF;
 `;
 
 const Nav = styled.div`
@@ -108,14 +106,15 @@ const ButtonToggle = styled.div`
 `;
 
 const ToggleList = styled.div`
-  width: 112px;
-  height: 210px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: absolute;
-  border-radius: 8px 8px 0px 0px;
-  background: #fff;
+    width:112px;
+    height:110px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    border-radius: 8px 8px 0px 0px;
+    background: #FFF;
+
 `;
 
 
@@ -210,7 +209,7 @@ const Button = styled.button`
     gap: 10px;
     flex-shrink: 0;
 
-        color: #FFF;
+    color: #FFF;
     text-align: center;
     font-feature-settings: 'ss10' on;
 
@@ -284,9 +283,7 @@ const handleItemClick=(path,token,isbn)=>{
         <ChangeNickNamePage>
               <NoteContainer>
                 <Header>
-                    <Logo>
-                  <p onClick={()=>handleItemClick('/afterlogin',token)}>로고</p>
-                    </Logo>
+                    <Logo src ={logo} onClick={()=>handleItemClick('/afterlogin',token)}/>
                 <Nav>
                   <li><a onClick={() => handleItemClick("/afterlogin/mylibrary",token)}>내 서재</a></li>
                   <li><a onClick={() => handleItemClick("/afterlogin/community",token)}>커뮤니티</a></li>
@@ -295,10 +292,8 @@ const handleItemClick=(path,token,isbn)=>{
                       <MypageBtn onClick={() => { setCheck((e) => !e) }}>마이페이지</MypageBtn>
                       {isCheck && (
                         <ToggleList>
-                          <p>닉네임 변경</p>
-                          <p>1:1 문의</p>
-                          <p>로그아웃</p>
-                          <p>회원탈퇴</p>
+                        <p onClick={()=>handleItemClick('/afterlogin/changenickname',token)}>닉네임 변경</p>
+                        <p>로그아웃</p>
                         </ToggleList>
                       )}
                     </ButtonToggle>

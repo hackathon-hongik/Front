@@ -8,7 +8,7 @@
     background: linear-gradient(0deg, rgba(26, 54, 54, 0.04) 0%, rgba(26, 54, 54, 0.04) 100%), #FFF;
 }
 .header{
-    width:1200px;
+    width:1620px;
     height:120px;
     display: flex;
     flex-direction: row;
@@ -16,12 +16,13 @@
 }
 
 .logo{
-    width:64px;
-    height: 48px;
+    width: 145px;
+    height: 44px;
     margin-top:58px;
-    margin-left: 90px;
-    background-color: grey;
-}
+    margin-left: 100px;
+    background: linear-gradient(0deg, rgba(26, 54, 54, 0.04) 0%, rgba(26, 54, 54, 0.04) 100%), #FFF;
+    }
+
 
 .nav{
     width:600px;
@@ -30,7 +31,7 @@
     flex-direction: row;
     align-items: center;
     margin-top:45px;
-    margin-left: 650px;
+    margin-left: 1000px;
     /* background-color: antiquewhite; */
 }
 
@@ -62,7 +63,7 @@
     gap: 8px;
     border-radius: 20px;
     color: #FFF;
-
+    border: none;
     text-align: center;
     font-feature-settings: 'ss10' on;
     font-family: "Pretendard JP";
@@ -76,14 +77,16 @@
 }
 
 .toggleList{
+
     width:112px;
-    height:210px;
+    height:110px;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: absolute;
     border-radius: 8px 8px 0px 0px;
     background: #FFF;
+
 }
 .text1{
     width:480px;

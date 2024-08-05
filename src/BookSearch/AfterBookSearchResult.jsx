@@ -6,6 +6,7 @@ import styled from "styled-components";
 import findLogo from "../assets/findLogo.png";
 import {bookAPI} from "../api";
 import { axiosInstance } from '../api';
+import logo from "../assets/Logo.png";
 
 const API_KEY=process.env.REACT_APP_KAKAO_BOOK_API_KEY;
 
@@ -75,12 +76,13 @@ const Header=styled.div`
     display: flex;
     flex-direction: row;
     /*background-color: aqua;*/
+
     .logo{
-    width:64px;
-    height: 48px;
+    width: 145px;
+    height: 44px;
     margin-top:58px;
     margin-left: 300px;
-    background-color: grey;
+    background: linear-gradient(0deg, rgba(26, 54, 54, 0.04) 0%, rgba(26, 54, 54, 0.04) 100%), #FFF;
     }
 
     .nav{
@@ -130,7 +132,7 @@ const Header=styled.div`
     gap: 8px;
     border-radius: 20px;
     color: #FFF;
-
+    border: none;
     text-align: center;
     font-feature-settings: 'ss10' on;
     font-family: "Pretendard JP";
@@ -145,7 +147,7 @@ const Header=styled.div`
 
     .toggleList{
     width:112px;
-    height:210px;
+    height:110px;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -633,10 +635,7 @@ export function AfterBookSearchResult(){  //로그인 전 책 검색하면 나�
         
         <ResultPage>
             <Header>
-                <div className="logo">
-                    <p onClick={()=>handleItemClick('/afterlogin',token)}>로고</p>
-                </div>
-
+                <img className="logo" src ={logo} onClick={()=>handleItemClick('/afterlogin',token)}/>
                 <ul className="nav">
                     <li><a className="orangeText" onClick={()=>handleItemClick('/afterlogin/mylibrary',token)}>내 서재</a></li>
                     <li><a onClick={()=>handleItemClick('/afterlogin/community')}>커뮤니티</a></li>
@@ -646,9 +645,7 @@ export function AfterBookSearchResult(){  //로그인 전 책 검색하면 나�
                             {isCheck &&(
                                 <div className="toggleList">
                                     <p onClick={()=>handleItemClick('/afterlogin/changenickname',token)}>닉네임 변경</p>
-                                    <p>1:1 문의</p>
                                     <p>로그아웃</p>
-                                    <p>회원탈퇴</p>
                                 </div>
                             )}
                          </div>

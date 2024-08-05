@@ -6,11 +6,13 @@ import findLogo from "../assets/findLogo.png";
 import greenpic from "../assets/greenpic.png";
 import pluspic from "../assets/pluspic.png";
 import blurpic from "../assets/blurpic.png";
+import logo from "../assets/Logo.png";
 import orange_banner from "../assets/orange_banner.png";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import {bookAPI} from "../api";
+
 
 const API_KEY=process.env.REACT_APP_KAKAO_BOOK_API_KEY;
 
@@ -139,9 +141,9 @@ export function BeforeLoginMain(){
     return( 
         <div className="mainPage1">
             <div className="header">
-                <div className="logo">
-                    <p>로고</p>
-                </div>
+
+            <img className="logo" src ={logo} onClick={()=>handleItemClick('/beforelogin')}/>
+
 
                 <ul className="nav">
                     <li><a onClick={()=>handleItemClick("/login")}>내 서재</a></li>

@@ -4,35 +4,72 @@ import {useNavigate} from "react-router-dom";
 import { axiosInstance } from "../api";
 import styled from "styled-components";
 import kakao from "../assets/kakaoLogin_pic.png";
+import loginLogo from "../assets/로그인로고.png";
+import bookImage from "../assets/로그인책장.png";
 
 const LoginPage=styled.div`
+
     width:1620px;
-    height:900px;
+    height:1000px;
     display:flex;
-    flex-direction:row;
+    flex-direction:column;
+    align-items: center;
     margin:auto;
+    font-family: "Pretendard JP";
+    background-color: #FFFFFF;
+
+    .LoginSet{
+        display:flex;
+        flex-direction:row;
+
+    }
+
 
     .orangeX{
-        width:800px;
-        height:930px;
+        width:820px;
+        height:1000px;
         background-color:#FF6E23;
+        display:flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-between;
+        
 
-        .Btn{
-            width:80px;
-            height:80px;
-            border-radius: 8px;
-            background: #FFF;
-            margin:64px;
+        .loginLogo{
+            width:300px;
+            height:90px;
+            background-color: #FF6E23;
+            margin-top: 260px;
+
         }
+        
+        .bookImage{
+            width:550px;
+            height:400px;
+            background-color: #FF6E23;
+        }
+
     }
     
     .realLogin{
-        width:820px;
-        height:900px;
+        width:800px;
+        height:1000px;
         display:flex;
         flex-direction:column;
         align-items:center;
-        margin-top: 80px;
+
+        .Xbar{
+        width: 820px;
+        display: flex;
+        margin-top: 20px;
+        flex-direction: flex-end;
+        margin-bottom: 80px;
+        }
+
+        .close{
+        font-size: 33px;
+        margin-left: 750px;
+        }
 
         p{
             color: var(--kakao-logo, #000);
@@ -88,18 +125,28 @@ const LoginPage=styled.div`
             width: 400px;
             height: 64px;
             border-radius: 8px;
-            border: 2px solid #FF6E23;
+            border: 2px solid ${props => (props.hasValue ? '#FF6E23' : '#ccc')};
             background: #FFF;
             margin-top: 40px;
+
+                &:focus {
+                border-color: #FF6E23;
+                outline: none;
+                }
         }
 
         .pwInput{
             width: 400px;
             height: 64px;
             border-radius: 8px;
-            border: 2px solid #FF6E23;
+            border: 2px solid ${props => (props.hasValue ? '#FF6E23' : '#ccc')};
             background: #FFF;
             margin-top: 20px;
+
+            &:focus {
+                border-color: #FF6E23;
+                outline: none;
+                }
         }
 
         .loginBtn{
@@ -112,8 +159,19 @@ const LoginPage=styled.div`
             gap: 10px;
             flex-shrink: 0;
             border-radius: 8px;
-            background: #FF6E23;
             margin-top:90px;
+
+
+            background-color: ${props => (props.hasValue ? '#FF6E23' : '#ccc')};
+            color: white;
+
+            &:disabled {
+                cursor: not-allowed;
+              }
+
+                &:hover {
+                background-color: ${props => (props.hasValue ? '#FF6E23' : '#ccc')};
+            }
         }
 
         .textBtn{
@@ -145,12 +203,79 @@ const LoginPage=styled.div`
                 font-weight: 600;
                 line-height: 144.5%;
                 letter-spacing: -0.004px;
+                margin-left: 20px;
                 cursor:pointer;
             }
         }
     }
 
 `;
+
+
+
+const Input = styled.input`
+  width: 400px;
+  height: 32px;
+  padding: 19px 32px;
+  border: 2px solid ${props => (props.hasValue ? '#FF6E23' : '#ccc')};
+  border-radius: 5px;
+  margin-bottom: 40px;
+  font-size: 16px;
+  
+  &::placeholder {
+    color: #808080;
+    font-family: "Pretendard JP";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 144.5%; /* 26.01px */
+    letter-spacing: -0.004px;
+  }
+
+  &:focus {
+    border-color: #FF6E23;
+    outline: none;
+  }
+`;
+
+const Button = styled.button` 
+  width: 400px;
+  height: 64px;
+  border-radius: 8px;
+  background-color: ${props => (props.hasValue ? '#FF6E23' : '#ccc')};
+  color: white;
+  border: none;
+  cursor: pointer;
+    display: flex;
+    width: 480px;
+    height: 64px;
+    padding: 18px 174px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+
+    color: #FFF;
+    text-align: center;
+    font-feature-settings: 'ss10' on;
+
+    /* Heading 2/Bold */
+    font-family: "Pretendard JP";
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 140%; /* 28px */
+    letter-spacing: -0.24px;
+
+    &:disabled {
+        cursor: not-allowed;
+    }
+
+    &:hover {
+    background-color: ${props => (props.hasValue ? '#FF6E23' : '#ccc')};
+  }
+`;
+
 
 export function Login(){
     const[id,setId]=useState("");
@@ -207,29 +332,41 @@ export function Login(){
 
         return(
         <LoginPage>
+            <div className="LoginSet">
             <div className="orangeX">
-                <button className="Btn" onClick={()=>navigate("/")}>X</button>
+                <img className="loginLogo" src={loginLogo}/>
+                <img className="bookImage" src={bookImage}/>
             </div>
             <div className="realLogin">
+                <div className="Xbar">
+                    <span className="material-icons close" onClick={()=>navigate("/")}>
+                        close
+                    </span>
+                </div>
                 <p>로그인</p>
-                {/* <img src={kakao} alt="login" className="kakaoLoginBtn" onClick={handleLogin}/> */}
-                {/* <div className="text1">
-                    <div className="line">
-
-                    </div>
-                    <p>또는 이메일로 로그인</p>
-                    <div className="line">
-
-                    </div>
-                </div> */}
-                <input type="text" className="idInput" value={id} placeholder="아이디 입력" onChange={handleIdChange} onKeyDown={handleKeyDown}></input>
-                <input type="text" className="pwInput" value={password} placeholder="비밀번호 입력" onChange={handlePwChange} onKeyDown={handleKeyDown}></input>
-                <button className="loginBtn" onClick={handleLoginClick} >로그인</button>
+                <Input
+                        type="text"
+                        value={id}
+                        onChange={handleIdChange}
+                        placeholder="아이디 입력"
+                        onKeyDown={handleKeyDown}
+                        hasValue={id.length > 0}
+                        />
+                <Input
+                        type="text"
+                        value={password}
+                        onChange={handlePwChange}
+                        placeholder="비밀번호 입력"
+                        onKeyDown={handleKeyDown}
+                        hasValue={password.length > 0}
+                        />
+                <Button type="submit" onClick={handleLoginClick} hasValue={id.length > 0 && password.length > 0} disabled={id.length === 0 || password.length === 0}>로그인</Button>
                 <div className="textBtn">
                     <p>회원이 아니신가요?</p>
                     <p className="gotoJoinBtn" onClick={()=>navigate("/join")}>회원가입</p>
                 </div>
             </div>
+           </div>
         </LoginPage>
         
         );

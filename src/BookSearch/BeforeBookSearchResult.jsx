@@ -5,6 +5,7 @@ import React from "react";
 import styled from "styled-components";
 import findLogo from "../assets/findLogo.png";
 import {bookAPI} from "../api";
+import logo from "../assets/Logo.png";
 
 const API_KEY=process.env.REACT_APP_KAKAO_BOOK_API_KEY;
 
@@ -75,11 +76,11 @@ const Header=styled.div`
     flex-direction: row;
     /*background-color: aqua;*/
     .logo{
-    width:64px;
-    height: 48px;
+    width: 145px;
+    height: 44px;
     margin-top:58px;
     margin-left: 300px;
-    background-color: grey;
+    background: linear-gradient(0deg, rgba(26, 54, 54, 0.04) 0%, rgba(26, 54, 54, 0.04) 100%), #FFF;
     }
 
     .nav{
@@ -129,7 +130,7 @@ const Header=styled.div`
     gap: 8px;
     border-radius: 20px;
     color: #FFF;
-
+    border: none;
     text-align: center;
     font-feature-settings: 'ss10' on;
     font-family: "Pretendard JP";
@@ -143,14 +144,15 @@ const Header=styled.div`
     }
 
     .toggleList{
-    width:112px;
-    height:210px;
+        width:112px;
+    height:110px;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: absolute;
     border-radius: 8px 8px 0px 0px;
     background: #FFF;
+
     }
 `;
 
@@ -430,6 +432,7 @@ export function BeforeBookSearchResult(){  //로그인 전 책 검색하면 나�
     const[printNewSearchWord,setPrintNewSearchWord]=useState(""); //책 제목을 입력하고 있을때 화면에 실시간으로 나타나게 하지 않기 위해 프린트용으로 배치
     const [bookResults, setBookResults] = useState([]);
     const [num,setNum]=useState(0);
+    const token = location.state?.token || '';
    
 
     const searchData=async(query)=>{ 
@@ -510,9 +513,7 @@ export function BeforeBookSearchResult(){  //로그인 전 책 검색하면 나�
         
         <ResultPage>
             <Header>
-                <div className="logo">
-                    <p>로고</p>
-                </div>
+                    <img className="logo" src ={logo} onClick={()=>handleItemClick('/afterlogin',token)}/>
 
                 <ul className="nav">
                     <li><a className="orangeText" onClick={()=>handleAlert('/login')}>내 서재</a></li>
@@ -522,10 +523,8 @@ export function BeforeBookSearchResult(){  //로그인 전 책 검색하면 나�
                             <button className="mypageBtn" onClick={()=>{setCheck((e)=>!e)}}>마이페이지</button>
                             {isCheck &&(
                                 <div className="toggleList">
-                                    <p>닉네임 변경</p>
-                                    <p>1:1 문의</p>
-                                    <p>로그아웃</p>
-                                    <p>회원탈퇴</p>
+                                <p onClick={()=>handleItemClick('/afterlogin/changenickname',token)}>닉네임 변경</p>
+                                <p>로그아웃</p>
                                 </div>
                             )}
                          </div>

@@ -3,6 +3,7 @@ import {useNavigate} from "react-router-dom";
 import { axiosInstance } from "../api";
 import styled from "styled-components";
 import { useLocation } from 'react-router-dom';
+import logo from "../assets/Logo.png";
 
 
 
@@ -105,12 +106,13 @@ const LibraryPage=styled.div`
     flex-direction: row;
     /*background-color: aqua;*/
     .logo{
-    width:64px;
-    height: 48px;
+    width: 145px;
+    height: 44px;
     margin-top:58px;
     margin-left: 300px;
-    background-color: grey;
+    background: linear-gradient(0deg, rgba(26, 54, 54, 0.04) 0%, rgba(26, 54, 54, 0.04) 100%), #FFF;
     }
+
 
     .nav{
     width:500px;
@@ -159,7 +161,7 @@ const LibraryPage=styled.div`
     gap: 8px;
     border-radius: 20px;
     color: #FFF;
-
+    border: none;
     text-align: center;
     font-feature-settings: 'ss10' on;
     font-family: "Pretendard JP";
@@ -174,13 +176,14 @@ const LibraryPage=styled.div`
 
     .toggleList{
     width:112px;
-    height:210px;
+    height:110px;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: absolute;
     border-radius: 8px 8px 0px 0px;
     background: #FFF;
+
     }
 `;
 
@@ -684,9 +687,9 @@ export function MyLibrary(){  //내 서재 페이지
     return(
         <LibraryPage>
            <Header>
-                <div className="logo">
-                    <p onClick={()=>handleItemClick('/afterlogin',token)}>로고</p>
-                </div>
+
+           <img className="logo" src ={logo} onClick={()=>handleItemClick('/afterlogin',token)}/>
+
 
                 <ul className="nav">
                     <li><a className="orangeText" onClick={()=>handleItemClick('/afterlogin/mylibrary',token)}>내 서재</a></li>
@@ -697,9 +700,7 @@ export function MyLibrary(){  //내 서재 페이지
                             {isCheck &&(
                                 <div className="toggleList">
                                 <p onClick={()=>handleItemClick('/afterlogin/changenickname',token)}>닉네임 변경</p>
-                                <p>1:1 문의</p>
                                 <p>로그아웃</p>
-                                <p>회원탈퇴</p>
                             </div>
                             )}
                         </div>

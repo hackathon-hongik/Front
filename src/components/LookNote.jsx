@@ -17,7 +17,7 @@ import sadImage from '../assets/슬퍼요.png';
 import worriedImage from '../assets/걱정돼요.png';
 import qImage from '../assets/Q.png';
 import aImage from '../assets/A.png';
-
+import logo from "../assets/Logo.png";
 
 
 export const getShortNotes = async (memberId, isbn) => {
@@ -99,15 +99,14 @@ const Header = styled.div`
   padding: 0 20px;
 `;
 
-const Logo = styled.div`
-  width: 64px;
-  height: 48px;
-  display: flex;
-  justify-content: center;  
-  align-items: center;  
-  background-color: grey;
-  margin-left: 118px;
+const Logo = styled.img`
+    width: 145px;
+    height: 44px;
+    margin-top:58px;
+    background: #FFF;
+
 `;
+
 
 const Nav = styled.div`
   height: 50px;
@@ -162,14 +161,16 @@ const ButtonToggle = styled.div`
 `;
 
 const ToggleList = styled.div`
-  width: 112px;
-  height: 210px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  position: absolute;
-  border-radius: 8px 8px 0px 0px;
-  background: #fff;
+
+    width:112px;
+    height:110px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: absolute;
+    border-radius: 8px 8px 0px 0px;
+    background: #FFF;
+
 `;
 
 const TabsContainer = styled.div`
@@ -1510,19 +1511,32 @@ const emoGoToNext = () => {
   );
 };
 
-const handleItemClick=(path,token,isbn)=>{
-  navigate(path,{state:{token,isbn}});
-}; 
+const handleItemClick = (path, token, isbn, id) => {
+  navigate(path, { state: { token, isbn, id } });
+};
 
+
+const deleteNote = async (isbn, id, token) => {
+  try {
+      await axiosInstance.delete(`/desk/books/${isbn}/note/short/${id}`, {
+          headers: {
+              Authorization: `Bearer ${token}`
+          }
+      });
+      alert("노트가 삭제되었습니다.");
+      // 노트 삭제 후 필요한 추가 작업이 있으면 여기에 추가
+  } catch (error) {
+      console.error("노트 삭제 실패:", error);
+      alert("노트 삭제에 실패했습니다.");
+  }
+};
 
     return(
 
         <AppContainer>
             <NoteContainer>
                   <Header>
-                      <Logo>
-                         <p onClick={()=>handleItemClick('/afterlogin',token)}>로고</p>
-                      </Logo>
+                  <Logo src ={logo} onClick={()=>handleItemClick('/afterlogin',token)}/>
                     <Nav>
                     <li><a onClick={() => handleItemClick("/afterlogin/mylibrary",token)}>내 서재</a></li>
                     <li><a onClick={() => handleItemClick("/afterlogin/community",token)}>커뮤니티</a></li>
@@ -1531,10 +1545,8 @@ const handleItemClick=(path,token,isbn)=>{
                            <MypageBtn onClick={() => { setCheck((e) => !e) }}>마이페이지</MypageBtn>
                              {isCheck && (
                                 <ToggleList>
-                                 <p>닉네임 변경</p>
-                                 <p>1:1 문의</p>
-                                 <p>로그아웃</p>
-                                 <p>회원탈퇴</p>
+                                  <p onClick={()=>handleItemClick('/afterlogin/changenickname',token)}>닉네임 변경</p>
+                                  <p>로그아웃</p>
                                 </ToggleList>
                               )}
                          </ButtonToggle>
@@ -1564,7 +1576,7 @@ const handleItemClick=(path,token,isbn)=>{
             
                  {activeTab === 'simple' && (  //하루 기록
                     <NoteCardContainer>
-                         {shortNotes.map((note, index) => (
+                         {shortNotes.map((note, index) => ( 
                              <NoteCard key={note.id} onClick={()=>showInfo(index)}>
                                   <NoteText>{note.short_note.short_comment}</NoteText>
                                   <NoteActions>
@@ -1572,10 +1584,10 @@ const handleItemClick=(path,token,isbn)=>{
                                      <NoteDate onClick={(e) => e.stopPropagation()}>{new Date(note.created_at).toLocaleDateString()}</NoteDate>
                                     </div>
                                     <div>
-                                    <EditButton onClick={(e) => {e.stopPropagation(); handleItemClick("/afterlogin/looknote/modifynote", token, isbn); }}>
+                                    <EditButton onClick={(e) => {e.stopPropagation(); handleItemClick("/afterlogin/looknote/modifynote", token, isbn , note.id); }}>
                                       <Emoji src={modifyButton} />
                                     </EditButton>
-                                     <DeleteButton onClick={(e) => e.stopPropagation()}><Emoji src={deleteButton} /></DeleteButton>
+                                    <DeleteButton onClick={(e) => {e.stopPropagation(); deleteNote(token, isbn, note.id);}}><Emoji src={deleteButton} /></DeleteButton>
                                      </div>
                                   </NoteActions>
                             
@@ -1645,10 +1657,10 @@ const handleItemClick=(path,token,isbn)=>{
                               <NoteDate>{new Date(note.created_at).toLocaleDateString()}</NoteDate>
                             </div>
                             <div>
-                            <EditButton onClick={(e) => {e.stopPropagation(); handleItemClick("/afterlogin/looknote/modifynote", token, isbn); }}>
+                            <EditButton onClick={(e) => {e.stopPropagation(); handleItemClick("/afterlogin/looknote/modifynote", token, isbn , note.id); }}>
                                       <Emoji src={modifyButton} />
                             </EditButton>
-                            <DeleteButton><Emoji src={deleteButton}/></DeleteButton>
+                            <DeleteButton onClick={(e) => {e.stopPropagation(); deleteNote(token, isbn, note.id);}}><Emoji src={deleteButton} /></DeleteButton>
                             </div>
                          </NoteActions>
                          {clickedWritingIndex === index && (
@@ -1736,10 +1748,10 @@ const handleItemClick=(path,token,isbn)=>{
                                      {/* <EmotionImg onClick={(e) => e.stopPropagation()} src={question.ShortReviewList.mood}/> */}
                                     </div>
                                     <div>
-                                    <EditButton onClick={(e) => {e.stopPropagation(); handleItemClick("/afterlogin/looknote/modifynote", token, isbn); }}>
+                                    <EditButton onClick={(e) => {e.stopPropagation(); handleItemClick("/afterlogin/looknote/modifynote", token, isbn , question.id); }}>
                                       <Emoji src={modifyButton} />
                                     </EditButton>
-                                     <DeleteButton onClick={(e) => e.stopPropagation()}><Emoji src={deleteButton} /></DeleteButton>
+                                    <DeleteButton onClick={(e) => {e.stopPropagation(); deleteNote(token, isbn, question.id);}}><Emoji src={deleteButton} /></DeleteButton>
                                      </div>
                             </NoteActions>
 

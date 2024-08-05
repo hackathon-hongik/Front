@@ -12,6 +12,7 @@ import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import {bookAPI} from "../api";
 import { axiosInstance } from "../api";
 import { useLocation } from 'react-router-dom'
+import logo from "../assets/Logo.png";
 
 const API_KEY=process.env.REACT_APP_KAKAO_BOOK_API_KEY;
 
@@ -198,9 +199,8 @@ export function AfterLoginMain(){
     return( 
         <div className="mainPage2">
             <div className="header">
-                <div className="logo">
-                    <p onClick={()=>handleItemClick('/afterlogin',token)}>로고</p>
-                </div>
+                <img className="logo" src ={logo} onClick={()=>handleItemClick('/afterlogin',token)}/>
+
 
                 <ul className="nav">
                     <li><a onClick={()=>handleItemClick('/afterlogin/mylibrary',token)}>내 서재</a></li>
@@ -210,10 +210,8 @@ export function AfterLoginMain(){
                             <button className="mypageBtn" onClick={()=>{setCheck((e)=>!e)}}>마이페이지</button>
                             {isCheck &&(
                                 <div className="toggleList">
-                                <p onClick={()=>handleItemClick('/afterlogin/changenickname',token)}>닉네임 변경</p>
-                                <p>1:1 문의</p>
-                                <p onClick={handleLogOut}>로그아웃</p>
-                                <p>회원탈퇴</p>
+                                    <p onClick={()=>handleItemClick('/afterlogin/changenickname',token)}>닉네임 변경</p>
+                                    <p>로그아웃</p>     
                             </div>
                             )}
                         </div>
