@@ -1671,7 +1671,7 @@ const handleLogOut=async()=>{
                                                 </div>
                                                 <div className="modalBookInfo">
                                                     <div className="modalBookTitle">{note.book.title}</div>
-                                                    <div className="modalBookAuthor">{note.book.author}</div>
+                                                    <div className="modalBookAuthor">{note.book.author.replace(/[\[\]']+/g, '')}</div>
                                                 </div>
                                                 </div>
                                             </div>
@@ -1744,7 +1744,7 @@ const handleLogOut=async()=>{
                                                 </div>
                                                 <div className="modalBookInfo">
                                                     <div className="modalBookTitle">{note.book.title}</div>
-                                                    <div className="modalBookAuthor">{note.book.author}</div>
+                                                    <div className="modalBookAuthor">{note.book.author.replace(/[\[\]']+/g, '')}</div>
                                                 </div>
                                                 </div>
                                             </div>
@@ -1845,7 +1845,7 @@ const handleLogOut=async()=>{
                                                 </div>
                                                 <div className="modalBookInfo">
                                                     <div className="modalBookTitle">{question.book.title}</div>
-                                                    <div className="modalBookAuthor">{question.book.author}</div>
+                                                    <div className="modalBookAuthor">{question.book.author.replace(/[\[\]']+/g, '')}</div>
                                                 </div>
                                                 </div>
                                             </div>

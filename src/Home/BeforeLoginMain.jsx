@@ -22,17 +22,18 @@ export function BeforeLoginMain(){
     const [data, setData] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
     const [bookmarked, setBookmarked] = useState([]);
+    const [oneLine,setLineResults]=useState([]);
     
 
     useEffect(() => {
         // Simulate fetching data from server
         const fetchData = async () => {
             const mockData = [
-                { id: 1, title: "책 1", content: "사람은 미래에 대한 기대가 있어야만 세상을 살아갈 수 있다.", hearts: 620 },
-                { id: 2, title: "책 2", content: "결국 직장에서 성공 원리는 아주 간단하다. 자기 일처럼 상상하며 알아가 보도록 하라." ,hearts: 720},
-                { id: 3, title: "책 3", content: "결정의 순간에 할 수 있는 최선은 좋은 일을 하는 것이며, 차선은 옳은 일을 하는 것이다." ,hearts: 420},
-                { id: 4, title: "책 4", content: "결정의 순간에 할 수 있는 최선은 좋은 일을 하는 것이며, 차선은 옳은 일을 하는 것이다." ,hearts: 120},
-                { id: 5, title: "책 5", content: "결정의 순간에 할 수 있는 최선은 좋은 일을 하는 것이며, 차선은 옳은 일을 하는 것이다." ,hearts: 150},
+                { id: 1, writer: "루피", bestLine:"사람은 미래에 대한 기대가 있어야만 세상을 살아갈 수 있다.",title:"<빅터 프랭클의 죽음의 수용소에서>", author:"빅터프랭클" , hearts: 620 },
+                { id: 2, writer: "독한 고수", bestLine:"결국 직장에서의 성공 원리는 아주 간단하다. 자기 일처럼 성실하게 일하고 보고를 바로 하고 인사를 잘하면 된다.",title:"<돈의 속성 200쇄 개정증보판>", author:"김승호" , hearts: 620 },
+                { id: 3, writer: "복보이", bestLine:"결정의 순간에 할 수 있는 최선은 옳은 일을 하는 것이고, 차선은 잘못된 일을 하는 것이며, 최악은 아무것도 하지 않는 것이다.",title:"<힘든 일을 먼저 하라>", author:"스콧 앨런" , hearts: 620 },
+        
+               
                 // Add more mock data here
             ];
             setData(mockData);
@@ -61,12 +62,13 @@ export function BeforeLoginMain(){
         
             }));   //documents는 배열이기 때문에 아래 방식이 아닌 이런 방식으로 처리해야 함
 
+            
             // const results = {
             //     thumbnail: response.data.documents[0].thumbnail,
             //     authors: response.data.documents[0].authors
             // };  근데 이렇게 했을때 검색결과가 왜 하나도 안뜨는지는 모르겠음
             
-
+           
             navigate("/booksearchresult", { state: { results ,searchWord } });  //search한 데이터를 다른 페이지로 넘기기 
 
             console.log(response.data);
@@ -201,12 +203,14 @@ export function BeforeLoginMain(){
                         arrow_circle_left
                     </span>
                     {getVisibleItems().map((item) => (
-                        
-                       
-                        <div key={item.id} className="carouselItem">
+                        <div key={item.id} className="carouselItem" onClick={()=>handleItemClick("/login")}>
                             <div className="contents">
-                                <h3>{item.title}</h3>
-                                <p>{item.content}</p>
+                                <div className="oneLineWriter">{item.writer}</div>
+                                <div className="bestLine">{item.bestLine}</div>
+                                <div className="bookOneLineInfo">
+                                    <div className="bookOneLineTitle">{item.title}</div>
+                                    <div className="bookOneLineAuthor">{item.author.replace(/[\[\]']+/g, '')}</div>
+                                </div>
                             </div>
 
                             <div className="status">
@@ -216,13 +220,11 @@ export function BeforeLoginMain(){
                                         {item.hearts}
                                     </div>
                                 </div>
-                                <div className="bookmark" onClick={() => toggleBookmark(item.id)} style={{ color: bookmarked.includes(item.id) ? "black" : "grey" }}>
+                                {/* <div className="bookmark" onClick={() => toggleBookmark(item.id)} style={{ color: bookmarked.includes(item.id) ? "black" : "grey" }}>
                                     <FontAwesomeIcon icon={faBookmark} />
-                                </div>
+                                </div> */}
                             </div>
                         </div>
-                    
-                        
                     ))}
                     <span className="material-icons right-arrow-icon" onClick={nextSlide} style={{ color: currentIndex >= data.length - 3 ? '#989BA2' : '#FF6E23' }}>
                         arrow_circle_right

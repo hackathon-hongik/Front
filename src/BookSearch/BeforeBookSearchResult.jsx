@@ -434,6 +434,7 @@ export function BeforeBookSearchResult(){  //로그인 전 책 검색하면 나�
     const [bookResults, setBookResults] = useState([]);
     const [num,setNum]=useState(0);
     const token = location.state?.token || '';
+    const refresh=location.state?.refresh||'';
    
 
     const searchData=async(query)=>{ 
@@ -507,6 +508,26 @@ export function BeforeBookSearchResult(){  //로그인 전 책 검색하면 나�
             handleSearch();
         }               
     };
+
+    // const handleLogOut=async()=>{
+    //     try{
+    //         const newRefresh={
+    //             refresh: refresh
+    //         }
+    //         const response=await axiosInstance.post('/auth/logout/',newRefresh,{
+    //             headers:{
+    //                 Authorization: `Bearer ${token}`
+    //             }
+    //         });
+    //         handleItemClick('/');
+    //         console.log(response);
+    //     }
+    //     catch(e){
+    //         console.log(e);
+    //         alert("로그아웃 실패");
+    //     }
+    // }
+
 
 
     return (

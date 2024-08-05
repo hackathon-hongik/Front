@@ -435,6 +435,7 @@ export function AfterBookSearchResult(){  //로그인 전 책 검색하면 나�
     const location = useLocation();
     const { results,searchWord} = location.state || { results: [],searchWord:'' };  // Use state to get results
     const token = location.state?.token || '';
+    const refresh=location.state?.refresh||'';
     const [clickedBookIndex, setClickedBookIndex] = useState(null);
     const [isCheck,setCheck]=useState(false);
     const [newSearchWord,setNewSearchWord]=useState("");  //새로운 책을 입력받기 위한 장치
@@ -587,8 +588,8 @@ export function AfterBookSearchResult(){  //로그인 전 책 검색하면 나�
         setClickedBookIndex(null);
       };
 
-      const handleItemClick=(path,token)=>{
-        navigate(path,{state:{token}});
+      const handleItemClick=(path,token,refresh)=>{
+        navigate(path,{state:{token,refresh}});
     };
     
     const handleSearchWordChange=(e)=>{
@@ -629,24 +630,42 @@ export function AfterBookSearchResult(){  //로그인 전 책 검색하면 나�
         
     };
 
-   
+    const handleLogOut=async()=>{
+        try{
+            const newRefresh={
+                refresh: refresh
+            }
+            const response=await axiosInstance.post('/auth/logout/',newRefresh,{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                }
+            });
+            handleItemClick('/');
+            console.log(response);
+        }
+        catch(e){
+            console.log(e);
+            alert("로그아웃 실패");
+        }
+    }
+
 
     return (
         <>
         
         <ResultPage>
             <Header>
-                <img className="logo" src ={logo} onClick={()=>handleItemClick('/afterlogin',token)}/>
+                <img className="logo" src ={logo} onClick={()=>handleItemClick('/afterlogin',token,refresh)}/>
                 <ul className="nav">
-                    <li><a className="orangeText" onClick={()=>handleItemClick('/afterlogin/mylibrary',token)}>내 서재</a></li>
+                    <li><a className="orangeText" onClick={()=>handleItemClick('/afterlogin/mylibrary',token,refresh)}>내 서재</a></li>
                     <li><a onClick={()=>handleItemClick('/afterlogin/community')}>커뮤니티</a></li>
                     <li>
                         <div className="buttonToggle">
                             <button className="mypageBtn" onClick={()=>{setCheck((e)=>!e)}}>마이페이지</button>
                             {isCheck &&(
                                 <div className="toggleList">
-                                    <p onClick={()=>handleItemClick('/afterlogin/changenickname',token)}>닉네임 변경</p>
-                                    <p>로그아웃</p>
+                                    <p onClick={()=>handleItemClick('/afterlogin/changenickname',token,refresh)}>닉네임 변경</p>
+                                    <p onClick={handleLogOut}>로그아웃</p>
                                 </div>
                             )}
                          </div>

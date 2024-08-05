@@ -24,33 +24,32 @@ export function AfterLoginMain(){
     const [isCheck,setCheck]=useState(false);
     const [searchWord,setSearchWord]=useState("");
     const [bookResults,setBookResults]=useState([]);
+    const [oneLine,setLineResults]=useState([]);
     const [readingCount,setReadingCount]=useState(0);
     const location = useLocation();
     const token = location.state?.token || '';
     const refresh = location.state?.refresh || '';
     const [isbn,setIsbn]=useState([]);
 
-    const mockData = [
-        { id: 1, title: "책 1", content: "사람은 미래에 대한 기대가 있어야만 세상을 살아갈 수 있다.", hearts: 620 },
-        { id: 2, title: "책 2", content: "결국 직장에서 성공 원리는 아주 간단하다. 자기 일처럼 상상하며 알아가 보도록 하라." ,hearts: 720},
-        { id: 3, title: "책 3", content: "결정의 순간에 할 수 있는 최선은 좋은 일을 하는 것이며, 차선은 옳은 일을 하는 것이다." ,hearts: 420},
-        { id: 4, title: "책 4", content: "결정의 순간에 할 수 있는 최선은 좋은 일을 하는 것이며, 차선은 옳은 일을 하는 것이다." ,hearts: 120},
-        { id: 5, title: "책 5", content: "결정의 순간에 할 수 있는 최선은 좋은 일을 하는 것이며, 차선은 옳은 일을 하는 것이다." ,hearts: 150},
-        // Add more mock data here
-    ];
+    // const mockData = [
+    //     { id: 1, title: "책 1", content: "사람은 미래에 대한 기대가 있어야만 세상을 살아갈 수 있다.", hearts: 620 },
+    //     { id: 2, title: "책 2", content: "결국 직장에서 성공 원리는 아주 간단하다. 자기 일처럼 상상하며 알아가 보도록 하라." ,hearts: 720},
+    //     { id: 3, title: "책 3", content: "결정의 순간에 할 수 있는 최선은 좋은 일을 하는 것이며, 차선은 옳은 일을 하는 것이다." ,hearts: 420},
+    //     { id: 4, title: "책 4", content: "결정의 순간에 할 수 있는 최선은 좋은 일을 하는 것이며, 차선은 옳은 일을 하는 것이다." ,hearts: 120},
+    //     { id: 5, title: "책 5", content: "결정의 순간에 할 수 있는 최선은 좋은 일을 하는 것이며, 차선은 옳은 일을 하는 것이다." ,hearts: 150},
+    //     // Add more mock data here
+    // ];
 
    
     useEffect(() => {
         //console.log(token);
         //console.log(refresh)
         fetchBook();
-        fetchOneLine();
+        //fetchOneLine();
     }, []);
 
 
-    const fetchOneLine = async () => {
-        setData(mockData);
-    };
+
 
     const fetchBook=async()=>{
         try{
@@ -67,8 +66,17 @@ export function AfterLoginMain(){
                 title: book.book.title,
                 author: book.book.author,
               }));
+
+              const oneLine=response.data.popular_reviews.map(line=>({
+                writer:line.writer,
+                bestLine:line.short_note.short_comment,
+                title:line.book.title,
+                author:line.book.author,
+                like_count:line.like_count
+              }))
           
               setBookResults(results);
+              setLineResults(oneLine);
               setReadingCount(response.data.reading_count);
               const isbnList = response.data.recent_reading_books.map(item => item.book.isbn);
               setIsbn(isbnList); 
@@ -175,7 +183,7 @@ export function AfterLoginMain(){
     };
 
     const getVisibleItems = () => {
-        return data.slice(currentIndex, currentIndex + 3);
+        return oneLine.slice(currentIndex, currentIndex + 3);
     };
 
     const handleLogOut=async()=>{
@@ -324,20 +332,24 @@ export function AfterLoginMain(){
                     {getVisibleItems().map((item) => (
                         <div key={item.id} className="carouselItem">
                             <div className="contents">
-                                <h3>{item.title}</h3>
-                                <p>{item.content}</p>
+                                <div className="oneLineWriter">{item.writer}</div>
+                                <div className="bestLine">{item.bestLine}</div>
+                                <div className="bookOneLineInfo">
+                                    <div className="bookOneLineTitle">{item.title}</div>
+                                    <div className="bookOneLineAuthor">{item.author.replace(/[\[\]']+/g, '')}</div>
+                                </div>
                             </div>
 
                             <div className="status">
                                 <div className="heart">
                                     <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
                                     <div className="heartNum">
-                                        {item.hearts}
+                                        {item.like_count}
                                     </div>
                                 </div>
-                                <div className="bookmark" onClick={() => toggleBookmark(item.id)} style={{ color: bookmarked.includes(item.id) ? "black" : "grey" }}>
+                                {/* <div className="bookmark" onClick={() => toggleBookmark(item.id)} style={{ color: bookmarked.includes(item.id) ? "black" : "grey" }}>
                                     <FontAwesomeIcon icon={faBookmark} />
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     ))}
