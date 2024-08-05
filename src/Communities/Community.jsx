@@ -272,7 +272,7 @@ const long=[
 
 const CommunityPage=styled.div`
     width:1620px;
-    height:930px;
+    height:auto;
     display: flex;
     flex-direction: column;
     align-items: center;

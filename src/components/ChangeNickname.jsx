@@ -254,8 +254,10 @@ export function ChangeNickName(){
                 }
             });
             console.log('닉네임 변경 성공:', response);
+            alert('닉네임 변경 성공')
         } catch (error) {
             console.error('닉네임 변경 실패:', error);
+            alert('닉네임 변경 실패')
         }
     };
 

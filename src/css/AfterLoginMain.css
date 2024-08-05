@@ -98,10 +98,12 @@
     font-family: "Pretendard JP";
     font-size: 56px;
     font-style: normal;
-    font-weight: 500;
+    font-weight: 600;
     line-height: 128.6%; /* 72.016px */
     letter-spacing: -1.786px;
     /*background-color: bisque;*/
+
+    
 }
 
 .findBookContainer {
