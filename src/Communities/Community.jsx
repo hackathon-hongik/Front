@@ -1309,13 +1309,14 @@ const LongModalContent = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-top: 10px;
+    margin-top: 40px;
+    margin-bottom: 20px;
     //background-color:aqua;
 
     .modalLongWriting{
         overflow: auto;
         width:810px;
-        height:500px;
+        height:560px;
         display: flex;
         flex-direction: row;
         justify-content: center;
@@ -1323,7 +1324,7 @@ const LongModalContent = styled.div`
         margin-left: 10px;
         line-height: 200%;
         text-align: left;
-        //background-color: beige;
+        //ackground-color: beige;
     }
 
     /* .prevBtn, .nextBtn {
