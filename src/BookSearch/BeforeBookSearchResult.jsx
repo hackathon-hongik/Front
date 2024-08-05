@@ -14,6 +14,7 @@ const ResultPage=styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin:auto;
     background: linear-gradient(0deg, rgba(26, 54, 54, 0.04) 0%, rgba(26, 54, 54, 0.04) 100%), #FFF;
 
     .text1{
