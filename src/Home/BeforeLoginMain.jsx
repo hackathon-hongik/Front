@@ -29,9 +29,9 @@ export function BeforeLoginMain(){
         // Simulate fetching data from server
         const fetchData = async () => {
             const mockData = [
-                { id: 1, writer: "루피", bestLine:"사람은 미래에 대한 기대가 있어야만 세상을 살아갈 수 있다.",title:"<빅터 프랭클의 죽음의 수용소에서>", author:"빅터프랭클" , hearts: 620 },
-                { id: 2, writer: "독한 고수", bestLine:"결국 직장에서의 성공 원리는 아주 간단하다. 자기 일처럼 성실하게 일하고 보고를 바로 하고 인사를 잘하면 된다.",title:"<돈의 속성 200쇄 개정증보판>", author:"김승호" , hearts: 620 },
-                { id: 3, writer: "복보이", bestLine:"결정의 순간에 할 수 있는 최선은 옳은 일을 하는 것이고, 차선은 잘못된 일을 하는 것이며, 최악은 아무것도 하지 않는 것이다.",title:"<힘든 일을 먼저 하라>", author:"스콧 앨런" , hearts: 620 },
+                { id: 1, writer: "루피", bestLine:"사람은 미래에 대한 기대가 있어야만 세상을 살아갈 수 있다.",title:"<빅터 프랭클의 죽음의 수용소에서>", author:"빅터프랭클" , hearts: 21 },
+                { id: 2, writer: "독한 고수", bestLine:"결국 직장에서의 성공 원리는 아주 간단하다. 자기 일처럼 성실하게 일하고 보고를 바로 하고 인사를 잘하면 된다.",title:"<돈의 속성 200쇄 개정증보판>", author:"김승호" , hearts: 17 },
+                { id: 3, writer: "복보이", bestLine:"결정의 순간에 할 수 있는 최선은 옳은 일을 하는 것이고, 차선은 잘못된 일을 하는 것이며, 최악은 아무것도 하지 않는 것이다.",title:"<힘든 일을 먼저 하라>", author:"스콧 앨런" , hearts: 15 },
         
                
                 // Add more mock data here
