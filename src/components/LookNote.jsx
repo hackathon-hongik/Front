@@ -1516,7 +1516,7 @@ const handleItemClick = (path, token, isbn, id) => {
 };
 
 
-const deleteNote = async (isbn, id, token) => {
+const deleteNoteShort = async (token, isbn, id) => {
   try {
       await axiosInstance.delete(`/desk/books/${isbn}/note/short/${id}`, {
           headers: {
@@ -1526,7 +1526,22 @@ const deleteNote = async (isbn, id, token) => {
       alert("노트가 삭제되었습니다.");
       // 노트 삭제 후 필요한 추가 작업이 있으면 여기에 추가
   } catch (error) {
-      console.error("노트 삭제 실패:", error);
+      console.log("노트 삭제 실패:", error);
+      alert("노트 삭제에 실패했습니다.");
+  }
+};
+
+const deleteNoteLong = async (token, isbn, id) => {
+  try {
+      await axiosInstance.delete(`/desk/books/${isbn}/note/long/${id}`,{
+          headers: {
+              Authorization: `Bearer ${token}`
+          }
+      });
+      alert("노트가 삭제되었습니다.");
+      // 노트 삭제 후 필요한 추가 작업이 있으면 여기에 추가
+  } catch (error) {
+      console.log("노트 삭제 실패:", error);
       alert("노트 삭제에 실패했습니다.");
   }
 };
@@ -1587,7 +1602,7 @@ const deleteNote = async (isbn, id, token) => {
                                     <EditButton onClick={(e) => {e.stopPropagation(); handleItemClick("/afterlogin/looknote/modifynote", token, isbn , note.id); }}>
                                       <Emoji src={modifyButton} />
                                     </EditButton>
-                                    <DeleteButton onClick={(e) => {e.stopPropagation(); deleteNote(token, isbn, note.id);}}><Emoji src={deleteButton} /></DeleteButton>
+                                    <DeleteButton onClick={(e) => {e.stopPropagation(); deleteNoteShort(token, isbn, note.id);}}><Emoji src={deleteButton} /></DeleteButton>
                                      </div>
                                   </NoteActions>
                             
@@ -1660,7 +1675,7 @@ const deleteNote = async (isbn, id, token) => {
                             <EditButton onClick={(e) => {e.stopPropagation(); handleItemClick("/afterlogin/looknote/modifynote", token, isbn , note.id); }}>
                                       <Emoji src={modifyButton} />
                             </EditButton>
-                            <DeleteButton onClick={(e) => {e.stopPropagation(); deleteNote(token, isbn, note.id);}}><Emoji src={deleteButton} /></DeleteButton>
+                            <DeleteButton onClick={(e) => {e.stopPropagation(); deleteNoteLong(token, isbn, note.id);}}><Emoji src={deleteButton} /></DeleteButton>
                             </div>
                          </NoteActions>
                          {clickedWritingIndex === index && (
@@ -1751,7 +1766,7 @@ const deleteNote = async (isbn, id, token) => {
                                     <EditButton onClick={(e) => {e.stopPropagation(); handleItemClick("/afterlogin/looknote/modifynote", token, isbn , question.id); }}>
                                       <Emoji src={modifyButton} />
                                     </EditButton>
-                                    <DeleteButton onClick={(e) => {e.stopPropagation(); deleteNote(token, isbn, question.id);}}><Emoji src={deleteButton} /></DeleteButton>
+                                    <DeleteButton onClick={(e) => {e.stopPropagation(); deleteNoteShort(token, isbn, question.id);}}><Emoji src={deleteButton} /></DeleteButton>
                                      </div>
                             </NoteActions>
 
