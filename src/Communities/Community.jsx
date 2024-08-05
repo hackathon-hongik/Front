@@ -1750,7 +1750,7 @@ export function Community(){
             const newComment={
                 comment:comment
             }
-            const response=await axiosInstance.post(`community/long-reviews/${id}/comment/`,newComment,{
+            const response=await axiosInstance.post(`/community/long-reviews/${id}/comment/`,newComment,{
                 headers:{
                     Authorization: `Bearer ${token}`
                 } 
@@ -1765,7 +1765,7 @@ export function Community(){
 
     const clickHeartShort=async(id)=>{
         try{
-            const response=await axiosInstance.post(`community/short-reviews/${id}/like/`,{},{
+            const response=await axiosInstance.post(`/community/short-reviews/${id}/like/`,{},{
                 headers:{
                     Authorization: `Bearer ${token}`
                 } 
@@ -1783,7 +1783,7 @@ export function Community(){
 
     const clickHeartLong=async(id)=>{
         try{
-            const response=await axiosInstance.post(`community/long-reviews/${id}/like/`,{},{
+            const response=await axiosInstance.post(`/community/long-reviews/${id}/like/`,{},{
                 headers:{
                     Authorization: `Bearer ${token}`
                 } 

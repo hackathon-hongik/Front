@@ -30,6 +30,7 @@ export function AfterLoginMain(){
     const token = location.state?.token || '';
     const refresh = location.state?.refresh || '';
     const [isbn,setIsbn]=useState([]);
+    const [refreshShortHearts, setRefreshShortHearts] = useState(false);
 
     // const mockData = [
     //     { id: 1, title: "책 1", content: "사람은 미래에 대한 기대가 있어야만 세상을 살아갈 수 있다.", hearts: 620 },
@@ -48,7 +49,9 @@ export function AfterLoginMain(){
         //fetchOneLine();
     }, []);
 
-
+    useEffect(() => {
+        fetchBook();
+    }, [refreshShortHearts]);
 
 
     const fetchBook=async()=>{
@@ -68,6 +71,7 @@ export function AfterLoginMain(){
               }));
 
               const oneLine=response.data.popular_reviews.map(line=>({
+                id:line.id,
                 writer:line.writer,
                 bestLine:line.short_note.short_comment,
                 title:line.book.title,
@@ -202,6 +206,24 @@ export function AfterLoginMain(){
         catch(e){
             console.log(e);
             alert("로그아웃 실패");
+        }
+    }
+
+    const clickHeartShort=async(id)=>{
+        try{
+            const response=await axiosInstance.post(`/community/short-reviews/${id}/like/`,{},{
+                headers:{
+                    Authorization: `Bearer ${token}`
+                } 
+            })
+            console.log(response);
+            setRefreshShortHearts(prev => !prev);
+        }
+        catch(e){
+            if(e.response && e.response.data===400){
+                alert('이미 좋아요를 누르신 리뷰입니다!');
+            }
+            console.log(e);
         }
     }
     return( 
@@ -342,7 +364,7 @@ export function AfterLoginMain(){
 
                             <div className="status">
                                 <div className="heart">
-                                    <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} />
+                                    <FontAwesomeIcon icon={faHeart} style={{ color: "orange" }} onClick={()=>clickHeartShort(item.id)} />
                                     <div className="heartNum">
                                         {item.like_count}
                                     </div>
