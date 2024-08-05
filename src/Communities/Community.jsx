@@ -576,6 +576,7 @@ const ShortWritingCard=styled.div`
         width:290px;
         height:120px;
         overflow: auto;
+        padding: 10px;
         margin-top:10px;
         //background-color: rebeccapurple;
 
@@ -590,7 +591,7 @@ const ShortWritingCard=styled.div`
         //background-color: red;
         
         .nickName{
-        width:70px;
+        width:80px;
         height:50px;
         display:flex;
         flex-direction: row;
@@ -783,7 +784,7 @@ const LongWritingCard=styled.div`
 
         
         .nickName{
-            width:70px;
+            width:80px;
             height:50px;
             display:flex;
             flex-direction: row;
@@ -1014,7 +1015,7 @@ const ShortModalContent = styled.div`
     }
 
     .modalNickname{
-        width:70px;
+        width:200px;
         height:20px;
         display:flex;
         flex-direction: row;            
@@ -1251,7 +1252,7 @@ const LongModalContent = styled.div`
     }
 
     .modalNickname{
-        width:70px;
+        width:200px;
         height:30px;
         display:flex;
         flex-direction: row;            

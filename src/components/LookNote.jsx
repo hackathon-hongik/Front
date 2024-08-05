@@ -845,7 +845,7 @@ const LongModalContent = styled.div`
    //background-color:aqua;
 
     .modalLongWriting{
-      overflow: hidden;
+      overflow: auto;
       color: var(--kakao-logo, #000);
       font-feature-settings: 'ss10' on;
       text-overflow: ellipsis;
@@ -858,7 +858,7 @@ const LongModalContent = styled.div`
       line-height: 200%; /* 24px */
       letter-spacing: 0.144px;
         width:850px;
-        height:490px;
+        height:500px;
         display: flex;
         flex-direction: row;
         justify-content: center;
