@@ -2299,9 +2299,11 @@ export function Community(){
                                                     {item.comments.map((comment) => (
                                                     <CommentCard key={comment.comment_id}>
                                                         <img src={faceLogo} className="commentFace"></img>
-                                                        <div className="commentNickName">{comment.user}</div>
-                                                        <div className="commentCreatedAt">{new Date(comment.created_at).toLocaleDateString()}</div>
-                                                        <div className="commentText">{comment.comment}</div>
+                                                        <div className="realComment">
+                                                            <div className="commentNickName">{comment.user}</div>
+                                                            <div className="commentCreatedAt">{new Date(comment.created_at).toLocaleDateString()}</div>
+                                                            <div className="commentText">{comment.comment}</div>
+                                                        </div>
                                                     </CommentCard>
                                                     ))}
                                                 </CommentList>
