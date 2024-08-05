@@ -175,7 +175,7 @@ export function AfterLoginMain(){
     // };
 
     const nextSlide = () => {
-        if (currentIndex < data.length - 3) {
+        if (currentIndex < oneLine.length - 3) {
             setCurrentIndex(prevIndex => prevIndex + 1);
         }
     };
@@ -375,7 +375,7 @@ export function AfterLoginMain(){
                             </div>
                         </div>
                     ))}
-                    <span className="material-icons right-arrow-icon" onClick={nextSlide} style={{ color: currentIndex >= data.length - 3 ? '#989BA2' : '#FF6E23' }}>
+                    <span className="material-icons right-arrow-icon" onClick={nextSlide} style={{ color: currentIndex >= oneLine.length - 3 ? '#989BA2' : '#FF6E23' }}>
                         arrow_circle_right
                     </span>
                     {/* <button className="arrow rightArrow" onClick={nextSlide}>{">"}</button> */}
