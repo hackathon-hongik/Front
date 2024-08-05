@@ -555,7 +555,7 @@ const BelowShortWritingList = styled.div`
 
 
 const ShortWritingCard=styled.div`
-    width:310px;
+    width:320px;
     height:270px;
     margin-left: 60px;
     display: flex;
@@ -573,10 +573,20 @@ const ShortWritingCard=styled.div`
     //background-color: aqua;
 
     .shortWriting{
+                color: var(--kakao-logo, #000);
+        font-feature-settings: 'ss10' on;
+
+        /* Body 1/Reading - Bold */
+        font-family: "Pretendard JP";
+        font-size: 16px;
+        font-style: normal;
+        font-weight: 600;
+        line-height: 162.5%; /* 26px */
+        letter-spacing: 0.091px;
         width:290px;
-        height:120px;
+        height:130px;
         overflow: auto;
-        padding: 10px;
+        padding: 20px 20px ;
         margin-top:10px;
         //background-color: rebeccapurple;
 
@@ -584,7 +594,7 @@ const ShortWritingCard=styled.div`
 
     .likePick{
         width:290px;
-        height:70px;
+        height:50px;
         display: flex;
         flex-direction: row;
         align-items: center;
@@ -595,11 +605,10 @@ const ShortWritingCard=styled.div`
         height:50px;
         display:flex;
         flex-direction: row;
-        justify-content: center;
         align-items: center;
         color: #01524D;
         font-feature-settings: 'ss10' on;
-        text-overflow: ellipsis;
+        text-align: left;
         /* Label 2/Bold */
         font-family: "Pretendard JP";
         font-size: 13px;
@@ -608,7 +617,9 @@ const ShortWritingCard=styled.div`
         //line-height: 138.5%; /* 18.005px */
         //letter-spacing: 0.252px;
         //background-color: beige;
+        margin-left: 10px;
         }
+        
         .heart{
         width:50px;
         height:50px;
@@ -622,8 +633,8 @@ const ShortWritingCard=styled.div`
     }
 
     .bookInfo{
-        width:310px;
-        height:70px;
+        width:320px;
+        height:80px;
         display: flex;
         flex-direction: row;
         //justify-content: center;
@@ -645,14 +656,14 @@ const ShortWritingCard=styled.div`
         }
 
         .bookInfoText{
-            width:165px;
+            width:200px;
             height:50px;
             display: flex;
             flex-direction: column;
-            margin-left: 20px;
+            margin-left: 10px;
 
             .bookTitle{
-                width:160px;
+                width:200px;
                 height:20px;
                 display: flex;
                 flex-direction: row;
@@ -773,6 +784,7 @@ const LongWritingCard=styled.div`
         //background-color: beige;
         
         .createDate{
+            width: 100px;
             font-family: "Pretendard JP";
             font-size: 10px;
             font-style: normal;
@@ -780,11 +792,12 @@ const LongWritingCard=styled.div`
             line-height: 138.5%; /* 18.005px */
             letter-spacing: 0.252px;
             color: #989BA2;
+            //ackground-color: aqua;
         }
 
         
         .nickName{
-            width:150px;
+            width:180px;
             height:50px;
             display:flex;
             flex-direction: row;
@@ -806,7 +819,7 @@ const LongWritingCard=styled.div`
         .heart{
         width:35px;
         height:50px;
-        margin-left: 270px;
+        margin-left: 250px;
         //background-color: blue;
         }
 
@@ -997,7 +1010,7 @@ const ShortModalContent = styled.div`
    // background-color: aqua;
 
     .modalCreateDate{
-        width:100px;
+        width:260px;
         height: 30px;
         display: flex;
         flex-direction: row;
@@ -1005,7 +1018,7 @@ const ShortModalContent = styled.div`
         align-items: center;
         //background-color: beige;
         font-family: "Pretendard JP";
-        font-size: 13px;
+        font-size: 12px;
         font-style: normal;
         font-weight: 400;
         line-height: 138.5%; /* 18.005px */
@@ -1014,7 +1027,7 @@ const ShortModalContent = styled.div`
     }
 
     .modalNickname{
-        width:200px;
+        width:300px;
         height:20px;
         display:flex;
         flex-direction: row;            
@@ -1034,7 +1047,7 @@ const ShortModalContent = styled.div`
     }
 
      .heart{
-        margin-left: 350px;
+        margin-left: 330px;
     }
   }
 
