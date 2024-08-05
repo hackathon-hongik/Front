@@ -607,7 +607,7 @@ const ShortWritingCard=styled.div`
         font-weight: 600;
         //line-height: 138.5%; /* 18.005px */
         //letter-spacing: 0.252px;
-        background-color: beige;
+        //background-color: beige;
         }
         .heart{
         width:50px;
@@ -878,7 +878,7 @@ const LongWritingCard=styled.div`
                 font-size: 12px;
                 font-style: normal;
                 font-weight: 600;
-                background-color: palegreen;
+                //background-color: palegreen;
                 margin: 0; 
                 margin-top: 10px;
                 margin-right:20px;
@@ -894,7 +894,7 @@ const LongWritingCard=styled.div`
                 font-size: 12px;
                 font-style: normal;
                 font-weight: 400;
-                background-color: red;
+                //background-color: red;
                 margin-right:20px;
             }
         }
