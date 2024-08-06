@@ -62,12 +62,7 @@ export function BeforeLoginMain(){
         
             }));   //documents는 배열이기 때문에 아래 방식이 아닌 이런 방식으로 처리해야 함
 
-            
-            // const results = {
-            //     thumbnail: response.data.documents[0].thumbnail,
-            //     authors: response.data.documents[0].authors
-            // };  근데 이렇게 했을때 검색결과가 왜 하나도 안뜨는지는 모르겠음
-            
+    
            
             navigate("/booksearchresult", { state: { results ,searchWord } });  //search한 데이터를 다른 페이지로 넘기기 
 
@@ -104,14 +99,6 @@ export function BeforeLoginMain(){
         );
     }; //즐겨찾기 부분
 
-    // const nextSlide = () => {
-    //     setCurrentIndex((prevIndex) => (prevIndex + 3) % data.length);
-    // };
-
-    // const prevSlide = () => {
-    //     setCurrentIndex((prevIndex) => (prevIndex - 3 + data.length) % data.length);
-    // };
-
     const nextSlide = () => {
         if (currentIndex < data.length - 3) {
             setCurrentIndex(prevIndex => prevIndex + 1);
@@ -128,17 +115,6 @@ export function BeforeLoginMain(){
         return data.slice(currentIndex, currentIndex + 3);
     };
     
-    // const getVisibleItems = () => {
-    //     if (data.length <= 3) {
-    //         return data;
-    //     }
-
-    //     const visibleItems = [];
-    //     for (let i = 0; i < 3; i++) {
-    //         visibleItems.push(data[(currentIndex + i) % data.length]);
-    //     }
-    //     return visibleItems;
-    // };
 
     return( 
         <div className="mainPage1">
@@ -194,7 +170,7 @@ export function BeforeLoginMain(){
 
             <div className="bestLineBox">
                 <div className="text4">
-                    <p>실시간 인기 '책 한 줄'</p>
+                    <p>실시간 인기 '책 속 한 줄'</p>
                 </div>
 
                 <div className="bestList">
@@ -220,9 +196,7 @@ export function BeforeLoginMain(){
                                         {item.hearts}
                                     </div>
                                 </div>
-                                {/* <div className="bookmark" onClick={() => toggleBookmark(item.id)} style={{ color: bookmarked.includes(item.id) ? "black" : "grey" }}>
-                                    <FontAwesomeIcon icon={faBookmark} />
-                                </div> */}
+                                
                             </div>
                         </div>
                     ))}

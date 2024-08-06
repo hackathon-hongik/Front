@@ -171,6 +171,15 @@ const ToggleList = styled.div`
     border-radius: 8px 8px 0px 0px;
     background: #FFF;
 
+    p{
+        cursor: default;
+
+
+        &:hover {
+            color: gray;
+          }
+    }
+
 `;
 
 const TabsContainer = styled.div`

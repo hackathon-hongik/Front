@@ -32,15 +32,6 @@ export function AfterLoginMain(){
     const [isbn,setIsbn]=useState([]);
     const [refreshShortHearts, setRefreshShortHearts] = useState(false);
 
-    // const mockData = [
-    //     { id: 1, title: "책 1", content: "사람은 미래에 대한 기대가 있어야만 세상을 살아갈 수 있다.", hearts: 620 },
-    //     { id: 2, title: "책 2", content: "결국 직장에서 성공 원리는 아주 간단하다. 자기 일처럼 상상하며 알아가 보도록 하라." ,hearts: 720},
-    //     { id: 3, title: "책 3", content: "결정의 순간에 할 수 있는 최선은 좋은 일을 하는 것이며, 차선은 옳은 일을 하는 것이다." ,hearts: 420},
-    //     { id: 4, title: "책 4", content: "결정의 순간에 할 수 있는 최선은 좋은 일을 하는 것이며, 차선은 옳은 일을 하는 것이다." ,hearts: 120},
-    //     { id: 5, title: "책 5", content: "결정의 순간에 할 수 있는 최선은 좋은 일을 하는 것이며, 차선은 옳은 일을 하는 것이다." ,hearts: 150},
-    //     // Add more mock data here
-    // ];
-
    
     useEffect(() => {
         //console.log(token);
@@ -61,9 +52,6 @@ export function AfterLoginMain(){
                     Authorization: `Bearer ${token}`
                 }
             });
-            // setBookResults(response.data.recent_reading_books)
-            // setReadingCount(response.data.reading_count);
-
             const results = response.data.recent_reading_books.map(book => ({
                 thumbnail: book.book.thumbnail,
                 title: book.book.title,
@@ -113,11 +101,6 @@ export function AfterLoginMain(){
                 date:doc.datetime
             }));   //documents는 배열이기 때문에 아래 방식이 아닌 이런 방식으로 처리해야 함
 
-            // const results = {
-            //     thumbnail: response.data.documents[0].thumbnail,
-            //     authors: response.data.documents[0].authors
-            // };  근데 이렇게 했을때 검색결과가 왜 하나도 안뜨는지는 모르겠음
-            
 
             navigate("/afterlogin/booksearchresult", { state: { results, searchWord, token } });  //search한 데이터를 다른 페이지로 넘기기 
 
@@ -154,25 +137,6 @@ export function AfterLoginMain(){
         );
     }; //즐겨찾기 부분
 
-    // const nextSlide = () => {
-    //     setCurrentIndex((prevIndex) => (prevIndex + 3) % data.length);
-    // };
-
-    // const prevSlide = () => {
-    //     setCurrentIndex((prevIndex) => (prevIndex - 3 + data.length) % data.length);
-    // };
-
-    // const getVisibleItems = () => {
-    //     if (data.length <= 3) {
-    //         return data;
-    //     }
-
-    //     const visibleItems = [];
-    //     for (let i = 0; i < 3; i++) {
-    //         visibleItems.push(data[(currentIndex + i) % data.length]);
-    //     }
-    //     return visibleItems;
-    // };
 
     const nextSlide = () => {
         if (currentIndex < oneLine.length - 3) {
@@ -297,26 +261,6 @@ export function AfterLoginMain(){
                                 <button className="record" onClick={()=>handleItemClick('/afterlogin/note',token,refresh,isbn[index])}>바로 기록하기</button>
                             </div>
                         </div>))}
-
-                        {/* {bookResults.length>0 && bookResults.map((book, index) => (<div className="twoBook">
-                            <div className="bookInfo">
-                                <div className="bookPic">
-                                    <img src={bookResults[1].book.thumbnail} alt="bookPic"></img>
-                                </div>
-                                <div className="bookExplain">
-                                    <div className="title">
-                                        <p className="bookTitle">{bookResults[1].book.title}</p>
-                                    </div>
-                                    <div className="writer">
-                                        <p className="bookAuthor">{bookResults[1].book.author.replace(/[\[\]']+/g, '')}</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="buttons">
-                                <button className="toMyShelf" onClick={()=>handleItemClick('/afterlogin/thisbook')}>내 서재 가기</button>
-                                <button className="record" onClick={()=>handleItemClick('/afterlogin/note')}>바로 기록하기</button>
-                            </div>
-                        </div>))} */}
                     </div>
 
                     <div className="gotoMyShelfBox">
@@ -343,7 +287,7 @@ export function AfterLoginMain(){
 
             <div className="bestLineBox">
                 <div className="text4">
-                    <p>실시간 인기 '책 한 줄'</p>
+                    <p>실시간 인기 '책 속 한 줄'</p>
                 </div>
 
                 <div className="bestList">
@@ -369,16 +313,14 @@ export function AfterLoginMain(){
                                         {item.like_count}
                                     </div>
                                 </div>
-                                {/* <div className="bookmark" onClick={() => toggleBookmark(item.id)} style={{ color: bookmarked.includes(item.id) ? "black" : "grey" }}>
-                                    <FontAwesomeIcon icon={faBookmark} />
-                                </div> */}
+                            
                             </div>
                         </div>
                     ))}
                     <span className="material-icons right-arrow-icon" onClick={nextSlide} style={{ color: currentIndex >= oneLine.length - 3 ? '#989BA2' : '#FF6E23' }}>
                         arrow_circle_right
                     </span>
-                    {/* <button className="arrow rightArrow" onClick={nextSlide}>{">"}</button> */}
+    
                 </div>
             </div>
         </div>

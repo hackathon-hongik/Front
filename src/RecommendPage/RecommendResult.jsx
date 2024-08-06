@@ -116,7 +116,7 @@ const Header = styled.div`
 
     .toggleList{
 
-        width:112px;
+    width:112px;
     height:110px;
     display: flex;
     flex-direction: column;
@@ -124,6 +124,15 @@ const Header = styled.div`
     position: absolute;
     border-radius: 8px 8px 0px 0px;
     background: #FFF;
+
+    p{
+        cursor: default;
+
+
+        &:hover {
+            color: gray;
+          }
+    }
 
     }
 `;

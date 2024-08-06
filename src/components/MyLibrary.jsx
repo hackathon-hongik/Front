@@ -6,74 +6,6 @@ import { useLocation } from 'react-router-dom';
 import logo from "../assets/Logo.png";
 
 
-
-const sampleBooks = [
-    {
-        id: 1,
-        title: "나를 읽어줘",
-        author: "홍길동",
-        category: "지금 읽고 있는 책",
-        cover: "sample_cover1.png",
-    },
-    {
-        id: 2,
-        title: "책 제목 2",
-        author: "이몽룡",
-        category: "지금까지 읽은 책",
-        cover: "sample_cover2.png",
-    },
-    {
-        id: 3,
-        title: "책 제목 3",
-        author: "성춘향",
-        category: "찜해둔 책",
-        cover: "sample_cover3.png",
-    },
-    {
-        id: 4,
-        title: "책 제목 3",
-        author: "성춘향",
-        category: "찜해둔 책",
-        cover: "sample_cover3.png",
-    },
-    {
-        id: 5,
-        title: "책 제목 3",
-        author: "성춘향rerereeeeeeeeeeeeeeeereeeee",
-        category: "찜해둔 책",
-        cover: "sample_cover3.png",
-    },
-    {
-        id: 6,
-        title: "책 제목 안녕안녕 안녕안녕안녕안녕안녕안녕안녕안녕 안녕안녕안녕안녕안녕안녕안녕안녕 안녕안녕안녕안녕안녕안녕",
-        author: "성춘향",
-        category: "찜해둔 책",
-        cover: "sample_cover3.png",
-    },
-    {
-        id: 7,
-        title: "책 제목 안녕안녕 안녕안녕안녕안녕안녕안녕",
-        author: "성춘향",
-        category: "찜해둔 책",
-        cover: "sample_cover3.png",
-    },
-    {
-        id: 8,
-        title: "책 제목 안녕안녕 안녕안녕안녕안녕안녕안녕",
-        author: "성춘향",
-        category: "찜해둔 책",
-        cover: "sample_cover3.png",
-    },
-    {
-        id: 9,
-        title: "책 제목 안녕안녕 안녕안녕안녕안녕안녕안녕",
-        author: "성춘향",
-        category: "찜해둔 책",
-        cover: "sample_cover3.png",
-    },
-    // 더 많은 샘플 데이터 추가
-];
-
 const categoryColors = {
     "reading": "#2EEA7E",
     "read": "#9DB8FF",
@@ -183,6 +115,16 @@ const LibraryPage=styled.div`
     position: absolute;
     border-radius: 8px 8px 0px 0px;
     background: #FFF;
+
+
+    p{
+        cursor: default;
+
+
+        &:hover {
+            color: gray;
+          }
+    }
 
     }
 `;

@@ -15,260 +15,6 @@ import { faChevronLeft, faChevronRight } from '@fortawesome/free-solid-svg-icons
 import axios from 'axios';
 import faceLogo from "../assets/commentFace.png";
 
-const short = [
-    {
-        id: 1,
-        short_comment: "1안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
-        nickname:"롯데 우승은 언제쯤",
-        like_count:200,
-        book_title:"나를 위해 살지 않으면 남을 위해 살게 된다",
-        book_author:"롤링",
-        nickname:"닉네임",
-        created_at:"2024-07-28T05:41:31.341060+09:00"
-
-    },
-    {
-        id: 2,
-        short_comment: "2안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
-        nickname:"롯데 우승은 언제쯤",
-        like_count:200,
-        book_title:"해리포터",
-        book_author:"롤링",
-        nickname:"닉네임",
-        created_at:"2024-07-28T05:41:31.341060+09:00"
-    },
-    {
-        id: 3,
-        short_comment: "3안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
-        nickname:"롯데 우승은 언제쯤",
-        like_count:200,
-        book_title:"해리포터",
-        book_author:"롤링",
-        nickname:"닉네임",
-        created_at:"2024-07-28T05:41:31.341060+09:00"
-    },
-    {
-        id: 4,
-        short_comment: "4안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
-        nickname:"롯데 우승은 언제쯤",
-        like_count:200,
-        book_title:'해리포터',
-        book_author:'롤링',
-        nickname:"닉네임",
-        created_at:"2024-07-28T05:41:31.341060+09:00"
-    },
-    {
-        id: 5,
-        short_comment: "5안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
-        nickname:"롯데 우승은 언제쯤",
-        like_count:200,
-        book_title:'해리포터',
-        book_author:'롤링',
-        nickname:"닉네임",
-        created_at:"2024-07-28T05:41:31.341060+09:00"
-    },
-    {
-        id: 6,
-        short_comment: "6안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
-        nickname:"롯데 우승은 언제쯤",
-        like_count:200,
-        book_title:'해리포터',
-        book_author:'롤링',
-        nickname:"닉네임",
-        created_at:"2024-07-28T05:41:31.341060+09:00"
-    },
-    {
-        id: 7,
-        short_comment: "7안녕하세요안녕하세요안녕하세요안녕하세요",
-        nickname:"닉네임",
-        like_count:200,
-        book_title:'해리포터',
-        book_author:'롤링',
-        nickname:"닉네임",
-        created_at:"2024-07-28T05:41:31.341060+09:00"
-    },
-    {
-        id: 8,
-        short_comment: "8안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
-        nickname:"롯데 우승은 언제쯤",
-        like_count:200,
-        book_title:'해리포터',
-        book_author:'롤링',
-        nickname:"닉네임",
-        created_at:"2024-07-28T05:41:31.341060+09:00"
-    },
-    {
-        id: 9,
-        short_comment: "9안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
-        nickname:"롯데 우승은 언제쯤",
-        like_count:200,
-        book_title:'해리포터',
-        book_author:'롤링',
-        nickname:"닉네임",
-        created_at:"2024-07-28T05:41:31.341060+09:00"
-    },
-    {
-        id: 10,
-        short_comment: "10안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요안녕하세요",
-        nickname:"롯데 우승은 언제쯤",
-        like_count:200,
-        book_title:'해리포터',
-        book_author:'롤링',
-        nickname:"닉네임",
-        created_at:"2024-07-28T05:41:31.341060+09:00"
-    },
-    // 더 많은 샘플 데이터 추가
-];
-
-const long=[
-    {
-        id:1,
-        review_title:'으아아아 힘들어',
-        long_text:'1이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만',
-        created_at:"2024-07-28T05:41:31.341060+09:00",
-        nickname:'닉네임',
-        like_count:200,
-        book_title:'해리포터',
-        book_author:'롤링',
-        comment_count : 0,
-
-		comment_list : [
-					{
-                        comment_id : 1, 
-                        comment_nickname : "닉1",
-                        comment_created_at : "2024-07-28T05:41:31.341060+09:00",
-                        comment_text : '댓글1'
-					},
-					{
-					    comment_id : 2, 
-						comment_nickname : "닉2",
-						comment_created_at : "2024-07-28T05:41:31.341060+09:00",
-						comment_text : '댓글2'
-					},
-			
-				]
-    },
-    {
-        id:2,
-        review_title:'으아아아 힘들어',
-        long_text:'2이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만',
-        created_at:"2024-07-28T05:41:31.341060+09:00",
-        nickname:'닉네임',
-        like_count:200,
-        book_title:'해리포터',
-        book_author:'롤링',
-        comment_count : 2,
-
-		comment_list : [
-					{
-                        comment_id : 1, 
-                        comment_nickname : "닉1",
-                        comment_created_at : "2024-07-28T05:41:31.341060+09:00",
-                        comment_text : '댓글1'
-					},
-					{
-					    comment_id : 2, 
-						comment_nickname : "닉2",
-						comment_created_at : "2024-07-28T05:41:31.341060+09:00",
-						comment_text : '댓글2'
-					},
-			
-				]
-    },
-    {
-        id:3,
-        review_title:'으아아아 힘들어',
-        long_text:'3이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만',
-        created_at:"2024-07-28T05:41:31.341060+09:00",
-        nickname:'닉네임',
-        like_count:200,
-        book_title:'해리포터',
-        book_author:'롤링',
-        comment_count : 4,
-
-		comment_list : [
-					{
-                        comment_id : 1, 
-                        comment_nickname : "닉1",
-                        comment_created_at : "2024-07-28T05:41:31.341060+09:00",
-                        comment_text : '댓글1'
-					},
-					{
-					    comment_id : 2, 
-						comment_nickname : "닉2",
-						comment_created_at : "2024-07-28T05:41:31.341060+09:00",
-						comment_text : '댓글2'
-					},
-                    {
-					    comment_id : 3, 
-						comment_nickname : "닉3",
-						comment_created_at : "2024-07-28T05:41:31.341060+09:00",
-						comment_text : '댓글3'
-					},
-                    {
-					    comment_id : 4, 
-						comment_nickname : "닉4",
-						comment_created_at : "2024-07-28T05:41:31.341060+09:00",
-						comment_text : '댓글4'
-					},
-                ]
-    },
-    {
-        id:4,
-        review_title:'으아아아 힘들어',
-        long_text:'4나를 위해 살지 않으면 남을 위해 살게 된다 책을 읽고 난 후, 나의 웰빙에 대한 새로운 관점을 얻게 되었다. 우리는 종종 타인의 기대에 부응하려고 하며, 그 과정에서 자신을 잃어버리기 쉽다. 이 책은 자신을 위한 삶의 중요성을 강조하며, 스스로의 행복과 만족을 우선시하는 것이 왜 중요한지에 대해 다시 한 번 생각해 보게 한다. 나의 웰빙은 단순히 신체적 건강을 넘어선다. 정신적, 감정적 건강 또한 중요한 부분이다. 이 책을 통해 나는 나 자신에게 더 많은 시간을 투자하고, 내가 진정으로 원하는 것을 추구하는 것이 얼마나 중요한지 깨달았다. 타인의 기대에 얽매이지 않고, 나만의 목표와 꿈을 향해 나아갈 때 비로소 진정한 웰빙을 실현할 수 있다. 또한, 자기 자신을 돌보는 것이 이기적인 것이 아님을 깨달았다. 내가 행복하고 건강할 때, 주변 사람들에게도 긍정적인 영향을 미칠 수 있다. 따라서 나의 웰빙을 위해 나를 위한 시간을 갖고, 나의 가치를 존중하며 살아가는 것이 중요하다. 이 책은 나에게 새로운 동기부여가 되었고, 앞으로의 삶에서 나를 위해 더 많이 살 것을 다짐하게 만들었다.',
-        created_at:"2024-07-28T05:41:31.341060+09:00",
-        nickname:'닉네임',
-        like_count:200,
-        book_title:'해리포터',
-        book_author:'롤링',
-        comment_count : 2,
-
-		comment_list : [
-					{
-                        comment_id : 1, 
-                        comment_nickname : "닉1",
-                        comment_created_at : "2024-07-28T05:41:31.341060+09:00",
-                        comment_text : '댓글1'
-					},
-					{
-					    comment_id : 2, 
-						comment_nickname : "닉2",
-						comment_created_at : "2024-07-28T05:41:31.341060+09:00",
-						comment_text : '댓글2'
-					},
-			
-				]
-    },
-    {
-        id:5,
-        review_title:'으아아아 힘들어',
-        long_text:'5이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제그만이제',
-        created_at:"2024-07-28T05:41:31.341060+09:00",
-        nickname:'닉네임',
-        like_count:200,
-        book_title:'해리포터',
-        book_author:'롤링',
-        comment_count : 2,
-
-		comment_list : [
-					{
-                        comment_id : 1, 
-                        comment_nickname : "닉1",
-                        comment_created_at : "2024-07-28T05:41:31.341060+09:00",
-                        comment_text : '댓글1'
-					},
-					{
-					    comment_id : 2, 
-						comment_nickname : "닉2",
-						comment_created_at : "2024-07-28T05:41:31.341060+09:00",
-						comment_text : '댓글2'
-					},
-			
-				]
-    },
-]
-
 
 const CommunityPage=styled.div`
     width:1620px;
@@ -368,6 +114,15 @@ const Header = styled.div`
     position: absolute;
     border-radius: 8px 8px 0px 0px;
     background: #FFF;
+
+    p{
+        cursor: default;
+
+
+        &:hover {
+            color: gray;
+          }
+    }
 
     }
 `;
@@ -614,9 +369,6 @@ const ShortWritingCard=styled.div`
         font-size: 13px;
         font-style: normal;
         font-weight: 600;
-        //line-height: 138.5%; /* 18.005px */
-        //letter-spacing: 0.252px;
-        //background-color: beige;
         margin-left: 10px;
         }
         
@@ -709,8 +461,6 @@ const LongWritingList = styled.div`
 
 const BelowLongWritingList = styled.div`
   width: 1200px;
-  //height: 1200px;
-  //background-color: antiquewhite;
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
@@ -1184,14 +934,6 @@ const LongModalContent = styled.div`
   overflow: auto;
   //position: relative;
    
-    /* .scrollableContent{
-    width:50px;
-    height:800px;
-    background-color: blue;
-    overflow: auto; 
-    padding-right: 10px; 
-    }   */
-   
 
   .close{
     margin-left:800px;
@@ -1292,9 +1034,6 @@ const LongModalContent = styled.div`
         font-size: 13px;
         font-style: normal;
         font-weight: 600;
-        //line-height: 138.5%; /* 18.005px */
-        //letter-spacing: 0.252px;
-        //background-color: beige;
     }
 
     /* .heart{
@@ -1327,13 +1066,6 @@ const LongModalContent = styled.div`
         //ackground-color: beige;
     }
 
-    /* .prevBtn, .nextBtn {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    cursor: pointer;
-    } */
-
     .left-arrow-icon{
         color: default;
         font-size: 35px;
@@ -1354,16 +1086,6 @@ const LongModalContent = styled.div`
             color:#FF6E23;
         }
   }
-
-   /* .modalLongWritingBox .prevBtn {
-    position: fixed;
-    left: 350px; 
-    } */
-
-    /* .modalLongWritingBox .nextBtn {
-    position: fixed;
-    right: 360px; 
-    } */
 
   .likeLine{
     width:850px;
@@ -1846,20 +1568,6 @@ export function Community(){
             <TitleBanner>
                 <p>커뮤니티</p>
             </TitleBanner>
-            {/* <BtnBanner>
-                <div className="meWrite" onClick={()=>handleItemClick('/afterlogin/community/communitywrite',token)}>
-                    <p className="meWriteText">내가 쓴 글</p>
-                    <span class="material-symbols-outlined">
-                        arrow_right
-                    </span>
-                </div>
-                <div className="meScrap" onClick={()=>handleItemClick('/afterlogin/community/communityscrap',token)}>
-                    <p className="meScrapText">내가 스크랩한 글</p>
-                    <span class="material-symbols-outlined">
-                        arrow_right
-                    </span>
-                </div>
-            </BtnBanner> */}
 
             <TabsContainer>
                 <Tab active={activeTab === 'simple'} onClick={() => setActiveTab('simple')}>함께하는 책 속 한 줄</Tab>

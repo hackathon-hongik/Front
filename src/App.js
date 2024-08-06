@@ -4,19 +4,17 @@ import { Login } from "./Login/Login";
 import { Join } from "./Home/Join";
 import { Redirect } from "./Login/Redirect";
 import { MyLibrary } from "./components/MyLibrary";
-import { ThisBook } from "./components/ThisBook";
-import { Note } from "./components/Note";
+import { ThisBook } from "./Notes/ThisBook";
+import { Note } from "./Notes/Note";
 import { BeforeBookSearchResult} from "./BookSearch/BeforeBookSearchResult";
 import { AfterBookSearchResult } from "./BookSearch/AfterBookSearchResult";
 import { Recommend } from "./RecommendPage/Recommend";
 import { RecommendResult } from "./RecommendPage/RecommendResult";
 import { Community } from "./Communities/Community";
-import { CommunityWrite } from "./Communities/CommunityWrite";
-import { CommunityScrap } from "./Communities/CommunityScrap";
-import { LookNote } from "./components/LookNote";
+import { LookNote } from "./Notes/LookNote";
 import {Routes,Route} from "react-router-dom";
 import { ChangeNickName } from "./components/ChangeNickname";
-import ModifyNote from "./components/ModifyNote";
+import ModifyNote from "./Notes/ModifyNote";
 
 function App() {
   return (
@@ -37,8 +35,6 @@ function App() {
       <Route path='/afterlogin/recommendation' element={<Recommend/>}/>
       <Route path='/afterlogin/recommendation/recommendresult' element={<RecommendResult/>}/>
       <Route path='/afterlogin/community' element={<Community/>}/>
-      <Route path='/afterlogin/community/communityscrap' element={<CommunityScrap/>}/>
-      <Route path='/afterlogin/community/communitywrite' element={<CommunityWrite/>}/>
     </Routes>
   );
 }

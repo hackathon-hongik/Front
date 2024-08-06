@@ -457,12 +457,6 @@ export function BeforeBookSearchResult(){  //로그인 전 책 검색하면 나�
                 isbn:doc.isbn,
             }));   //documents는 배열이기 때문에 아래 방식이 아닌 이런 방식으로 처리해야 함
 
-            // const results = {
-            //     thumbnail: response.data.documents[0].thumbnail,
-            //     authors: response.data.documents[0].authors
-            // };  근데 이렇게 했을때 검색결과가 왜 하나도 안뜨는지는 모르겠음
-            
-
             setBookResults(results);
             //setNewSearchWord(query);  //이렇게 하면 입력하고 있는 와중에 화면에 따라서 출력이 됨
             setPrintNewSearchWord(query); //책 제목을 입력하고 있을때 화면에 실시간으로 나타나게 하지 않기 위해 프린트용으로 배치

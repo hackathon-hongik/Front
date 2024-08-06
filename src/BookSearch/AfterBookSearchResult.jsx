@@ -155,6 +155,15 @@ const Header=styled.div`
     position: absolute;
     border-radius: 8px 8px 0px 0px;
     background: #FFF;
+
+    p{
+        cursor: default;
+
+
+        &:hover {
+            color: gray;
+          }
+    }
     }
 `;
 
@@ -494,11 +503,6 @@ export function AfterBookSearchResult(){  //로그인 전 책 검색하면 나�
                 publisher:doc.publisher,
                 date:doc.datetime
             }));   //documents는 배열이기 때문에 아래 방식이 아닌 이런 방식으로 처리해야 함
-
-            // const results = {
-            //     thumbnail: response.data.documents[0].thumbnail,
-            //     authors: response.data.documents[0].authors
-            // };  근데 이렇게 했을때 검색결과가 왜 하나도 안뜨는지는 모르겠음
 
 
             setBookResults(results);
