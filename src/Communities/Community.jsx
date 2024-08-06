@@ -646,8 +646,8 @@ const ShortWritingCard=styled.div`
         background: #F2F2F7;
 
         .bookCover{
-            width:50px;
-            height:60px;
+            width:40px;
+            height: 55px;
             margin-left:20px;
             img{
                 width:20px;
@@ -864,8 +864,8 @@ const LongWritingCard=styled.div`
         }
 
         .bookCover{
-            width:50px;
-            height:60px;
+            width:40px;
+            height:55px;
             margin-left:20px;
             img{
                 width:20px;
