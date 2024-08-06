@@ -147,8 +147,9 @@ const Stats=styled.div`
     font-weight: 700;
     line-height: 135.8%; /* 38.024px */
     letter-spacing: -0.661px;
-    margin-right: 800px;
+    margin-right: 320px;
     margin-top: 30px;
+    margin-bottom: 70px;
   }
 
   .text3{
