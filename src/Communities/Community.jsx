@@ -676,10 +676,10 @@ const ShortWritingCard=styled.div`
                 //background-color: palegreen;
                 margin: 0; 
                 margin-top: 10px;
-                margin-right:20px;
+                margin-right:20px
             }
             .bookAuthor{
-                width:160px;
+                width:200px;
                 height:20px;
                 display: flex;
                 flex-direction: row;
