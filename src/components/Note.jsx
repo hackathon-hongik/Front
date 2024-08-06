@@ -819,7 +819,7 @@ const handleLogOut=async()=>{
           </SetContainer>
 
           <SetContainer>
-          <Label>04. 인상 깊은 한 줄</Label>
+          <Label>04. 인상 깊은 책 속 한 줄</Label>
           <div style={{ width: '97%' }}>
             <TextArea placeholder="인상 깊은 한 줄" 
             rows="4" 
@@ -829,7 +829,7 @@ const handleLogOut=async()=>{
           </div>
           </SetContainer>
           <OpenSet>
-             <OpenSetLabel>글 공개여부 설정</OpenSetLabel>
+             <OpenSetLabel>책 속 한 줄 공개여부 설정</OpenSetLabel>
              <OpenSetContainer>
                 <OpenSetInput
                 type="radio"
@@ -889,7 +889,7 @@ const handleLogOut=async()=>{
             />
           </div>
           <OpenSet>
-             <OpenSetLabel>글 공개여부 설정</OpenSetLabel>
+             <OpenSetLabel>책 속 한 줄 공개여부 설정</OpenSetLabel>
              <OpenSetContainer>
                 <OpenSetInput
                 type="radio"
