@@ -103,7 +103,7 @@ export function AfterLoginMain(){
             }));   //documents는 배열이기 때문에 아래 방식이 아닌 이런 방식으로 처리해야 함
 
 
-            navigate("/afterlogin/booksearchresult", { state: { results, searchWord, token } });  //search한 데이터를 다른 페이지로 넘기기 
+            navigate("/afterlogin/booksearchresult", { state: { results, searchWord, token, refresh } });  //search한 데이터를 다른 페이지로 넘기기 
 
             console.log(response.data);
         }
