@@ -142,6 +142,7 @@ const LoginPage=styled.div`
             border: 2px solid ${props => (props.hasValue ? '#FF6E23' : '#ccc')};
             background: #FFF;
             margin-top: 20px;
+            
 
             &:focus {
                 border-color: #FF6E23;
@@ -353,7 +354,7 @@ export function Login(){
                         hasValue={id.length > 0}
                         />
                 <Input
-                        type="text"
+                        type="password"
                         value={password}
                         onChange={handlePwChange}
                         placeholder="비밀번호 입력"

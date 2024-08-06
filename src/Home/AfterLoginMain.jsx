@@ -13,6 +13,7 @@ import {bookAPI} from "../api";
 import { axiosInstance } from "../api";
 import { useLocation } from 'react-router-dom'
 import logo from "../assets/Logo.png";
+import lucky from "../assets/럭키북키.png";
 
 const API_KEY=process.env.REACT_APP_KAKAO_BOOK_API_KEY;
 
@@ -214,7 +215,8 @@ export function AfterLoginMain(){
             </div>
 
             <div className="text1">
-                <p>Refresh your mind with fresh books</p>
+                <p>독서로 웰니스에 도달할 수 있다고?</p>
+                <img className="Lucky" src ={lucky}/>
             </div>
 
             <div className="findBookContainer">

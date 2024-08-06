@@ -27,10 +27,10 @@ const ResultPage=styled.div`
     font-weight: 550;
     line-height: 133.4%; /* 32.016px */
     letter-spacing: -0.552px;
-    margin-right:500px;
+    margin-right:0px;
     margin-top: 50px;
     /* background-color: red; */
-    width:1000px;
+    width:800px;
     height:0px;
     }
 

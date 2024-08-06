@@ -98,20 +98,28 @@
 
 }
 .text1{
-    width:480px;
+    width:700px;
     height:250px;
-    color: var(--kakao-logo, #000);
+    
 
-    text-align: center;
-    /* Display 1/Medium */
-    font-family: "Pretendard JP";
-    font-size: 56px;
-    font-style: normal;
-    font-weight: 600;
-    line-height: 128.6%; /* 72.016px */
-    letter-spacing: -1.786px;
-    /*background-color: bisque;*/
+    .Lucky{
+        width:700px;
+        height: 89px;
+    }
 
+    p{
+        color: var(--kakao-logo, #000);
+        text-align: center;
+        font-family: "Pretendard JP";
+        font-size: 42px;
+        font-style: normal;
+        font-weight: 500;
+        line-height: 130%; /* 48.048px */
+        letter-spacing: -1.042px;
+        margin-top: 80px;
+        margin-bottom: 0px;
+
+    }
     
 }
 
@@ -123,18 +131,23 @@
 }
 
 .findBook{
-    width:790px;
-    height:60px;
+    width:850px;
+    height:80px;
     margin-top:56px;
     display: flex;
     flex-direction: row;
+    align-items: center;
     justify-content: center;
-    border:solid black;
+    border:none;
     background-color: white;
+    border-radius: 8px;
+    border: 2px solid #C6C6C8;
+    background: var(--Materials-Chrome, rgba(255, 255, 255, 0.75));
+    background-blend-mode: hard-light;
 }
 
 .bookFind{
-    width:766px;
+    width:790px;
     height:57px;
     border: none;
     outline: none;
@@ -151,7 +164,7 @@
 }
 
 .searchBtn {
-    margin-top: 10px;
+    margin-top: 0px;
     margin-right: 0px;
     margin-left: 10px;
     width:40px;
@@ -166,7 +179,7 @@
 .myBookShelf{
     width:1200px;
     height:410px;
-    margin-top: 150px;
+    margin-top: 100px;
     /*background-color: aqua;*/
 }
 
@@ -180,7 +193,7 @@
     font-weight: 700;
     line-height: 135.8%; /* 38.024px */
     letter-spacing: -0.661px;
-    margin-left: 119px;
+    margin-left: 94px;
 }
 
 .centerBar{
@@ -202,8 +215,8 @@
 
 
 .greenPic{
-    width:169px;
-    height:52px;
+    width:160px;
+    height:65px;
 }
 
 .howMany{
@@ -215,8 +228,8 @@
 }
 
 .showHowMany{
-    width:70px;
-    height:52px;
+    width:80px;
+    height:60px;
     display:flex;
     flex-direction: row;
     justify-content: center;
@@ -231,7 +244,7 @@
     font-feature-settings: 'ss10' on;
     /* Heading 2/Bold */
     font-family: "Pretendard JP";
-    font-size: 20px;
+    font-size: 23px;
     font-style: normal;
     font-weight: 600;
     line-height: 140%; /* 28px */
@@ -263,6 +276,7 @@
     align-items: center;
     /* background-color: #FF6E23; */
     background-color: white;
+    border-radius: 8px;
     margin-left: 10px;
 }
 
@@ -273,6 +287,7 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    margin-top: 15px;
     /* background-color: aqua; */
 }
 
@@ -339,7 +354,7 @@
     justify-content: center;
     align-items: center;
     /* background-color: red; */
-    margin-top:20px;
+    margin-top:0px;
 }
 
 .toMyShelf{
@@ -589,26 +604,6 @@ margin-right: 120px;
     margin-top:50px;
 }
 
-
-/* .leftArrow {
-    width:40px;
-    height:40px;
-    position: absolute;
-    left: 300px;
-    border-radius: 50px;
-    border: none;
-    background-color: #808080;
-}
-
-.rightArrow {
-    width:40px;
-    height:40px;
-    position: absolute;
-    right: 300px;
-    border-radius: 50px;
-    border: none;
-    background-color: #808080;
-} */
 
 .material-icons {
     font-size: 36px; 

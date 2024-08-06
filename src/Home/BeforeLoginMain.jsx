@@ -12,6 +12,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import {bookAPI} from "../api";
+import lucky from "../assets/럭키북키.png";
 
 
 const API_KEY=process.env.REACT_APP_KAKAO_BOOK_API_KEY;
@@ -132,7 +133,8 @@ export function BeforeLoginMain(){
             </div>
 
             <div className="text1">
-                <p>Refresh your mind with fresh books</p>
+                <p>독서로 웰니스에 도달할 수 있다고?</p>
+                <img className="Lucky" src ={lucky}/>
             </div>
 
             <div className="findBookContainer">

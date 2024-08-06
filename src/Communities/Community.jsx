@@ -935,9 +935,34 @@ const LongModalContent = styled.div`
   //position: relative;
    
 
-  .close{
-    margin-left:800px;
-    cursor: default;
+  .textAndClose{
+    width:900px;
+    height:34px;
+    display: flex;
+    flex-direction: row;
+    //background-color: red;
+    overflow: hidden;
+    color: #989BA2;
+
+    .modalText{
+        width:150px;
+        height:20px;
+        //background-color: blue;
+        font-feature-settings: 'ss10' on;
+        text-overflow: ellipsis;
+        /* Label 2/Regular */
+        font-family: "Pretendard JP";
+        font-size: 13px;
+        font-style: normal;
+        font-weight: 400;
+        line-height: 138.5%; /* 18.005px */
+        letter-spacing: 0.252px;
+        margin-left: 40px;
+    }
+    .close{
+        font-size: 33px;
+        margin-left: 680px;
+        }
   }
 
   .line1{
@@ -1237,6 +1262,7 @@ const CommentInputBox=styled.div`
 
         .commentInput{
             width:690px;
+            height:40px;
             border: none;
             margin-left: 20px;
         }
@@ -1783,9 +1809,12 @@ export function Community(){
                                         <LongModalWrapper onClick={(e) => e.stopPropagation()}>
                                         <LongModalContent onClick={(e) => e.stopPropagation()}> {/*모달창을 눌렀을때는 꺼지지 않도록*/}
                                             
-                                            <span className="material-icons close" onClick={closeModal}>
-                                                close
-                                            </span>
+                                            <div className="textAndClose">
+                                                <div className="modalText">자유기록장 상세보기</div>
+                                                <span className="material-icons close" onClick={closeModal}>
+                                                    close
+                                                </span>
+                                            </div>
                                             <div className="line1"></div>
                                             <div className="top1">
                                                 <div className="modalTitle">{item.long_note.long_title}</div>
@@ -1927,9 +1956,12 @@ export function Community(){
                                         <LongModalWrapper onClick={(e) => e.stopPropagation()}>
                                         <LongModalContent onClick={(e) => e.stopPropagation()}> {/*모달창을 눌렀을때는 꺼지지 않도록*/}
                                             
-                                            <span className="material-icons close" onClick={closeModal}>
-                                                close
-                                            </span>
+                                            <div className="textAndClose">
+                                                <div className="modalText">자유기록장 상세보기</div>
+                                                <span className="material-icons close" onClick={closeModal}>
+                                                    close
+                                                </span>
+                                            </div>
                                             <div className="line1"></div>
                                             <div className="top1">
                                                 <div className="modalTitle">{item.long_note.long_title}</div>
