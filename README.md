@@ -3,6 +3,7 @@
 
 ## 프로젝트 소개
 독서 후 기록을 통한 웰니스 달성 서비스
+<img width="296" alt="Image" src="https://github.com/user-attachments/assets/f9d4def0-9ecc-4986-809a-20c7e3b64c72" />
 
 ## 개발 기간
 * 24.07.06 - 24.08.06
