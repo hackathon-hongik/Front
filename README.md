@@ -7,6 +7,7 @@
 해당 책에 대한 내용을 자신의 현재 감정과 엮어 독서기록을 작성할 수 있게 함으로써<br>
 서비스 이용자들의 멘탈 케어를 이끌 수 있는 서비스
 <br>
+<br>
 <img width="296" alt="Image" src="https://github.com/user-attachments/assets/f9d4def0-9ecc-4986-809a-20c7e3b64c72" />
 
 ## 개발 기간
