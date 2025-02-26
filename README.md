@@ -20,7 +20,8 @@
 
 ## 주요기능
 - 책 검색
-    - 카카오 책 검색 open API 사용
+    - 카카오 책 검색 open API 사용 <br>
+    <img width="282" alt="Image" src="https://github.com/user-attachments/assets/98f60ebf-357a-4d75-a83b-63241c7a3fc1" /> <br>
 - 책 등록
     - 즐겨찾기 기능과 책 추가 기능
 - 책에 대한 짧은 글 / 긴 글 작성
